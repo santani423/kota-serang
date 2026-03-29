@@ -55,7 +55,7 @@ export default function Header() {
             ? "h-14 shadow-lg backdrop-blur-lg"
             : "h-16 backdrop-blur-md"
         }
-        bg-transparent dark:bg-gray-900/70
+          bg-[#DDE1D5]/80 dark:bg-gray-900/70
       `}
     >
       <div className="max-w-7xl mx-auto h-full flex items-center justify-between px-4 sm:px-6 lg:px-8">
@@ -79,12 +79,12 @@ export default function Header() {
 
           <button
             onClick={toggleDarkMode}
-            className="p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-800 transition text-white hover:text-black"
+            className="p-2 rounded-md  hover:bg-gray-200 dark:hover:bg-gray-800 transition text-white hover:text-black"
           >
             {darkMode ? (
-              <Sun className="w-5 h-5" />
+              <Sun className="w-5 h-5 text-slate-500" />
             ) : (
-              <Moon className="w-5 h-5" />
+              <Moon className="w-5 h-5 text-slate-500" />
             )}
           </button>
 

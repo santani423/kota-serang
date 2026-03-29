@@ -54,7 +54,7 @@ export default function MobileNav() {
           aria-label="Open Menu"
           className="p-2 rounded-md hover:bg-white/10 transition"
         >
-          <Menu className="w-6 h-6 text-white" />
+          <Menu className="w-6 h-6 text-slate-500" />
         </button>
       </SheetTrigger>
 
