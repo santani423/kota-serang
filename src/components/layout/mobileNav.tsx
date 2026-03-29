@@ -16,7 +16,7 @@ export default function Home() {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="outline">Open</Button>
+        <Button variant="outline">buka</Button>
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>
