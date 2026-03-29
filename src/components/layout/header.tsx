@@ -5,6 +5,8 @@ import Image from "next/image";
 import Logo from "@/assets/logo.png";
 import { Moon, Sun } from "lucide-react";
 import MobileNav from "@/components/layout/mobileNav";
+import DekstopNav from "@/components/layout/dekstopNav";
+import { Button } from "../ui/button";
 
 export default function Header() {
   const [isScrolling, setIsScrolling] = useState(false);
@@ -57,7 +59,6 @@ export default function Header() {
       `}
     >
       <div className="max-w-7xl mx-auto h-full flex items-center justify-between px-4 sm:px-6 lg:px-8">
-        
         {/* Logo */}
         <Image
           src={Logo}
@@ -68,10 +69,14 @@ export default function Header() {
           `}
         />
 
+        <div className="custom-container flex p-2 hidden md:flex xl:flex rounded-md transition">
+          <DekstopNav />
+        </div>
+
         {/* Right Actions */}
         <div className="flex items-center gap-2">
-          
           {/* Dark Mode Toggle */}
+
           <button
             onClick={toggleDarkMode}
             className="p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-800 transition text-white hover:text-black"
@@ -84,10 +89,12 @@ export default function Header() {
           </button>
 
           {/* Mobile Menu */}
-          <div className="p-2 rounded-md hover:bg-gray-200   hover:text-black dark:hover:bg-gray-800 transition">
+          <div className="p-2 rounded-md hover:bg-gray-200   hover:text-black dark:hover:bg-gray-800 transition md:hidden xl:hidden">
             <MobileNav />
           </div>
-
+          <div className="custom-container flex p-2 hidden md:flex xl:flex rounded-md transition">
+            <Button>Sampaikan Aspirasi</Button>
+          </div>
         </div>
       </div>
     </header>

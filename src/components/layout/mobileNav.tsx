@@ -2,20 +2,22 @@
 
 import React, { useState } from "react";
 import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetDescription,
+  Sheet, 
+  SheetContent, 
   SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
+
+
 import { Button } from "@/components/ui/button"
 import { Menu, ChevronRightIcon } from "lucide-react";
 import Image from "next/image";
 import Logo from "@/assets/logo.png";
 import Link from "next/link";
+
+
 
 const navItems = [
   {

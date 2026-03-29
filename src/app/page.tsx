@@ -1,12 +1,12 @@
- 
-import Header from "@/components/layout/header";
+import Template from "@/components/layout/template";
 
 export default function Home() {
   return (
     <>
-      <Header />{" "}
-      <div className="min-w-full h-screen bg-gray-100"></div>
-      <div className="min-w-full h-screen bg-blue-500"></div>
+      <Template>
+        <div className="min-w-full h-screen bg-gray-100"></div>
+        <div className="min-w-full h-screen bg-blue-500"></div>
+      </Template>
     </>
   );
 }
