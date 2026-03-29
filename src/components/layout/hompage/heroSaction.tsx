@@ -49,6 +49,9 @@ export default function HeroSection() {
         <h1 className="font-sans text-white text-4xl font-bold tracking-tight">
           Serang Kota
         </h1>
+        <h2 className="font-sans text-[#34D399] text-4xl font-bold tracking-tight">
+          Maju & Mandiri
+        </h2>
         <p className="text-lg md:text-2xl text-white mb-6 drop-shadow-lg">
           Temukan informasi terbaru, layanan publik, dan berbagai hal menarik
           tentang Kota Serang di sini.
