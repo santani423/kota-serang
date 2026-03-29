@@ -55,7 +55,7 @@ export default function Header() {
             ? "h-14 shadow-lg backdrop-blur-lg"
             : "h-16 backdrop-blur-md"
         }
-        bg-[#0B1F3A] dark:bg-gray-900/70
+        bg-transparent dark:bg-gray-900/70
       `}
     >
       <div className="max-w-7xl mx-auto h-full flex items-center justify-between px-4 sm:px-6 lg:px-8">

@@ -42,7 +42,7 @@ export default function DekstopNav() {
           <NavigationMenuItem key={item.code}>
             <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
               <Link href={item.href}>
-                <button className="relative px-6 py-2 text-white">
+                <button className="relative px-6 py-2 text-slate-600 hover:text-slate-900 transition">
                   {item.title}
 
                   {/* underline center (active style dummy) */}
