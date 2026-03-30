@@ -18,7 +18,35 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Moon, Sun, GalleryVerticalEnd, Newspaper } from "lucide-react";
+import { Moon, Sun, GalleryVerticalEnd, Newspaper, Users } from "lucide-react";
+// Data untuk card
+const dataCard = [
+  {
+    label: "Penduduk",
+    value: "750K+",
+    desc: "Jiwa Terdaftar",
+    icon: <Users size={28} className="text-[#37B27D]" />,
+    bg: "bg-[#406A40]/30"
+  },
+  {
+    label: "Kecamatan",
+    value: "6",
+    desc: "Kecamatan",
+    icon: (
+      <svg xmlns='http://www.w3.org/2000/svg' width='28' height='28' fill='none' viewBox='0 0 24 24' strokeWidth='1.5' stroke='white' className='w-7 h-7'><path strokeLinecap='round' strokeLinejoin='round' d='M3.75 21v-3.75A2.25 2.25 0 016 15h3a2.25 2.25 0 012.25 2.25V21M15.75 21v-3.75A2.25 2.25 0 0118 15h0a2.25 2.25 0 012.25 2.25V21M6 6.75a3 3 0 116 0 3 3 0 01-6 0zm6 0a3 3 0 116 0 3 3 0 01-6 0z' /></svg>
+    ),
+    bg: "bg-blue-600/30"
+  },
+  {
+    label: "Layanan",
+    value: "30+",
+    desc: "Jenis Layanan",
+    icon: (
+      <svg xmlns='http://www.w3.org/2000/svg' width='28' height='28' fill='none' viewBox='0 0 24 24' strokeWidth='1.5' stroke='white' className='w-7 h-7'><path strokeLinecap='round' strokeLinejoin='round' d='M12 6v6l4 2M21 12a9 9 0 11-18 0 9 9 0 0118 0z' /></svg>
+    ),
+    bg: "bg-yellow-500/30"
+  }
+];
 
 const images = [img1, img2, img3, img4];
 
@@ -96,14 +124,28 @@ export default function HeroSection() {
           >
             DATA KOTA 2026
           </p>
-          <Card className="w-full max-w-sm bg-white/20 backdrop-blur-md border border-white/30 shadow-lg mb-4 px-4 py-6">
-            <CardHeader></CardHeader>
-            <CardContent></CardContent>
-          </Card>
-          <Card className="w-full max-w-sm bg-white/20 backdrop-blur-md border border-white/30 shadow-lg px-4 py-6">
-            <CardHeader></CardHeader>
-            <CardContent></CardContent>
-          </Card>
+          <div className="flex flex-col gap-4 sm:flex-row sm:gap-4 items-center justify-center">
+            {dataCard.map((item, idx) => (
+              <Card key={item.label} className="w-full max-w-sm bg-white/20 backdrop-blur-md border border-white/30 shadow-lg px-0 py-0 rounded-2xl overflow-hidden">
+                <div className="flex flex-col gap-0">
+                  <div className="flex items-center gap-3 px-6 pt-6">
+                    <div className={`${item.bg} rounded-xl p-3 flex items-center justify-center`}>
+                      {item.icon}
+                    </div>
+                    <div className="flex flex-col items-start">
+                      <span className="text-xs font-mono uppercase tracking-[0.2em] text-white/70">{item.label}</span>
+                    </div>
+                  </div>
+                  <div className="px-6 pt-2 pb-1">
+                    <span className="text-4xl font-extrabold text-white drop-shadow-lg">{item.value}</span>
+                  </div>
+                  <div className="px-6 pb-6">
+                    <span className="text-sm text-white/70 font-mono">{item.desc}</span>
+                  </div>
+                </div>
+              </Card>
+            ))}
+          </div>
         </div>
       </div>
     </section>
