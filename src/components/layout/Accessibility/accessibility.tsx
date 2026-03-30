@@ -9,8 +9,19 @@ import {
   SheetTitle,
   SheetDescription,
   SheetTrigger,
+  SheetFooter,
 } from "@/components/ui/sheet";
-import { Accessibility, Volume2, AudioLines, Sun } from "lucide-react";
+import {
+  Accessibility,
+  Volume2,
+  AudioLines,
+  Sun,
+  SwatchBook,
+  FileText,
+  Link,
+  MousePointer2,
+  SquareStop,
+} from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 
@@ -211,37 +222,37 @@ export default function AccessibilityComponent() {
                   key: "highContrast",
                   label: "Kontras Tinggi",
                   icon: <Sun className="text-black w-6 h-6" />,
-                  desc: "Meningkatkan kontras warna untuk visibilitas."
+                  desc: "Meningkatkan kontras warna untuk visibilitas.",
                 },
                 {
                   key: "grayscale",
                   label: "Grayscale",
-                  icon: <Sun className="text-gray-400 w-6 h-6" />,
-                  desc: "Ubah tampilan menjadi hitam putih."
+                  icon: <SwatchBook className="text-black w-6 h-6" />,
+                  desc: "Ubah tampilan menjadi hitam putih.",
                 },
                 {
                   key: "dyslexia",
                   label: "Mode Disleksia",
-                  icon: <Sun className="text-yellow-500 w-6 h-6" />,
-                  desc: "Gunakan font ramah disleksia."
+                  icon: <FileText className="text-black w-6 h-6" />,
+                  desc: "Gunakan font ramah disleksia.",
                 },
                 {
                   key: "reduceMotion",
                   label: "Kurangi Animasi",
-                  icon: <Sun className="text-blue-500 w-6 h-6" />,
-                  desc: "Minimalkan animasi/transisi."
+                  icon: <SquareStop className="text-black w-6 h-6" />,
+                  desc: "Minimalkan animasi/transisi.",
                 },
                 {
                   key: "largeCursor",
                   label: "Kursor Besar",
-                  icon: <Sun className="text-green-700 w-6 h-6" />,
-                  desc: "Perbesar ukuran kursor."
+                  icon: <MousePointer2 className="text-black w-6 h-6" />,
+                  desc: "Perbesar ukuran kursor.",
                 },
                 {
                   key: "highlightLinks",
                   label: "Sorot Link",
-                  icon: <Sun className="text-indigo-600 w-6 h-6" />,
-                  desc: "Sorot semua tautan di halaman."
+                  icon: <Link className="text-black w-6 h-6" />,
+                  desc: "Sorot semua tautan di halaman.",
                 },
               ].map(({ key, label, icon, desc }) => (
                 <div
@@ -254,10 +265,15 @@ export default function AccessibilityComponent() {
                       {icon}
                     </div>
                     <div>
-                      <Label htmlFor={key} className="cursor-pointer font-medium">
+                      <Label
+                        htmlFor={key}
+                        className="cursor-pointer font-medium"
+                      >
                         {label}
                       </Label>
-                      <div className="text-xs text-gray-400 leading-tight">{desc}</div>
+                      <div className="text-xs text-gray-400 leading-tight">
+                        {desc}
+                      </div>
                     </div>
                   </div>
                   {/* Switch dengan label aksesibilitas */}
@@ -265,8 +281,12 @@ export default function AccessibilityComponent() {
                     <Switch
                       id={key}
                       aria-label={label}
-                      checked={settings[key as keyof typeof settings] as boolean}
-                      onCheckedChange={() => onToggle(key as keyof typeof settings)}
+                      checked={
+                        settings[key as keyof typeof settings] as boolean
+                      }
+                      onCheckedChange={() =>
+                        onToggle(key as keyof typeof settings)
+                      }
                       className={
                         settings[key as keyof typeof settings]
                           ? "data-[state=checked]:bg-[#37B27D] border-[#37B27D]"
@@ -288,11 +308,9 @@ export default function AccessibilityComponent() {
             </div>
           </div>
           {/* Footer Sheet */}
-          <div className="p-4 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-black flex justify-end">
-            <Button variant="destructive" onClick={resetAll}>
-              Reset Settingan
-            </Button>
-          </div>
+          <SheetFooter>
+            <Button onClick={resetAll}>Reset Settingan</Button>
+          </SheetFooter>
         </SheetContent>
       </Sheet>
     </div>
