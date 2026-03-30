@@ -69,7 +69,7 @@ export default function Header() {
           `}
         />
 
-        <div className="custom-container flex p-2 hidden md:flex xl:flex rounded-md transition">
+        <div className="custom-container flex p-2 hidden xl:flex rounded-md transition">
           <DekstopNav />
         </div>
 
@@ -89,10 +89,10 @@ export default function Header() {
           </button>
 
           {/* Mobile Menu */}
-          <div className="p-2 rounded-md hover:bg-gray-200   hover:text-black dark:hover:bg-gray-800 transition md:hidden xl:hidden">
+          <div className="p-2 rounded-md hover:bg-gray-200   hover:text-black dark:hover:bg-gray-800 transition   xl:hidden">
             <MobileNav />
           </div>
-          <div className="custom-container flex p-2 hidden md:flex xl:flex rounded-md transition">
+          <div className="custom-container flex p-2 hidden   xl:flex rounded-md transition">
             <Button>Sampaikan Aspirasi</Button>
           </div>
         </div>

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
+
 import img1 from "@/assets/hompage/1.jpg";
 import img2 from "@/assets/hompage/2.jpg";
 import img3 from "@/assets/hompage/3.jpg";
@@ -15,10 +16,11 @@ import {
   Newspaper,
   Users,
   Building2,
-  Clock
+  Clock,
 } from "lucide-react";
 
-// ✅ Data Card Lebih Clean
+const images = [img1, img2, img3, img4];
+
 const dataCard = [
   {
     label: "Penduduk",
@@ -37,49 +39,64 @@ const dataCard = [
     value: "30+",
     desc: "Jenis Layanan",
     icon: Clock,
-  }
+  },
 ];
 
-const images = [img1, img2, img3, img4];
-
 export default function HeroSection() {
-  const [current, setCurrent] = useState(0);
-  const [fade, setFade] = useState(false);
+  const [index, setIndex] = useState(0);
+  const [zoomIn, setZoomIn] = useState(true);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setFade(true);
-      setTimeout(() => {
-        setCurrent((prev) => (prev + 1) % images.length);
-        setFade(false);
-      }, 300);
-    }, 3500);
+      setIndex((prev) => (prev + 1) % images.length);
+      setZoomIn((prev) => !prev);
+    }, 6000); // lebih panjang = lebih smooth
 
     return () => clearInterval(interval);
   }, []);
 
   return (
-    <section className="w-screen min-h-screen flex items-center justify-center relative overflow-hidden">
+    <section className="relative w-full min-h-screen flex items-center justify-center overflow-hidden py-20">
 
-      {/* Background Slider */}
-      <div className="absolute inset-0">
-        <div className={`transition-opacity duration-500 w-full h-full ${fade ? "opacity-0" : "opacity-100"}`}>
-          <Image
-            src={images[current]}
-            alt="slider"
-            fill
-            className="object-cover"
-            priority
-          />
-        </div>
+      {/* BACKGROUND */}
+      <div className="absolute inset-0 z-0 overflow-hidden">
+
+        {/* IMAGE LAYER 1 */}
+        <Image
+          src={images[index]}
+          alt="bg1"
+          fill
+          priority
+          className={`absolute object-cover transition-all duration-[6000ms] ease-in-out ${
+            zoomIn
+              ? "scale-110 translate-x-2 translate-y-1 opacity-100"
+              : "scale-100 translate-x-0 translate-y-0 opacity-0"
+          }`}
+        />
+
+        {/* IMAGE LAYER 2 */}
+        <Image
+          src={images[(index + 1) % images.length]}
+          alt="bg2"
+          fill
+          priority
+          className={`absolute object-cover transition-all duration-[6000ms] ease-in-out ${
+            zoomIn
+              ? "scale-100 translate-x-0 translate-y-0 opacity-0"
+              : "scale-110 translate-x-2 translate-y-1 opacity-100"
+          }`}
+        />
+
+        {/* Overlay */}
         <div className="absolute inset-0 bg-black/50" />
       </div>
 
-      {/* Content */}
-      <div className="relative z-10 w-full max-w-6xl px-6 flex flex-col xl:flex-row justify-between gap-10 my-20">
+      {/* CONTENT */}
+      <div className="relative z-10 w-full max-w-6xl px-6 flex flex-col md:flex-row justify-between gap-10 my-20">
 
         {/* LEFT */}
         <div className="flex flex-col gap-4 text-left justify-center">
+
           <h1 className="text-white text-4xl md:text-7xl font-bold">
             Serang Kota
           </h1>
@@ -89,54 +106,59 @@ export default function HeroSection() {
           </h2>
 
           <p className="text-white/80 max-w-md">
-            Temukan informasi terbaru, layanan publik, dan berbagai hal menarik tentang Kota Serang di sini.
+            Temukan informasi terbaru, layanan publik, dan berbagai hal menarik
+            tentang Kota Serang di sini.
           </p>
 
           <div className="flex gap-4 flex-wrap">
-            <Button>
+            <Button className="flex items-center gap-2">
               <GalleryVerticalEnd size={22} />
               Akses Layanan
             </Button>
+
             <Button variant="floating">
               <Newspaper size={22} />
               Berita
             </Button>
           </div>
-          {/* Slide Position Indicator */}
+
+          {/* Indicator */}
           <div className="flex items-center gap-2 mt-4">
             {images.map((_, idx) => (
               <span
                 key={idx}
-                className={`transition-all duration-300 ease-in-out h-2 rounded-full ${current === idx ? "bg-emerald-500 w-10" : "bg-white/30 w-6"}`}
+                className={`transition-all duration-300 h-2 rounded-full ${
+                  index === idx
+                    ? "bg-[#37B27D] w-10"
+                    : "bg-white/30 w-6"
+                }`}
               />
             ))}
           </div>
         </div>
 
         {/* RIGHT CARD */}
-        <div className="flex flex-col gap-6 max-w-sm  w-full">
-          <p className="text-xs font-mono tracking-widest text-white/50 mb-3">
+        <div className="flex flex-col gap-6 max-w-sm w-full">
+
+          <p className="text-xs font-mono tracking-widest text-white/50">
             DATA KOTA 2026
           </p>
 
           <div className="flex flex-col gap-4">
-
             {dataCard.map((item, idx) => {
               const Icon = item.icon;
 
               return (
                 <Card
                   key={idx}
-                  className="bg-white/10 backdrop-blur border border-white/20 rounded-2xl p-5"
+                  className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-5 shadow-lg"
                 >
                   <div className="flex items-center gap-4">
 
-                    {/* ICON */}
                     <div className="bg-[#406A40] p-3 rounded-xl">
                       <Icon size={24} className="text-[#37B27D]" />
                     </div>
 
-                    {/* TEXT */}
                     <div>
                       <p className="text-xs text-white/60 uppercase tracking-widest">
                         {item.label}
@@ -155,11 +177,14 @@ export default function HeroSection() {
                 </Card>
               );
             })}
-
           </div>
         </div>
 
       </div>
+
+      {/* FOG */}
+      <div className="pointer-events-none absolute bottom-0 left-0 w-full h-30 bg-gradient-to-t from-white via-white/80 via-white/40 to-transparent backdrop-blur-lg" />
+
     </section>
   );
 }
