@@ -10,7 +10,9 @@ import {
   SheetDescription,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Accessibility, Volume2, AudioLines } from "lucide-react";
+import { Accessibility, Volume2, AudioLines, Sun } from "lucide-react";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 
 type FontSize = "sm" | "md" | "lg" | "xl";
 
@@ -116,7 +118,7 @@ export default function AccessibilityComponent() {
           </button>
         </SheetTrigger>
 
-        <SheetContent className="bg-white dark:bg-black text-black dark:text-white border-none w-[85%] sm:w-[400px]">
+        <SheetContent className="bg-white dark:bg-black text-black dark:text-white border-none w-[85%] sm:w-[400px] flex flex-col h-full">
           <SheetHeader>
             <SheetTitle className="font-bold text-lg">Aksesibilitas</SheetTitle>
             <SheetDescription>
@@ -129,7 +131,8 @@ export default function AccessibilityComponent() {
             <div className="w-full h-px bg-gray-200 dark:bg-gray-700" />
           </div>
 
-          <div className="p-5 space-y-6">
+          {/* Konten scrollable */}
+          <div className="p-5 space-y-6 flex-1 overflow-y-auto">
             <h3 className="text-xs font-bold uppercase tracking-wider text-muted mb-3">
               Pendengaran
             </h3>
@@ -198,30 +201,96 @@ export default function AccessibilityComponent() {
                 ))}
               </div>
             </div>
-
             {/* TOGGLES */}
-            {[
-              ["highContrast", "Kontras Tinggi"],
-              ["grayscale", "Grayscale"],
-              ["dyslexia", "Mode Disleksia"],
-              ["reduceMotion", "Kurangi Animasi"],
-              ["largeCursor", "Kursor Besar"],
-              ["highlightLinks", "Sorot Link"],
-            ].map(([key, label]) => (
-              <button
-                key={key}
-                onClick={() => onToggle(key as any)}
-                className="w-full p-3 border rounded-lg flex justify-between"
-              >
-                <span>{label}</span>
-                <span>
-                  {settings[key as keyof typeof settings] ? "ON" : "OFF"}
-                </span>
-              </button>
-            ))}
-
+            <div className="space-y-2">
+              <h3 className="text-xs font-bold uppercase tracking-wider text-muted mb-3">
+                Pengaturan Visual
+              </h3>
+              {[
+                {
+                  key: "highContrast",
+                  label: "Kontras Tinggi",
+                  icon: <Sun className="text-black w-6 h-6" />,
+                  desc: "Meningkatkan kontras warna untuk visibilitas."
+                },
+                {
+                  key: "grayscale",
+                  label: "Grayscale",
+                  icon: <Sun className="text-gray-400 w-6 h-6" />,
+                  desc: "Ubah tampilan menjadi hitam putih."
+                },
+                {
+                  key: "dyslexia",
+                  label: "Mode Disleksia",
+                  icon: <Sun className="text-yellow-500 w-6 h-6" />,
+                  desc: "Gunakan font ramah disleksia."
+                },
+                {
+                  key: "reduceMotion",
+                  label: "Kurangi Animasi",
+                  icon: <Sun className="text-blue-500 w-6 h-6" />,
+                  desc: "Minimalkan animasi/transisi."
+                },
+                {
+                  key: "largeCursor",
+                  label: "Kursor Besar",
+                  icon: <Sun className="text-green-700 w-6 h-6" />,
+                  desc: "Perbesar ukuran kursor."
+                },
+                {
+                  key: "highlightLinks",
+                  label: "Sorot Link",
+                  icon: <Sun className="text-indigo-600 w-6 h-6" />,
+                  desc: "Sorot semua tautan di halaman."
+                },
+              ].map(({ key, label, icon, desc }) => (
+                <div
+                  key={key}
+                  className="flex items-center justify-between p-3 rounded-xl border border-gray-200 hover:border-[#1E3A8A] transition"
+                >
+                  {/* Left Section */}
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 rounded-xl bg-gray-100 flex items-center justify-center">
+                      {icon}
+                    </div>
+                    <div>
+                      <Label htmlFor={key} className="cursor-pointer font-medium">
+                        {label}
+                      </Label>
+                      <div className="text-xs text-gray-400 leading-tight">{desc}</div>
+                    </div>
+                  </div>
+                  {/* Switch dengan label aksesibilitas */}
+                  <div className="flex items-center gap-2">
+                    <Switch
+                      id={key}
+                      aria-label={label}
+                      checked={settings[key as keyof typeof settings] as boolean}
+                      onCheckedChange={() => onToggle(key as keyof typeof settings)}
+                      className={
+                        settings[key as keyof typeof settings]
+                          ? "data-[state=checked]:bg-[#37B27D] border-[#37B27D]"
+                          : ""
+                      }
+                    />
+                    <span
+                      className={`text-xs font-semibold ${
+                        settings[key as keyof typeof settings]
+                          ? "text-green-600"
+                          : "text-gray-400"
+                      }`}
+                    >
+                      {settings[key as keyof typeof settings] ? "ON" : "OFF"}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          {/* Footer Sheet */}
+          <div className="p-4 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-black flex justify-end">
             <Button variant="destructive" onClick={resetAll}>
-              Reset Semua
+              Reset Settingan
             </Button>
           </div>
         </SheetContent>
