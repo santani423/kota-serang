@@ -141,3 +141,8 @@ html {
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
+
+/* Background khusus dark mode dengan opacity 50% */
+.dark-bg-50 {
+  background-color: rgba(30, 41, 59, 0.5);
+}

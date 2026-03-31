@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import {
   FileText,
@@ -86,6 +86,20 @@ const delays = [
 
 export default function QuickServicesSection() {
   const sectionRef = useRef<HTMLElement>(null);
+  const [theme, setTheme] = useState<string | null>(null);
+  const [isThemeDark, setIsThemeDark] = useState(theme);
+
+  useEffect(() => {
+    setTheme(localStorage.getItem("theme"));
+  }, []);
+
+  useEffect(() => {
+    setIsThemeDark(theme === "dark" ? "dark" : "light");
+  }, [theme]);
+  useEffect(() => {
+    console.log("isThemeDark",isThemeDark);
+    
+  }, [isThemeDark]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -123,8 +137,8 @@ export default function QuickServicesSection() {
               <br />
               <span className="gradient-title">Dalam Satu Portal</span>
             </h2>
-          </div> 
-          
+          </div>
+
           <Link
             href="/news"
             className="reveal delay-200 flex items-center gap-2 text-sm border-2 border-[#1E3A8A] text-[#1E3A8A] px-6 py-3 rounded-xl hover:bg-[#1E3A8A]/10 transition"
@@ -147,8 +161,8 @@ export default function QuickServicesSection() {
                   reveal-scale ${delays[i] || "delay-500"}
                   ${service.span || "col-span-1"}
                   group relative overflow-hidden
-                  bg-gray-100 dark:bg-white/5
-                  border border-gray-200 dark:border-white/10 dark:bg-[#1E293B]/50
+                  ${isThemeDark === "dark" ? "bg-[#22304a] " : "bg-gray-100"}  
+                  border border-gray-200 dark:border-primary-800  
                   rounded-2xl p-6 flex flex-col gap-4
                   transform will-change-transform
                   hover:-translate-y-1
@@ -156,7 +170,7 @@ export default function QuickServicesSection() {
                 `}
               >
                 {/* Background Hover (INSTANT) */}
-                <div className="absolute inset-0 bg-white dark:bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-150" />
+                <div className="absolute inset-0 bg-white dark:bg-primary-900/60 opacity-0 group-hover:opacity-100 transition-opacity duration-150" />
 
                 {/* Content wrapper biar di atas overlay */}
                 <div className="relative z-10 flex flex-col gap-4 h-full">
