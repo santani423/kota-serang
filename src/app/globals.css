@@ -122,3 +122,20 @@ html {
 .group:hover .service-link-underline {
   transform: scaleX(1);
 }
+
+/* ── Primary Gradient ── */
+.gradient-primary {
+  background: linear-gradient(135deg, #1E3A8A 0%, #1e5a8a 50%, #10B981 100%);
+}
+.gradient-text {
+  background: linear-gradient(135deg, #1E3A8A, #10B981);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.dark .gradient-text {
+  background: linear-gradient(135deg, #60A5FA, #34D399);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
