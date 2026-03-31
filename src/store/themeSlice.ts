@@ -15,7 +15,7 @@ const themeSlice = createSlice({
     setTheme: (state, action: PayloadAction<'light' | 'dark'>) => {
       state.value = action.payload;
       if (typeof globalThis.window !== 'undefined') {
-        globalThis.window.localStorage.setItem('theme', action.payload);
+        globalThis.window.localStorage.setItem('theme', action.payload === 'dark' ? 'dark' : 'light');
       }
     },
   },

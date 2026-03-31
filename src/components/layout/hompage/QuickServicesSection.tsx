@@ -87,9 +87,7 @@ const delays = [
 
 export default function QuickServicesSection() {
   const sectionRef = useRef<HTMLElement>(null);
-    const theme = useAppSelector((state) => state.theme.value);
- 
- 
+  const theme = useAppSelector((state) => state.theme.value);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -113,16 +111,16 @@ export default function QuickServicesSection() {
     <section
       ref={sectionRef}
       id="layanan"
-      className="py-20 lg:py-28 bg-gray-50 dark:bg-[#0F172A]"
+      className={`py-20 lg:py-28 ${theme === "dark" ? "bg-[#22304a]" : "bg-gray-100"}`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-[#0F172A]">
+      <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ${theme === "dark" ? "bg-[#22304a]" : "bg-gray-100"}`}>
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14 bg-gray-50 dark:bg-[#0F172A]">
+        <div className={`flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14 ${theme === "dark" ? "bg-[#22304a]" : "bg-gray-100"}`}>
           <div className="reveal">
             <p className="text-xs font-mono uppercase tracking-[0.2em] text-[#22c55e] mb-3">
               — LAYANAN PUBLIK
             </p>
-            <h2 className="text-[2.5rem] leading-[1.1] font-display font-bold text-[#111827] dark:text-white">
+            <h2 className={`text-[2.5rem] leading-[1.1] font-display font-bold    ${theme === "dark" ? "text-white" : "text-[#111827]"}`}>
               Semua Kebutuhan
               <br />
               <span className="gradient-title">Dalam Satu Portal</span>
@@ -131,7 +129,7 @@ export default function QuickServicesSection() {
 
           <Link
             href="/news"
-            className="reveal delay-200 flex items-center gap-2 text-sm border-2 border-[#1E3A8A] text-[#1E3A8A] px-6 py-3 rounded-xl hover:bg-[#1E3A8A]/10 transition"
+            className={`reveal delay-200 flex items-center gap-2 text-sm border-2 border-[#1E3A8A] px-6 py-3 rounded-xl hover:bg-[#1E3A8A]/10 transition ${theme === "dark" ? "text-white" : "text-[#1E3A8A]"}`}
           >
             Lihat Semua Layanan
             <ArrowRight size={16} />
@@ -151,7 +149,7 @@ export default function QuickServicesSection() {
                   reveal-scale ${delays[i] || "delay-500"}
                   ${service.span || "col-span-1"}
                   group relative overflow-hidden
-                  ${theme === "dark" ? "bg-[#22304a] " : "bg-gray-100"}  
+                  ${theme === "dark" ? "bg-[#22304a]" : "bg-gray-100"}  
                   border border-gray-200 dark:border-primary-800  
                   rounded-2xl p-6 flex flex-col gap-4
                   transform will-change-transform
@@ -160,7 +158,10 @@ export default function QuickServicesSection() {
                 `}
               >
                 {/* Background Hover (INSTANT) */}
-                <div className="absolute inset-0 bg-white dark:bg-primary-900/60 opacity-0 group-hover:opacity-100 transition-opacity duration-150" />
+                <div
+                  className={`absolute inset-0 bg-white dark:bg-primary-900/60 opacity-0 group-hover: 
+                  ${theme === "dark" ? "" : "opacity-100"}  transition-opacity duration-150`}
+                />
 
                 {/* Content wrapper biar di atas overlay */}
                 <div className="relative z-10 flex flex-col gap-4 h-full">
@@ -173,7 +174,7 @@ export default function QuickServicesSection() {
 
                   {/* Content */}
                   <div>
-                    <h3 className="font-display font-semibold text-base text-serang-foreground dark:text-white mb-1.5 group-hover:text-primary-700 transition-colors duration-150">
+                    <h3 className="font-display font-semibold text-base text-serang-foreground dark:text-white mb-1.5 group-hover:text-blue transition-colors duration-150">
                       {service.title}
                     </h3>
                     <p className="text-sm text-serang-muted dark:text-slate-300 leading-relaxed">

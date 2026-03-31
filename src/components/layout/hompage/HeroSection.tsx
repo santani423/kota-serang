@@ -7,6 +7,7 @@ import img1 from "@/assets/hompage/1.jpg";
 import img2 from "@/assets/hompage/2.jpg";
 import img3 from "@/assets/hompage/3.jpg";
 import img4 from "@/assets/hompage/4.jpg";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -45,6 +46,7 @@ const dataCard = [
 export default function HeroSection() {
   const [index, setIndex] = useState(0);
   const [zoomIn, setZoomIn] = useState(true);
+  const theme = useAppSelector((state) => state.theme.value);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -57,10 +59,8 @@ export default function HeroSection() {
 
   return (
     <section className="relative w-full min-h-screen flex items-center justify-center overflow-hidden py-20">
-
       {/* BACKGROUND */}
       <div className="absolute inset-0 z-0 overflow-hidden">
-
         {/* IMAGE LAYER 1 */}
         <Image
           src={images[index]}
@@ -93,10 +93,8 @@ export default function HeroSection() {
 
       {/* CONTENT */}
       <div className="relative z-10 w-full max-w-6xl px-6 flex flex-col md:flex-row justify-between gap-10 my-20">
-
         {/* LEFT */}
         <div className="flex flex-col gap-4 text-left justify-center">
-
           <h1 className="text-white text-4xl md:text-7xl font-bold">
             Serang Kota
           </h1>
@@ -128,9 +126,7 @@ export default function HeroSection() {
               <span
                 key={idx}
                 className={`transition-all duration-300 h-2 rounded-full ${
-                  index === idx
-                    ? "bg-[#37B27D] w-10"
-                    : "bg-white/30 w-6"
+                  index === idx ? "bg-[#37B27D] w-10" : "bg-white/30 w-6"
                 }`}
               />
             ))}
@@ -139,7 +135,6 @@ export default function HeroSection() {
 
         {/* RIGHT CARD */}
         <div className="flex flex-col gap-6 max-w-sm w-full">
-
           <p className="text-xs font-mono tracking-widest text-white/50">
             DATA KOTA 2026
           </p>
@@ -154,7 +149,6 @@ export default function HeroSection() {
                   className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-5 shadow-lg"
                 >
                   <div className="flex items-center gap-4">
-
                     <div className="bg-[#406A40] p-3 rounded-xl">
                       <Icon size={24} className="text-[#37B27D]" />
                     </div>
@@ -168,23 +162,26 @@ export default function HeroSection() {
                         {item.value}
                       </p>
 
-                      <p className="text-sm text-white/60">
-                        {item.desc}
-                      </p>
+                      <p className="text-sm text-white/60">{item.desc}</p>
                     </div>
-
                   </div>
                 </Card>
               );
             })}
           </div>
         </div>
-
       </div>
 
       {/* FOG */}
-      <div className="pointer-events-none absolute bottom-0 left-0 w-full h-30 bg-gradient-to-t from-white via-white/80 via-white/40 to-transparent backdrop-blur-lg" />
-
+      <div
+        className={`
+      pointer-events-none absolute bottom-0 left-0 w-full h-30
+      bg-gradient-to-t
+      from-white via-white/80 via-white/40 to-transparent
+      ${theme === "dark" ? "from-[#162032] via-[#162032]/80 via-[#162032]/40 to-transparent" : ""}
+      backdrop-blur-lg
+  `}
+      />
     </section>
   );
 }
