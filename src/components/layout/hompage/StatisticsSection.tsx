@@ -9,6 +9,7 @@ import {
   BuildingStorefrontIcon,
   AcademicCapIcon,
 } from "@heroicons/react/24/outline";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 
 /* ================= TYPES ================= */
 interface Stat {
@@ -118,13 +119,15 @@ function StatCard({
 }) {
   const count = useCountUp(stat.value, 1600, active);
   const Icon = stat.icon;
+  
+  const theme = useAppSelector((state) => state.theme.value);
 
   return (
     <div
       className={`reveal delay-${Math.min(
         index * 100,
-        500
-      )} bg-white dark:bg-serang-card-dark border border-serang-border dark:border-white/10 rounded-2xl p-6 flex flex-col gap-4 transition hover:scale-[1.03]`}
+        500,
+      )} ${theme === "dark" ? "bg-[#22304a]" : "bg-gray-100"} border   ${theme === "dark" ? "border-white/10" : "border-gray-200"} rounded-2xl p-6 flex flex-col gap-4 transition hover:scale-[1.03]`}
     >
       <div
         className={`w-12 h-12 rounded-xl flex items-center justify-center ${stat.bgColor}`}
@@ -133,9 +136,7 @@ function StatCard({
       </div>
 
       <div>
-        <div
-          className={`text-3xl lg:text-4xl font-extrabold ${stat.color}`}
-        >
+        <div className={`text-3xl lg:text-4xl font-extrabold ${stat.color}`}>
           {stat.value >= 1000 ? count.toLocaleString("id-ID") : count}
           <span>{stat.suffix}</span>
         </div>
@@ -156,6 +157,7 @@ function StatCard({
 export default function StatisticsSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const [active, setActive] = useState(false);
+  const theme = useAppSelector((state) => state.theme.value);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -169,7 +171,7 @@ export default function StatisticsSection() {
           }
         });
       },
-      { threshold: 0.2 }
+      { threshold: 0.2 },
     );
 
     if (sectionRef.current) observer.observe(sectionRef.current);

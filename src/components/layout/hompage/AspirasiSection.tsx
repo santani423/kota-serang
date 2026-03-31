@@ -111,8 +111,8 @@ export default function AspirasiSection() {
               const Icon = item.icon;
               return (
                 <div key={item.title} className="flex gap-4">
-                  <div className="w-10 h-10 bg-[#1E3A8A]/20 rounded-xl flex items-center justify-center">
-                    <Icon size={18} className="text-[#1E3A8A]" />
+                  <div className="w-10 h-10 bg-[#406A40] rounded-xl flex items-center justify-center">
+                    <Icon size={18} className="text-[#37B27D]" />
                   </div>
                   <div>
                     <p className="font-semibold">{item.title}</p>
