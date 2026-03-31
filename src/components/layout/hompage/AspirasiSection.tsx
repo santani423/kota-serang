@@ -1,23 +1,17 @@
-'use client';
+"use client";
 
-import React, { useEffect, useRef, useState } from 'react';
-import {
-  Clock,
-  ShieldCheck,
-  BarChart3,
-  CheckCircle,
-  Send,
-} from 'lucide-react';
+import React, { useEffect, useRef, useState } from "react";
+import { Clock, ShieldCheck, BarChart3, CheckCircle, Send } from "lucide-react";
 
 export default function AspirasiSection() {
   const sectionRef = useRef<HTMLElement>(null);
 
   const [submitted, setSubmitted] = useState(false);
   const [form, setForm] = useState({
-    nama: '',
-    email: '',
-    pesan: '',
-    kategori: '',
+    nama: "",
+    email: "",
+    pesan: "",
+    kategori: "",
   });
   const [focused, setFocused] = useState<string | null>(null);
 
@@ -27,12 +21,12 @@ export default function AspirasiSection() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target
-              .querySelectorAll('.reveal')
-              .forEach((el) => el.classList.add('active'));
+              .querySelectorAll(".reveal")
+              .forEach((el) => el.classList.add("active"));
           }
         });
       },
-      { threshold: 0.1 }
+      { threshold: 0.1 },
     );
 
     if (sectionRef.current) observer.observe(sectionRef.current);
@@ -46,7 +40,7 @@ export default function AspirasiSection() {
 
   const resetForm = () => {
     setSubmitted(false);
-    setForm({ nama: '', email: '', pesan: '', kategori: '' });
+    setForm({ nama: "", email: "", pesan: "", kategori: "" });
   };
 
   const inputClass = (field: string) =>
@@ -54,8 +48,8 @@ export default function AspirasiSection() {
     transition-colors duration-200
     ${
       focused === field
-        ? 'border-[#1E3A8A] ring-2 ring-[#1E3A8A]/40'
-        : 'border-white/20 hover:border-white/40'
+        ? "border-[#1E3A8A] ring-2 ring-[#1E3A8A]/40"
+        : "border-white/20 hover:border-white/40"
     }`;
 
   return (
@@ -70,7 +64,7 @@ export default function AspirasiSection() {
         className="absolute inset-0 opacity-20"
         style={{
           backgroundImage:
-            'radial-gradient(circle at 30% 40%, rgba(16,185,129,0.3), transparent 60%), radial-gradient(circle at 80% 60%, rgba(30,58,138,0.4), transparent 50%)',
+            "radial-gradient(circle at 30% 40%, rgba(16,185,129,0.3), transparent 60%), radial-gradient(circle at 80% 60%, rgba(30,58,138,0.4), transparent 50%)",
         }}
       />
 
@@ -94,18 +88,18 @@ export default function AspirasiSection() {
             {[
               {
                 icon: Clock,
-                title: 'Respons 1×24 Jam',
-                desc: 'Ditindaklanjuti dalam 24 jam',
+                title: "Respons 1×24 Jam",
+                desc: "Ditindaklanjuti dalam 24 jam",
               },
               {
                 icon: ShieldCheck,
-                title: 'Identitas Terlindungi',
-                desc: 'Data aman & rahasia',
+                title: "Identitas Terlindungi",
+                desc: "Data aman & rahasia",
               },
               {
                 icon: BarChart3,
-                title: 'Tracking Real-time',
-                desc: 'Pantau progres laporan',
+                title: "Tracking Real-time",
+                desc: "Pantau progres laporan",
               },
             ].map((item) => {
               const Icon = item.icon;
@@ -143,30 +137,29 @@ export default function AspirasiSection() {
                 </button>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="flex flex-col gap-5 text-white">
+              <form
+                onSubmit={handleSubmit}
+                className="flex flex-col gap-5 text-white"
+              >
                 <h3 className="text-lg font-bold">Form Aspirasi</h3>
 
                 <input
                   placeholder="Nama"
                   value={form.nama}
-                  onChange={(e) =>
-                    setForm({ ...form, nama: e.target.value })
-                  }
-                  onFocus={() => setFocused('nama')}
+                  onChange={(e) => setForm({ ...form, nama: e.target.value })}
+                  onFocus={() => setFocused("nama")}
                   onBlur={() => setFocused(null)}
-                  className={inputClass('nama')}
+                  className={inputClass("nama")}
                 />
 
                 <input
                   type="email"
                   placeholder="Email"
                   value={form.email}
-                  onChange={(e) =>
-                    setForm({ ...form, email: e.target.value })
-                  }
-                  onFocus={() => setFocused('email')}
+                  onChange={(e) => setForm({ ...form, email: e.target.value })}
+                  onFocus={() => setFocused("email")}
                   onBlur={() => setFocused(null)}
-                  className={inputClass('email')}
+                  className={inputClass("email")}
                 />
 
                 <select
@@ -174,25 +167,30 @@ export default function AspirasiSection() {
                   onChange={(e) =>
                     setForm({ ...form, kategori: e.target.value })
                   }
-                  onFocus={() => setFocused('kategori')}
+                  onFocus={() => setFocused("kategori")}
                   onBlur={() => setFocused(null)}
-                  className={inputClass('kategori')}
+                  className={
+                    inputClass("kategori") +
+                    " appearance-none " +
+                    (form.kategori === "" ? "text-gray-400" : "text-white font-semibold bg-[#22304a]")
+                  }
+                  style={{ backgroundColor: form.kategori === "" ? "" : "#22304a" }}
                 >
-                  <option value="">Pilih kategori</option>
-                  <option value="infrastruktur">Infrastruktur</option>
-                  <option value="layanan">Layanan</option>
+                  <option value="" disabled hidden style={{ color: '#9ca3af', fontWeight: 'normal' }}>
+                    Pilih kategori
+                  </option>
+                  <option value="infrastruktur" style={{ color: '#fff', fontWeight: 'bold', backgroundColor: '#22304a' }}>Infrastruktur</option>
+                  <option value="layanan" style={{ color: '#fff', fontWeight: 'bold', backgroundColor: '#22304a' }}>Layanan</option>
                 </select>
 
                 <textarea
                   rows={4}
                   placeholder="Tulis aspirasi..."
                   value={form.pesan}
-                  onChange={(e) =>
-                    setForm({ ...form, pesan: e.target.value })
-                  }
-                  onFocus={() => setFocused('pesan')}
+                  onChange={(e) => setForm({ ...form, pesan: e.target.value })}
+                  onFocus={() => setFocused("pesan")}
                   onBlur={() => setFocused(null)}
-                  className={inputClass('pesan')}
+                  className={inputClass("pesan")}
                 />
 
                 <button
