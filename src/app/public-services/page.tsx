@@ -28,14 +28,14 @@ export default function PublicServicesPage() {
   const [cctvData, setCctvData] = useState<any[]>([]);
   const [filtered, setFiltered] = useState<any[]>([]);
   const [search, setSearch] = useState("");
-  const [selectedId, setSelectedId] = useState<string|null>(null);
+  const [selectedId, setSelectedId] = useState<string|null>(null); // Tetap digunakan
   const mapRef = useRef<any>(null);
   const [customIcon, setCustomIcon] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
   // Inisialisasi customIcon hanya di client
   useEffect(() => {
-    if (typeof window !== "undefined") {
+    if (typeof globalThis.window === 'object') {
       import("leaflet").then(L => {
         setCustomIcon(
           new L.Icon({
@@ -62,7 +62,7 @@ export default function PublicServicesPage() {
   }, []);
 
   useEffect(() => {
-    if (!search) {
+    if (search === "") {
       setFiltered(cctvData);
     } else {
       setFiltered(
@@ -96,24 +96,28 @@ export default function PublicServicesPage() {
             onChange={e => setSearch(e.target.value)}
             style={{ width: "100%", padding: 8, borderRadius: 6, border: "1.5px solid #1e3a8a", marginBottom: 12, outline: 'none' }}
           />
-          {loading ? (
-            <div style={{ textAlign: 'center', marginTop: 40 }}>Memuat data CCTV...</div>
-          ) : filtered.length === 0 ? (
-            <div style={{ textAlign: 'center', marginTop: 40, color: '#888' }}>Tidak ada data CCTV ditemukan.</div>
-          ) : (
-            <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
-              {filtered.map((feature: any) => (
-                <li key={feature.properties.id} style={{ display: "flex", alignItems: "center", marginBottom: 12, gap: 8, borderBottom: '1px solid #eee', paddingBottom: 8 }}>
-                  <img src={leafletIconUrl} alt="CCTV Icon" width={32} height={32} style={{ marginRight: 8 }} />
-                  <span style={{ flex: 1, fontWeight: 500 }}>{feature.properties.place_name}</span>
-                  <button
-                    style={{ background: "#1e3a8a", color: "white", border: 0, borderRadius: 6, padding: "4px 10px", cursor: "pointer", fontWeight: 500 }}
-                    onClick={() => setSelectedId(feature.properties.id)}
-                  >Lihat CCTV</button>
-                </li>
-              ))}
-            </ul>
-          )}
+          {(() => {
+            if (loading) {
+              return <div style={{ textAlign: 'center', marginTop: 40 }}>Memuat data CCTV...</div>;
+            }
+            if (filtered.length === 0) {
+              return <div style={{ textAlign: 'center', marginTop: 40, color: '#888' }}>Tidak ada data CCTV ditemukan.</div>;
+            }
+            return (
+              <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+                {filtered.map((feature: any) => (
+                  <li key={feature.properties.id} style={{ display: "flex", alignItems: "center", marginBottom: 12, gap: 8, borderBottom: '1px solid #eee', paddingBottom: 8 }}>
+                    <img src={leafletIconUrl} alt="CCTV Icon" width={32} height={32} style={{ marginRight: 8 }} />
+                    <span style={{ flex: 1, fontWeight: 500 }}>{feature.properties.place_name}</span>
+                    <button
+                      style={{ background: "#1e3a8a", color: "white", border: 0, borderRadius: 6, padding: "4px 10px", cursor: "pointer", fontWeight: 500 }}
+                      onClick={() => setSelectedId(feature.properties.id)}
+                    >Lihat CCTV</button>
+                  </li>
+                ))}
+              </ul>
+            );
+          })()}
           <div style={{ marginTop: 12, fontSize: 14 }}>Total CCTV: <b>{filtered.length}</b></div>
         </div>
 
@@ -123,12 +127,15 @@ export default function PublicServicesPage() {
             Peta Lokasi CCTV
           </div>
           <div style={{ flex: 1, width: '100%', height: '100%', position: 'relative' }}>
-            {typeof window !== "undefined" && customIcon && !loading && (
+            {globalThis.window !== undefined && customIcon && !loading && (
               <MapContainer
                 center={[-6.1161948, 106.1829327]} // Gerbang Tol Serang Timur
                 zoom={17}
                 style={{ width: "100%", height: "100%", borderRadius: 16, minHeight: 400 }}
-                whenCreated={mapInstance => (mapRef.current = mapInstance)}
+                whenReady={() => {
+                  if (mapRef.current) return;
+                  // MapContainer akan otomatis mengisi ref jika diberikan prop ref
+                }}
                 zoomControl={true}
                 preferCanvas={true}
               >
@@ -153,7 +160,7 @@ export default function PublicServicesPage() {
                           <iframe
                             src={feature.properties.rtsp_ip}
                             style={{ width: "100%", height: "100%" }}
-                            frameBorder={0}
+                            title={`CCTV-${feature.properties.id || feature.properties.place_name || 'stream'}`}
                             allowFullScreen
                           ></iframe>
                         </div>
