@@ -174,16 +174,16 @@ export default function QuickServicesSection() {
 
                   {/* Content */}
                   <div>
-                    <h3 className="font-display font-semibold text-base text-serang-foreground dark:text-white mb-1.5 group-hover:text-blue transition-colors duration-150">
+                     <h3 className={`mt-2 font-bold ${theme === "dark" ? "group-hover:text-[#37B27D]" : "group-hover:text-[#1E3A8A]"} transition-colors`}>
                       {service.title}
                     </h3>
-                    <p className="text-sm text-serang-muted dark:text-slate-300 leading-relaxed">
+                    <p className={`text-sm ${theme === "dark" ? "text-slate-300" : "text-serang-muted"} leading-relaxed`}>
                       {service.desc}
                     </p>
                   </div>
 
                   {/* Arrow */}
-                  <div className="mt-auto flex items-center gap-1 text-xs text-serang-muted group-hover:text-primary-700 transition-colors duration-150">
+                  <div className={`mt-auto flex items-center gap-1 text-xs ${theme === "dark" ? "text-primary-700" : "text-serang-muted"} group-hover:text-primary-700 transition-colors duration-150`}>
                     Akses Layanan
                     <ArrowRight
                       size={14}

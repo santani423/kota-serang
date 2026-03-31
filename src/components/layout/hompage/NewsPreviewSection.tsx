@@ -124,7 +124,9 @@ export default function NewsPreviewSection() {
             <p className="text-xs font-mono uppercase tracking-[0.2em] text-[#22c55e] mb-3">
               — Berita & Pengumuman
             </p>
-            <h2 className={`text-[2.5rem] leading-[1.1] font-display font-bold ${theme === "dark" ? "text-white" : "text-[#111827]"}`}>
+            <h2
+              className={`text-[2.5rem] leading-[1.1] font-display font-bold ${theme === "dark" ? "text-white" : "text-[#111827]"}`}
+            >
               Semua Kebutuhan
               <br />
               <span className="gradient-title">Kota Serang</span>
@@ -164,20 +166,22 @@ export default function NewsPreviewSection() {
               </div>
 
               <div className="p-6 flex flex-col flex-1">
-                <div className="flex items-center gap-2 text-xs text-gray-500 mb-3">
+                <div className={`flex items-center gap-2 text-xs text-gray-500 mb-3 ${theme === "dark" ? "text-gray-300" : "text-gray-500"}`}>
                   <Calendar size={14} />
                   <time>{featured.date}</time>
                 </div>
 
-                <h3 className="text-lg font-semibold mb-3 group-hover:text-[#1E3A8A] transition-colors">
+                <h3
+                  className={`text-lg font-semibold mb-3  ${theme === "dark" ? "group-hover:text-[#37B27D]" : "group-hover:text-[#1E3A8A]"} transition-colors`}
+                >
                   {featured.title}
                 </h3>
 
-                <p className="text-sm text-gray-600 dark:text-gray-300 flex-1">
+                <p className={`text-sm ${theme === "dark" ? "text-gray-300" : "text-gray-600"} flex-1`}>
                   {featured.excerpt}
                 </p>
 
-                <div className="mt-4 flex items-center gap-2 text-sm text-[#1E3A8A] group-hover:gap-3 transition-all">
+                <div className={`mt-4 flex items-center gap-2 text-sm ${theme === "dark" ? "text-[#37B27D]" : "text-[#1E3A8A]"} group-hover:gap-3 transition-all`}>
                   Baca Selengkapnya
                   <ArrowRight size={14} />
                 </div>
@@ -191,7 +195,7 @@ export default function NewsPreviewSection() {
               <Link
                 key={item.id}
                 href="/news"
-                className={`reveal ${delays[i]} group flex gap-4 p-4 rounded-xl bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/10 transition
+                className={`reveal ${delays[i]} group flex gap-4 p-4 rounded-xl ${theme === "dark" ? "bg-white/5" : "bg-white hover:bg-gray-50"} border border-gray-200 dark:border-white/10  dark:hover:bg-white/10 transition
                 hover:shadow-2xl hover:-translate-y-1 hover:z-10 focus-visible:shadow-2xl focus-visible:-translate-y-1 focus-visible:z-10 duration-300`}
                 style={{
                   transitionProperty:
@@ -215,12 +219,13 @@ export default function NewsPreviewSection() {
                       {item.category}
                     </span>
 
-                    <h3 className="text-sm font-semibold mt-2 group-hover:text-[#1E3A8A] transition">
+                    <h3 className={`mt-2 font-medium ${theme === "dark" ? "group-hover:text-[#37B27D]" : "group-hover:text-[#1E3A8A]"} transition-colors`}>
                       {item.title}
                     </h3>
                   </div>
 
-                  <div className="flex items-center gap-2 text-xs text-gray-500 mt-2">
+                  <div className={`flex items-center gap-2 text-xs mt-2 ${theme === "dark" ? "text-gray-300" : "text-gray-500"}`}>
+
                     <Calendar size={12} />
                     <time>{item.date}</time>
                   </div>
