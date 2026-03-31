@@ -111,9 +111,9 @@ export default function QuickServicesSection() {
       id="layanan"
       className="py-20 lg:py-28 bg-gray-50 dark:bg-[#0F172A]"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-[#0F172A]">
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14 bg-gray-50 dark:bg-[#0F172A]">
           <div className="reveal">
             <p className="text-xs font-mono uppercase tracking-[0.2em] text-[#22c55e] mb-3">
               — LAYANAN PUBLIK
@@ -148,7 +148,7 @@ export default function QuickServicesSection() {
                   ${service.span || "col-span-1"}
                   group relative overflow-hidden
                   bg-gray-100 dark:bg-white/5
-                  border border-gray-200 dark:border-white/10
+                  border border-gray-200 dark:border-white/10 dark:bg-[#1E293B]/50
                   rounded-2xl p-6 flex flex-col gap-4
                   transform will-change-transform
                   hover:-translate-y-1
