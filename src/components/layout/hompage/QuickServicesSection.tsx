@@ -12,6 +12,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 
 interface Service {
   icon: React.ElementType;
@@ -86,20 +87,9 @@ const delays = [
 
 export default function QuickServicesSection() {
   const sectionRef = useRef<HTMLElement>(null);
-  const [theme, setTheme] = useState<string | null>(null);
-  const [isThemeDark, setIsThemeDark] = useState(theme);
-
-  useEffect(() => {
-    setTheme(localStorage.getItem("theme"));
-  }, []);
-
-  useEffect(() => {
-    setIsThemeDark(theme === "dark" ? "dark" : "light");
-  }, [theme]);
-  useEffect(() => {
-    console.log("isThemeDark",isThemeDark);
-    
-  }, [isThemeDark]);
+    const theme = useAppSelector((state) => state.theme.value);
+ 
+ 
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -161,7 +151,7 @@ export default function QuickServicesSection() {
                   reveal-scale ${delays[i] || "delay-500"}
                   ${service.span || "col-span-1"}
                   group relative overflow-hidden
-                  ${isThemeDark === "dark" ? "bg-[#22304a] " : "bg-gray-100"}  
+                  ${theme === "dark" ? "bg-[#22304a] " : "bg-gray-100"}  
                   border border-gray-200 dark:border-primary-800  
                   rounded-2xl p-6 flex flex-col gap-4
                   transform will-change-transform

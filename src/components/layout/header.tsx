@@ -1,16 +1,20 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useEffect, useCallback } from "react";
 import Image from "next/image";
 import Logo from "@/assets/logo.png";
 import { Moon, Sun } from "lucide-react";
 import MobileNav from "@/components/layout/mobileNav";
 import DekstopNav from "@/components/layout/dekstopNav";
 import { Button } from "../ui/button";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { setTheme } from "@/store/themeSlice";
 
 export default function Header() {
-  const [isScrolling, setIsScrolling] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
+  const [isScrolling, setIsScrolling] = React.useState(false);
+  const [isMounted, setIsMounted] = React.useState(false);
+  const dispatch = useAppDispatch();
+  const theme = useAppSelector((state) => state.theme.value);
 
   // Scroll effect
   const handleScroll = useCallback(() => {
@@ -18,31 +22,23 @@ export default function Header() {
   }, []);
 
   useEffect(() => {
+    setIsMounted(true);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [handleScroll]);
 
   // Load theme dari localStorage
   useEffect(() => {
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme === "dark") {
-      setDarkMode(true);
+    if (theme === "dark") {
       document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
     }
-  }, []);
+  }, [theme]);
 
   // Toggle dark mode
   const toggleDarkMode = () => {
-    const newMode = !darkMode;
-    setDarkMode(newMode);
-
-    if (newMode) {
-      document.documentElement.classList.add("dark");
-      localStorage.setItem("theme", "dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-      localStorage.setItem("theme", "light");
-    }
+    dispatch(setTheme(theme === "dark" ? "light" : "dark"));
   };
 
   return (
@@ -81,11 +77,13 @@ export default function Header() {
             onClick={toggleDarkMode}
             className="p-2 rounded-md  hover:bg-gray-200 dark:hover:bg-gray-800 transition text-white hover:text-black"
           >
-            {darkMode ? (
-              <Sun className="w-5 h-5 text-slate-500" />
-            ) : (
-              <Moon className="w-5 h-5 text-slate-500" />
-            )}
+            {isMounted ? (
+              theme === "dark" ? (
+                <Sun className="w-5 h-5 text-slate-500" />
+              ) : (
+                <Moon className="w-5 h-5 text-slate-500" />
+              )
+            ) : null}
           </button>
 
           {/* Mobile Menu */}
