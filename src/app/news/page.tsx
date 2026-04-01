@@ -1,6 +1,6 @@
 import Template from "@/components/layout/template";
 import NewsHero from "@/components/layout/News/NewsHero";
-import ServicesGrid from "@/components/layout/PublicServices/ServicesGrid";
+import NewsGrid from "@/components/layout/News/NewsGrid";
 
 import type { Metadata } from "next";
 
@@ -14,6 +14,7 @@ export default function NewsPage() {
     <>
       <Template>
         <NewsHero />
+        <NewsGrid /> 
       </Template>
     </>
   );
