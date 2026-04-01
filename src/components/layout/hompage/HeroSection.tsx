@@ -177,8 +177,8 @@ export default function HeroSection() {
         className={`
       pointer-events-none absolute bottom-0 left-0 w-full h-30
       bg-gradient-to-t
-      from-white via-white/80 via-white/40 to-transparent
-      ${theme === "dark" ? "from-[#162032] via-[#162032]/80 via-[#162032]/40 to-transparent" : ""}
+        to-transparent
+      ${theme === "dark" ? "from-[#22304a] via-[#162032]/80 via-[#162032]/40 to-transparent" : "from-gray-100 via-white/80 via-white/40"}
       backdrop-blur-lg
   `}
       />

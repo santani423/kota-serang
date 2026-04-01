@@ -206,7 +206,7 @@ export default function ServicesGrid() {
                 onClick={() =>
                   setExpandedId(expandedId === service.id ? null : service.id)
                 }
-                className={`cursor-pointer rounded-2xl border ${service.borderColor} bg-white dark:bg-[#162032]`}
+                className={`cursor-pointer rounded-2xl border ${service.borderColor} bg-white dark:bg-[#162032] hover:shadow-2xl hover:-translate-y-1 hover:z-10 focus-visible:shadow-2xl focus-visible:-translate-y-1 focus-visible:z-10 transition`}
               >
                 <div className="p-5 flex flex-col gap-3">
                   <div className="flex justify-between">
@@ -243,7 +243,7 @@ export default function ServicesGrid() {
                     borderTop: expandedId === service.id ? '1px solid #e5e7eb' : 'none',
                   }}
                 >
-                  <div className="p-5">
+                  <div className="p-5 gap-4 flex flex-col">
                     <ul className="text-xs space-y-2">
                       {service.requirements.map((r) => (
                         <li key={r} className="flex gap-2">
@@ -253,10 +253,10 @@ export default function ServicesGrid() {
                       ))}
                     </ul>
 
-                    <button className="mt-4 w-full flex items-center justify-center gap-2 text-xs bg-primary-700 text-white py-2 rounded-xl">
+                    <Button >
                       <ArrowRightCircle size={14} />
                       Mulai
-                    </button>
+                    </Button>
                   </div>
                 </div>
               </div>
@@ -266,10 +266,10 @@ export default function ServicesGrid() {
 
         {/* Load More */}
         <div className="text-center mt-10">
-          <button className="flex items-center gap-2 mx-auto">
+          <Button  variant={'outline'}>
             <Plus size={16} />
             Tampilkan Lebih Banyak
-          </button>
+          </Button>
         </div>
       </div>
     </section>

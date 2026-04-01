@@ -5,7 +5,7 @@ export interface ThemeState {
 }
 
 const initialState: ThemeState = {
-  value: typeof globalThis.window !== 'undefined' && globalThis.window.localStorage.getItem('theme') === 'dark' ? 'dark' : 'light',
+  value: 'light', // ✅ selalu konsisten di SSR & client
 };
 
 const themeSlice = createSlice({
@@ -14,12 +14,22 @@ const themeSlice = createSlice({
   reducers: {
     setTheme: (state, action: PayloadAction<'light' | 'dark'>) => {
       state.value = action.payload;
-      if (typeof globalThis.window !== 'undefined') {
-        globalThis.window.localStorage.setItem('theme', action.payload === 'dark' ? 'dark' : 'light');
+
+      // ✅ hanya jalan di client
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('theme', action.payload);
+      }
+    },
+
+    // ✅ init dari localStorage (dipanggil di client)
+    initTheme: (state) => {
+      if (typeof window !== 'undefined') {
+        const stored = localStorage.getItem('theme');
+        state.value = stored === 'dark' ? 'dark' : 'light';
       }
     },
   },
 });
 
-export const { setTheme } = themeSlice.actions;
+export const { setTheme, initTheme } = themeSlice.actions;
 export default themeSlice.reducer;

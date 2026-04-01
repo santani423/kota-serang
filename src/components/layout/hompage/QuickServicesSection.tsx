@@ -88,7 +88,8 @@ const delays = [
 export default function QuickServicesSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const theme = useAppSelector((state) => state.theme.value);
-
+  console.log("QuickServicesSection ",theme);
+  
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
