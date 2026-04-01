@@ -20,7 +20,7 @@ const navItems = [
   {
     code: "layanan-publik",
     title: "Layanan Publik",
-    href: "/layanan",
+    href: "/public-services",
   },
   {
     code: "transparansi",
