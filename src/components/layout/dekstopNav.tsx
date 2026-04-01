@@ -30,7 +30,7 @@ const navItems = [
   {
     code: "wisata",
     title: "Wisata",
-    href: "/wisata",
+    href: "/",
   },
 ];
 
