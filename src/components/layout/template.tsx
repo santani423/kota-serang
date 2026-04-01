@@ -8,7 +8,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
   return (
     <>
       <Header />
-      <main>{children}</main>
+      <main className="min-h-screen bg-serang-bg dark:bg-serang-bg-dark">{children}</main>
       <AccessibilityComponent />
       <Footer />
     </>

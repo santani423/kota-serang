@@ -23,9 +23,9 @@ const navItems = [
     href: "/public-services",
   },
   {
-    code: "transparansi",
-    title: "Transparansi",
-    href: "/transparansi",
+    code: "berita",
+    title: "Berita",
+    href: "/news",
   },
   {
     code: "wisata",

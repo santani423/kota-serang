@@ -2,22 +2,19 @@
 
 import React, { useState } from "react";
 import {
-  Sheet, 
-  SheetContent, 
+  Sheet,
+  SheetContent,
   SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "@/components/ui/sheet"
+} from "@/components/ui/sheet";
 
-
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import { Menu, ChevronRightIcon } from "lucide-react";
 import Image from "next/image";
 import Logo from "@/assets/logo.png";
 import Link from "next/link";
-
-
 
 const navItems = [
   {
@@ -28,12 +25,12 @@ const navItems = [
   {
     code: "layanan-publik",
     title: "Layanan Publik",
-    href: "/layanan",
+    href: "/public-services",
   },
   {
-    code: "transparansi",
-    title: "Transparansi",
-    href: "/transparansi",
+    code: "berita",
+    title: "Berita",
+    href: "/news",
   },
   {
     code: "wisata",
@@ -88,13 +85,17 @@ export default function MobileNav() {
                     : "hover:bg-white/5 text-black dark:text-black hover:text-white dark:text-black dark:hover:bg-gray-800/50 dark:text-white/80 dark:hover:text-white"
                 }`}
               >
-                <span className={`font-medium ${isActive ? "text-white" : "text-white/80 dark:text-black/80"}`}>
+                <span
+                  className={`font-medium ${isActive ? "text-white" : "text-white/80 dark:text-black/80"}`}
+                >
                   {item.title}
                 </span>
 
                 <ChevronRightIcon
                   className={`size-4 transition ${
-                    isActive ? "translate-x-1 text-white/80" : "opacity-60 text-white/80 dark:text-black/80"
+                    isActive
+                      ? "translate-x-1 text-white/80"
+                      : "opacity-60 text-white/80 dark:text-black/80"
                   }`}
                 />
               </Link>
@@ -102,10 +103,9 @@ export default function MobileNav() {
           })}
         </nav>
         <SheetFooter>
-          <Button type="submit">Sampaikan Aspirasi</Button> 
+          <Button type="submit">Sampaikan Aspirasi</Button>
         </SheetFooter>
       </SheetContent>
-      
     </Sheet>
   );
 }
