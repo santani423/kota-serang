@@ -233,8 +233,17 @@ export default function ServicesGrid() {
                   </div>
                 </div>
 
-                {expandedId === service.id && (
-                  <div className="p-5 border-t">
+                <div
+                  className={`service-detail-transition overflow-hidden transition-all duration-500 ease-in-out ${
+                    expandedId === service.id
+                      ? 'max-h-96 opacity-100 translate-y-0 pointer-events-auto'
+                      : 'max-h-0 opacity-0 -translate-y-2 pointer-events-none'
+                  }`}
+                  style={{
+                    borderTop: expandedId === service.id ? '1px solid #e5e7eb' : 'none',
+                  }}
+                >
+                  <div className="p-5">
                     <ul className="text-xs space-y-2">
                       {service.requirements.map((r) => (
                         <li key={r} className="flex gap-2">
@@ -249,7 +258,7 @@ export default function ServicesGrid() {
                       Mulai
                     </button>
                   </div>
-                )}
+                </div>
               </div>
             );
           })}

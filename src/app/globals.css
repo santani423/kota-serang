@@ -1,13 +1,14 @@
-/* ================= FONT ================= */
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
-
-/* ================= TAILWIND ================= */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap'); 
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
-
-/* ================= THIRD PARTY ================= */
 @import "leaflet/dist/leaflet.css";
+
+/* Animasi transisi untuk detail service */
+.service-detail-transition {
+  transition: max-height 0.5s cubic-bezier(0.4,0,0.2,1), opacity 0.5s, transform 0.5s;
+  will-change: max-height, opacity, transform;
+}
 
 /* ================= ROOT VARIABLES ================= */
 :root {
