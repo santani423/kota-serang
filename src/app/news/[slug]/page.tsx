@@ -1,3 +1,4 @@
+"use client";
 import Template from "@/components/layout/template";
 import NewsHero from "@/components/layout/News/NewsHero";
 import NewsGrid from "@/components/layout/News/NewsGrid";
