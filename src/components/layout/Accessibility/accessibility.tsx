@@ -131,7 +131,7 @@ export default function AccessibilityComponent() {
 
         <SheetContent className="bg-white dark:bg-black text-black dark:text-white border-none w-[85%] sm:w-[400px] flex flex-col h-full">
           <SheetHeader>
-            <SheetTitle className="font-bold text-lg">Aksesibilitas</SheetTitle>
+            <SheetTitle className="font-bold text-lg text-muted">Aksesibilitas</SheetTitle>
             <SheetDescription>
               <span className="text-xs text-muted mt-0.5">
                 Sesuaikan tampilan untuk kenyamanan Anda
@@ -175,10 +175,10 @@ export default function AccessibilityComponent() {
 
               {/* Text */}
               <div className="flex-1">
-                <span className="font-bold block">
+                <span className="font-bold block text-muted">
                   {settings.ttsActive ? "Stop Membaca" : "Baca Halaman"}
                 </span>
-                <p className="text-sm text-gray-500">Klik untuk mendengarkan</p>
+                <p className="text-sm text-muted">Klik untuk mendengarkan</p>
               </div>
 
               {/* Indicator */}
@@ -205,7 +205,7 @@ export default function AccessibilityComponent() {
             settings.fontSize === key
               ? "bg-[#1E3A8A] text-white"
               : "bg-gray-100 hover:bg-gray-200"
-          }`}
+          } `}
                   >
                     {label}
                   </button>
@@ -267,11 +267,11 @@ export default function AccessibilityComponent() {
                     <div>
                       <Label
                         htmlFor={key}
-                        className="cursor-pointer font-medium"
+                        className="cursor-pointer font-medium text-muted"
                       >
                         {label}
                       </Label>
-                      <div className="text-xs text-gray-400 leading-tight">
+                      <div className="text-xs text-muted leading-tight">
                         {desc}
                       </div>
                     </div>
