@@ -115,7 +115,7 @@ export default function NewsPreviewSection() {
     <section
       ref={sectionRef}
       id="berita"
-      className={`py-20 lg:py-28 ${theme === "dark" ? "bg-[#0A1628]" : "bg-gray-100"}`}
+      className={`py-20 lg:py-28 bg-surface-primary`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}

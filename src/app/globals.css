@@ -160,3 +160,62 @@ body {
 .dark .text-muted {
   @apply text-white/70;
 }
+
+/* Light mode (default) */
+.bg-gradient-theme {
+  @apply bg-gradient-to-b from-gray-100 via-white/80 via-white/40 to-transparent;
+}
+
+
+.dark .bg-gradient-theme {
+  @apply bg-gradient-to-b from-[#22304a] via-[#162032]/80 via-[#162032]/40 to-transparent;
+}
+/* .bg-surface */
+.bg-surface {
+  @apply bg-gray-100;
+}
+/* Dark mode */
+.dark .bg-surface {
+  @apply bg-[#22304a];
+}
+/*bg-surface-primary  */
+.bg-surface-primary {
+  @apply bg-gray-100;
+}
+
+.dark .bg-surface-primary {
+  @apply bg-[#0A1628];
+}
+
+/*  */
+.text-content {
+  @apply text-[#111827];
+}
+
+.dark .text-content {
+  @apply text-white;
+}
+/* text-highlight */
+.text-highlight{
+  @apply text-[#1E3A8A];
+}
+
+.dark .text-highlight{
+  @apply text-white;
+}
+/* opacity-visible */
+.opacity-visible {
+  @apply opacity-100;
+}
+
+.dark .opacity-visible {
+  @apply opacity-100; /* atau bisa diubah kalau mau beda */
+}
+/* .text-brand-hover  */
+.text-brand-hover {
+  @apply group-hover:text-[#1E3A8A];
+}
+
+.dark .text-brand-hover {
+  @apply group-hover:text-[#37B27D];
+}

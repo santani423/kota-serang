@@ -3,6 +3,8 @@
 import React from 'react';
 import Link from 'next/link';
 import { Globe, Popsicle  } from 'lucide-react';
+import Logo from "@/assets/logo.png";
+import Image from "next/image";
 
 const Footer: React.FC = () => {
   return (
@@ -14,12 +16,7 @@ const Footer: React.FC = () => {
           <div className="max-w-xs">
             <div className="flex items-center gap-3 mb-4">
               <div>
-                <h3 className="font-bold text-lg text-[#1E3A8A] dark:text-white">
-                  SerangKota
-                </h3>
-                <p className="text-xs uppercase tracking-widest text-gray-500">
-                  Kota Serang
-                </p>
+                <Image src={Logo} alt="SerangKota Logo" className="w-auto h-10" /> 
               </div>
             </div>
 
