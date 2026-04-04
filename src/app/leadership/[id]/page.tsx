@@ -5,6 +5,8 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import Image from "next/image";
 import Template from "@/components/layout/template";
+import { Button } from "@/components/ui/button";
+import LeadershipGrid from "@/components/layout/Leadership/LeadershipGrid";
 
 interface CareerItem {
   year: string;
@@ -788,11 +790,8 @@ export default function LeadershipDetailPage() {
             </span>
           </div>
           <h1
-            className="font-display text-white font-700 leading-tight"
-            style={{
-              fontSize: "clamp(1.6rem, 4vw, 2.8rem)",
-              letterSpacing: "-0.025em",
-            }}
+            className="text-lg font-bold   sm:text-2xl lg:text-3xl"
+            id="leadership-grid-heading  "
           >
             Profil Pimpinan
           </h1>
@@ -824,21 +823,17 @@ export default function LeadershipDetailPage() {
                   <div className="absolute inset-0 bg-gradient-to-t from-surface-dark/70 via-transparent to-transparent" />
                   {leader.featured && (
                     <div className="absolute top-4 left-4">
-                      <span className="text-[10px] font-700 px-3 py-1 rounded-full bg-accent text-white uppercase tracking-wider">
-                        Pimpinan Utama
-                      </span>
+                      <Button variant={"teal"}>Pimpinan Utama</Button>
                     </div>
                   )}
                   <div className="absolute top-4 right-4">
-                    <span className="text-[10px] font-600 px-3 py-1 rounded-full glass-dark text-white/80 uppercase tracking-wider">
-                      {leader.category}
-                    </span>
+                    <Button variant={"charcoal"}>{leader.category}</Button>
                   </div>
                 </div>
 
                 {/* Info strip */}
                 <div className="p-6">
-                  <h2 className="font-display text-xl font-700 text-neutral-900 leading-tight mb-1">
+                  <h2 className="text-lg font-bold text-content sm:text-2xl lg:text-3xl">
                     {leader.name}
                   </h2>
                   <p className="text-accent font-600 text-sm mb-1">
@@ -868,7 +863,7 @@ export default function LeadershipDetailPage() {
                           />
                         </svg>
                       </div>
-                      <span className="text-xs text-neutral-600 break-all">
+                      <span className="text-xs text-content break-all">
                         {leader.email}
                       </span>
                     </div>
@@ -888,7 +883,7 @@ export default function LeadershipDetailPage() {
                           />
                         </svg>
                       </div>
-                      <span className="text-xs text-neutral-600">
+                      <span className="text-xs text-content">
                         {leader.phone}
                       </span>
                     </div>
@@ -899,7 +894,7 @@ export default function LeadershipDetailPage() {
                   {/* Back button */}
                   <Link
                     href="/leadership-list"
-                    className="flex items-center justify-center gap-2 w-full py-3 rounded-xl border-2 border-primary/20 text-primary font-600 text-sm hover:bg-primary hover:text-white hover:border-primary transition-all duration-300"
+                    className="flex items-center justify-center gap-2 w-full py-3 rounded-xl border-2 border-primary/20 text-primary font-600 text-sm hover:bg-primary   hover:border-primary transition-all duration-300"
                   >
                     <svg
                       className="w-4 h-4"
@@ -932,7 +927,7 @@ export default function LeadershipDetailPage() {
                 </span>
               </div>
               <h2
-                className="font-display text-3xl sm:text-4xl font-700 text-neutral-900 leading-tight mb-2"
+                className="font-display text-3xl sm:text-4xl font-700 text-content leading-tight mb-2"
                 style={{ letterSpacing: "-0.025em" }}
               >
                 {leader.name}
@@ -951,10 +946,10 @@ export default function LeadershipDetailPage() {
               className="animate-reveal"
               style={{ transitionDelay: "160ms" }}
             >
-              <h3 className="font-display text-lg font-700 text-neutral-900 mb-3">
+              <h3 className="font-display text-lg font-700 text-content mb-3">
                 Tentang
               </h3>
-              <p className="text-neutral-600 leading-relaxed text-base">
+              <p className="text-content leading-relaxed text-base">
                 {leader.bio}
               </p>
             </div>
@@ -964,7 +959,7 @@ export default function LeadershipDetailPage() {
               className="animate-reveal"
               style={{ transitionDelay: "220ms" }}
             >
-              <h3 className="font-display text-lg font-700 text-neutral-900 mb-4">
+              <h3 className="font-display text-lg font-700 text-content mb-4">
                 Visi & Misi
               </h3>
               <div className="space-y-4">
@@ -996,7 +991,7 @@ export default function LeadershipDetailPage() {
                       <p className="text-xs font-700 text-primary uppercase tracking-widest mb-2">
                         Visi
                       </p>
-                      <p className="text-neutral-800 font-500 leading-relaxed text-sm">
+                      <p className="text-content font-500 leading-relaxed text-sm">
                         {leader.vision}
                       </p>
                     </div>
@@ -1044,7 +1039,7 @@ export default function LeadershipDetailPage() {
                                 />
                               </svg>
                             </span>
-                            <span className="text-neutral-700 text-sm leading-relaxed">
+                            <span className="text-content text-sm leading-relaxed">
                               {m.text}
                             </span>
                           </li>
@@ -1061,7 +1056,7 @@ export default function LeadershipDetailPage() {
               className="animate-reveal"
               style={{ transitionDelay: "280ms" }}
             >
-              <h3 className="font-display text-lg font-700 text-neutral-900 mb-5">
+              <h3 className="font-display text-lg font-700 text-content mb-5">
                 Riwayat Karir
               </h3>
               <div className="relative">
@@ -1077,14 +1072,14 @@ export default function LeadershipDetailPage() {
                       </div>
                       <div className="flex-1 bg-white rounded-2xl border border-neutral-100 shadow-soft px-5 py-4 hover:border-primary/20 hover:shadow-elevated transition-all duration-300">
                         <div className="flex flex-wrap items-center justify-between gap-2 mb-1">
-                          <h4 className="font-600 text-neutral-900 text-sm">
+                          <h4 className="font-600 text-content text-sm">
                             {item.role}
                           </h4>
                           <span className="text-[11px] font-600 px-2.5 py-0.5 rounded-full bg-primary/8 text-primary">
                             {item.year}
                           </span>
                         </div>
-                        <p className="text-neutral-500 text-xs">
+                        <p className="text-content text-xs">
                           {item.institution}
                         </p>
                       </div>
@@ -1101,7 +1096,7 @@ export default function LeadershipDetailPage() {
             >
               {/* Education */}
               <div>
-                <h3 className="font-display text-lg font-700 text-neutral-900 mb-4">
+                <h3 className="font-display text-lg font-700 text-content mb-4">
                   Pendidikan
                 </h3>
                 <div className="space-y-3">
@@ -1124,10 +1119,10 @@ export default function LeadershipDetailPage() {
                           </svg>
                         </div>
                         <div>
-                          <p className="font-600 text-neutral-900 text-sm leading-tight">
+                          <p className="font-600 text-content text-sm leading-tight">
                             {edu.degree}
                           </p>
-                          <p className="text-neutral-500 text-xs mt-0.5">
+                          <p className="text-content text-xs mt-0.5">
                             {edu.institution}
                           </p>
                           <p className="text-primary text-xs font-600 mt-1">
@@ -1142,7 +1137,7 @@ export default function LeadershipDetailPage() {
 
               {/* Achievements */}
               <div>
-                <h3 className="font-display text-lg font-700 text-neutral-900 mb-4">
+                <h3 className="font-display text-lg font-700 text-content mb-4">
                   Penghargaan
                 </h3>
                 <div className="space-y-3">
@@ -1156,7 +1151,7 @@ export default function LeadershipDetailPage() {
                           {ach.icon}
                         </div>
                         <div>
-                          <p className="font-600 text-neutral-900 text-sm leading-tight">
+                          <p className="font-600 text-content text-sm leading-tight">
                             {ach.title}
                           </p>
                           <p className="text-accent text-xs font-600 mt-1">
@@ -1173,71 +1168,8 @@ export default function LeadershipDetailPage() {
         </div>
 
         {/* ── Other Leaders ── */}
-        <div
-          className="mt-20 animate-reveal"
-          style={{ transitionDelay: "400ms" }}
-        >
-          <div className="gradient-line mb-10" />
-          <div className="flex items-center justify-between mb-8">
-            <h3 className="font-display text-2xl font-700 text-neutral-900">
-              Pimpinan Lainnya
-            </h3>
-            <Link
-              href="/leadership-list"
-              className="flex items-center gap-1.5 text-primary text-sm font-600 hover:gap-2.5 transition-all"
-            >
-              Lihat Semua
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2.5}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M13 7l5 5m0 0l-5 5m5-5H6"
-                />
-              </svg>
-            </Link>
-          </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-            {leadersData
-              .filter((l) => l.id !== leader.id)
-              .slice(0, 4)
-              .map((l) => (
-                <Link
-                  key={l.id}
-                  href={`/leadership-detail/${l.id}`}
-                  className="group"
-                >
-                  <div className="bg-white rounded-2xl overflow-hidden border border-neutral-100 shadow-soft hover:shadow-elevated hover:-translate-y-1 transition-all duration-300">
-                    <div className="relative aspect-[4/5] img-zoom overflow-hidden">
-                      <Image
-                        src={l.image}
-                        alt={l.imageAlt}
-                        fill
-                        className="object-cover object-top zoom-target"
-                        sizes="(max-width: 640px) 50vw, 25vw"
-                        unoptimized
-                      />
 
-                      <div className="absolute inset-0 bg-gradient-to-t from-surface-dark/70 via-transparent to-transparent" />
-                      <div className="absolute bottom-0 left-0 right-0 p-3">
-                        <p className="text-white font-600 text-xs leading-tight">
-                          {l.name}
-                        </p>
-                        <p className="text-accent text-[10px] mt-0.5">
-                          {l.title}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </Link>
-              ))}
-          </div>
-        </div>
+        <LeadershipGrid />
       </div>
     </Template>
   );

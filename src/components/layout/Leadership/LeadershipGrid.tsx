@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 const categories = ["Semua", "Eksekutif", "Sekretariat", "Dinas", "Badan"];
 
@@ -119,6 +120,7 @@ const leaders = [
 export default function LeadershipGrid() {
   const [activeCategory, setActiveCategory] = useState("Semua");
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [page, setPage] = useState(1);
 
   const filtered =
     activeCategory === "Semua"
@@ -149,36 +151,36 @@ export default function LeadershipGrid() {
 
   return (
     <section
-      className="section-pad px-4 sm:px-6 lg:px-8 bg-surface"
+      className="py-14 lg:py-20 bg-gray-50 dark:bg-slate-900"
       aria-labelledby="leadership-grid-heading"
     >
-      <div className="max-w-7xl mx-auto">
-        {/* Filter Tabs */}
-        <div
-          className="flex flex-wrap gap-2 mb-12"
-          role="tablist"
-          aria-label="Filter kategori pimpinan"
-        >
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              role="tab"
-              aria-selected={activeCategory === cat}
-              onClick={() => setActiveCategory(cat)}
-              className={`px-5 py-2.5 rounded-xl text-sm font-600 transition-all duration-300 ${
-                activeCategory === cat
-                  ? "bg-primary text-white shadow-soft"
-                  : "bg-white text-neutral-600 border border-neutral-200 hover:border-primary/30 hover:text-primary hover:bg-primary/5"
-              }`}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row justify-between gap-5 mb-10 opacity-100 translate-y-0">
+          <h2 className="text-lg font-bold text-content sm:text-2xl lg:text-3xl" id="leadership-grid-heading  ">
+            Semua Pimpinan Kota Serang
+          </h2>
 
-        <h2 id="leadership-grid-heading" className="sr-only">
-          Daftar Pimpinan Kota Serang
-        </h2>
+          <div className="flex flex-wrap gap-2">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => {
+                  setActiveCategory(cat);
+                  setPage(1);
+                }}
+                className={`px-3.5 py-1.5 rounded-xl text-xs font-medium transition
+                ${
+                  activeCategory === cat
+                    ? "bg-blue-600 text-white shadow"
+                    : "bg-white dark:bg-slate-800 text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-white/10 hover:text-blue-600 hover:border-blue-300"
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+        </div>
 
         {/* Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -210,17 +212,16 @@ export default function LeadershipGrid() {
                     {/* Featured badge */}
                     {leader.featured && (
                       <div className="absolute top-4 left-4">
-                        <span className="text-[10px] font-700 px-3 py-1 rounded-full bg-accent text-white uppercase tracking-wider">
-                          Pimpinan Utama
-                        </span>
+                        <Button variant={'teal'}>Pimpinan Utama</Button>
+                        {/* <span className="text-[10px] font-700 px-3 py-1 rounded-full bg-accent text-white uppercase tracking-wider">
+                          
+                        </span> */}
                       </div>
                     )}
 
                     {/* Category */}
                     <div className="absolute top-4 right-4">
-                      <span className="text-[10px] font-600 px-3 py-1 rounded-full glass-dark text-white/80 uppercase tracking-wider">
-                        {leader.category}
-                      </span>
+                      <Button variant={'charcoal'}>{leader.category}</Button> 
                     </div>
 
                     {/* Name overlay */}
@@ -228,7 +229,7 @@ export default function LeadershipGrid() {
                       <h3 className="text-white font-700 text-base leading-tight mb-1">
                         {leader.name}
                       </h3>
-                      <p className="text-accent text-xs font-600 leading-tight">
+                      <p className="text-[#22c55e] text-xs font-600 leading-tight">
                         {leader.title}
                       </p>
                       <p className="text-white/40 text-xs mt-1">
