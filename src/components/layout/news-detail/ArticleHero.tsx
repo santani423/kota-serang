@@ -87,15 +87,7 @@ export default function ArticlePage() {
             </div>
           </div>
         </div>
-      </section>
-
-      {/* CAPTION */}
-      <div className="max-w-3xl mx-auto px-4 text-center mt-4">
-        <p className="text-xs text-gray-500 italic leading-relaxed">
-          {article.imageCaption}
-        </p>
-      </div>
-
+      </section> 
     </main>
   );
 }

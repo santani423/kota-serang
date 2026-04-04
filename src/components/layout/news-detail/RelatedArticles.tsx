@@ -46,14 +46,14 @@ const getCategoryStyle = (category: string) => {
 
 export default function RelatedArticles() {
   return (
-    <section className="bg-slate-50 py-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+    <section className="bg-slate-50 py-16 bg-surface-primary">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 ">
         
         {/* Header Section */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
           <div>
-            <h2 className="font-serif text-3xl md:text-4xl text-slate-900">
-              Berita <span className="italic font-light text-primary">terkait</span>
+            <h2 className="text-[2.5rem] leading-[1.1] font-display font-bold text-content">
+              Berita <br /> <span className="gradient-title">terkait</span>
             </h2>
             <p className="text-slate-500 mt-2 text-sm">Informasi terbaru seputar perkembangan Kota Serang.</p>
           </div>
@@ -100,7 +100,7 @@ export default function RelatedArticles() {
                   <span>{item.readTime} Baca</span>
                 </div>
 
-                <h3 className="font-bold text-slate-800 text-lg leading-tight mb-4 group-hover:text-primary transition-colors line-clamp-2">
+                <h3 className="font-bold text-content text-lg leading-tight mb-4 group-hover:text-primary transition-colors line-clamp-2">
                   {item.title}
                 </h3>
 

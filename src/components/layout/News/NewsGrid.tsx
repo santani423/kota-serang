@@ -1,7 +1,8 @@
-'use client';
+"use client";
 
-import React, { useEffect, useRef, useState } from 'react';
-import Link from 'next/link';
+import React, { useEffect, useRef, useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 interface Article {
   id: number;
@@ -19,151 +20,184 @@ interface Article {
 const articles: Article[] = [
   {
     id: 1,
-    category: 'Layanan Publik',
-    title: 'Sistem Antrian Digital Puskesmas Kini Terintegrasi Portal SerangKota',
-    excerpt: 'Warga kini dapat mendaftar antrian Puskesmas dari rumah melalui portal resmi kota tanpa perlu datang pagi-pagi.',
-    date: '22 Mar 2026',
-    author: 'Dinas Kesehatan',
-    readTime: '3 menit',
-    image: "https://img.rocket.new/generatedImages/rocket_gen_img_11dd292e2-1764667687408.png",
-    alt: 'Petugas kesehatan menggunakan tablet untuk sistem antrian digital di Puskesmas modern',
-    tags: ['Kesehatan', 'Digital']
+    category: "Layanan Publik",
+    title:
+      "Sistem Antrian Digital Puskesmas Kini Terintegrasi Portal SerangKota",
+    excerpt:
+      "Warga kini dapat mendaftar antrian Puskesmas dari rumah melalui portal resmi kota tanpa perlu datang pagi-pagi.",
+    date: "22 Mar 2026",
+    author: "Dinas Kesehatan",
+    readTime: "3 menit",
+    image:
+      "https://img.rocket.new/generatedImages/rocket_gen_img_11dd292e2-1764667687408.png",
+    alt: "Petugas kesehatan menggunakan tablet untuk sistem antrian digital di Puskesmas modern",
+    tags: ["Kesehatan", "Digital"],
   },
   {
     id: 2,
-    category: 'Ekonomi',
-    title: 'Pasar UMKM Digital Serang Catat Transaksi Rp 4,2 Miliar di Kuartal I 2026',
-    excerpt: 'Program digitalisasi UMKM yang diluncurkan awal tahun berhasil meningkatkan omzet pedagang lokal secara signifikan.',
-    date: '20 Mar 2026',
-    author: 'Dinas Perdagangan',
-    readTime: '4 menit',
-    image: "https://img.rocket.new/generatedImages/rocket_gen_img_1d5b361fd-1774649961794.png",
-    alt: 'Pedagang UMKM menggunakan smartphone untuk transaksi digital di pasar modern Kota Serang',
-    tags: ['UMKM', 'Ekonomi']
+    category: "Ekonomi",
+    title:
+      "Pasar UMKM Digital Serang Catat Transaksi Rp 4,2 Miliar di Kuartal I 2026",
+    excerpt:
+      "Program digitalisasi UMKM yang diluncurkan awal tahun berhasil meningkatkan omzet pedagang lokal secara signifikan.",
+    date: "20 Mar 2026",
+    author: "Dinas Perdagangan",
+    readTime: "4 menit",
+    image:
+      "https://img.rocket.new/generatedImages/rocket_gen_img_1d5b361fd-1774649961794.png",
+    alt: "Pedagang UMKM menggunakan smartphone untuk transaksi digital di pasar modern Kota Serang",
+    tags: ["UMKM", "Ekonomi"],
   },
   {
     id: 3,
-    category: 'Pendidikan',
-    title: 'Serang Raih Penghargaan Kota Literasi Digital Terbaik Tingkat Provinsi Banten',
-    excerpt: 'Inovasi program literasi digital yang menjangkau 120 sekolah di seluruh kecamatan mendapat pengakuan provinsi.',
-    date: '18 Mar 2026',
-    author: 'Dinas Pendidikan',
-    readTime: '3 menit',
-    image: "https://img.rocket.new/generatedImages/rocket_gen_img_1f995b44c-1774649960096.png",
-    alt: 'Siswa sekolah dasar menggunakan komputer di laboratorium digital modern Kota Serang',
-    tags: ['Pendidikan', 'Penghargaan']
+    category: "Pendidikan",
+    title:
+      "Serang Raih Penghargaan Kota Literasi Digital Terbaik Tingkat Provinsi Banten",
+    excerpt:
+      "Inovasi program literasi digital yang menjangkau 120 sekolah di seluruh kecamatan mendapat pengakuan provinsi.",
+    date: "18 Mar 2026",
+    author: "Dinas Pendidikan",
+    readTime: "3 menit",
+    image:
+      "https://img.rocket.new/generatedImages/rocket_gen_img_1f995b44c-1774649960096.png",
+    alt: "Siswa sekolah dasar menggunakan komputer di laboratorium digital modern Kota Serang",
+    tags: ["Pendidikan", "Penghargaan"],
   },
   {
     id: 4,
-    category: 'Lingkungan',
-    title: 'Program Serang Hijau: 10.000 Pohon Ditanam di Seluruh Kecamatan',
-    excerpt: 'Gerakan penghijauan masif melibatkan komunitas warga, sekolah, dan instansi pemerintah untuk Serang yang lebih hijau.',
-    date: '15 Mar 2026',
-    author: 'Dinas Lingkungan Hidup',
-    readTime: '2 menit',
-    image: "https://img.rocket.new/generatedImages/rocket_gen_img_111a6e9b2-1774649959594.png",
-    alt: 'Komunitas warga menanam pohon di taman kota sebagai bagian program Serang Hijau',
-    tags: ['Lingkungan', 'Komunitas']
+    category: "Lingkungan",
+    title: "Program Serang Hijau: 10.000 Pohon Ditanam di Seluruh Kecamatan",
+    excerpt:
+      "Gerakan penghijauan masif melibatkan komunitas warga, sekolah, dan instansi pemerintah untuk Serang yang lebih hijau.",
+    date: "15 Mar 2026",
+    author: "Dinas Lingkungan Hidup",
+    readTime: "2 menit",
+    image:
+      "https://img.rocket.new/generatedImages/rocket_gen_img_111a6e9b2-1774649959594.png",
+    alt: "Komunitas warga menanam pohon di taman kota sebagai bagian program Serang Hijau",
+    tags: ["Lingkungan", "Komunitas"],
   },
   {
     id: 5,
-    category: 'Infrastruktur',
-    title: 'Pembangunan Jalan Lingkar Timur Serang Capai Progress 68%',
-    excerpt: 'Proyek strategis yang akan memperlancar konektivitas antar kecamatan ini ditargetkan selesai akhir 2026.',
-    date: '12 Mar 2026',
-    author: 'Dinas PUPR',
-    readTime: '4 menit',
-    image: "https://img.rocket.new/generatedImages/rocket_gen_img_1227842d5-1770821562771.png",
-    alt: 'Proses pembangunan jalan raya baru dengan alat berat dan pekerja konstruksi di Kota Serang',
-    tags: ['Infrastruktur', 'Pembangunan']
+    category: "Infrastruktur",
+    title: "Pembangunan Jalan Lingkar Timur Serang Capai Progress 68%",
+    excerpt:
+      "Proyek strategis yang akan memperlancar konektivitas antar kecamatan ini ditargetkan selesai akhir 2026.",
+    date: "12 Mar 2026",
+    author: "Dinas PUPR",
+    readTime: "4 menit",
+    image:
+      "https://img.rocket.new/generatedImages/rocket_gen_img_1227842d5-1770821562771.png",
+    alt: "Proses pembangunan jalan raya baru dengan alat berat dan pekerja konstruksi di Kota Serang",
+    tags: ["Infrastruktur", "Pembangunan"],
   },
   {
     id: 6,
-    category: 'Sosial',
-    title: 'Bantuan Sosial Langsung Tunai Tahap II Disalurkan ke 45.000 KPM',
-    excerpt: 'Pemerintah Kota Serang menyalurkan BST tahap kedua kepada keluarga penerima manfaat melalui rekening bank.',
-    date: '10 Mar 2026',
-    author: 'Dinas Sosial',
-    readTime: '3 menit',
-    image: "https://img.rocket.new/generatedImages/rocket_gen_img_131be2a6d-1774649961771.png",
-    alt: 'Petugas sosial membantu warga dalam proses penerimaan bantuan sosial di kantor kelurahan',
-    tags: ['Sosial', 'Bantuan']
+    category: "Sosial",
+    title: "Bantuan Sosial Langsung Tunai Tahap II Disalurkan ke 45.000 KPM",
+    excerpt:
+      "Pemerintah Kota Serang menyalurkan BST tahap kedua kepada keluarga penerima manfaat melalui rekening bank.",
+    date: "10 Mar 2026",
+    author: "Dinas Sosial",
+    readTime: "3 menit",
+    image:
+      "https://img.rocket.new/generatedImages/rocket_gen_img_131be2a6d-1774649961771.png",
+    alt: "Petugas sosial membantu warga dalam proses penerimaan bantuan sosial di kantor kelurahan",
+    tags: ["Sosial", "Bantuan"],
   },
   {
     id: 7,
-    category: 'Ekonomi',
-    title: 'Serang Investment Forum 2026 Tarik Minat 32 Investor Nasional',
-    excerpt: 'Forum investasi tahunan kota Serang berhasil menarik komitmen investasi senilai Rp 1,8 triliun di berbagai sektor.',
-    date: '8 Mar 2026',
-    author: 'DPMPTSP Kota Serang',
-    readTime: '5 menit',
-    image: "https://img.rocket.new/generatedImages/rocket_gen_img_130a039a2-1765172518149.png",
-    alt: 'Para eksekutif dan investor duduk dalam forum diskusi bisnis di ruang konferensi modern',
-    tags: ['Investasi', 'Ekonomi']
+    category: "Ekonomi",
+    title: "Serang Investment Forum 2026 Tarik Minat 32 Investor Nasional",
+    excerpt:
+      "Forum investasi tahunan kota Serang berhasil menarik komitmen investasi senilai Rp 1,8 triliun di berbagai sektor.",
+    date: "8 Mar 2026",
+    author: "DPMPTSP Kota Serang",
+    readTime: "5 menit",
+    image:
+      "https://img.rocket.new/generatedImages/rocket_gen_img_130a039a2-1765172518149.png",
+    alt: "Para eksekutif dan investor duduk dalam forum diskusi bisnis di ruang konferensi modern",
+    tags: ["Investasi", "Ekonomi"],
   },
   {
     id: 8,
-    category: 'Infrastruktur',
-    title: 'RSUD Kota Serang Tambah 3 Gedung Baru dengan Kapasitas 200 Tempat Tidur',
-    excerpt: 'Perluasan fasilitas rumah sakit daerah ini merupakan bagian dari investasi kesehatan jangka panjang pemerintah kota.',
-    date: '5 Mar 2026',
-    author: 'RSUD Kota Serang',
-    readTime: '3 menit',
-    image: "https://img.rocket.new/generatedImages/rocket_gen_img_1008f3ef7-1767606960262.png",
-    alt: 'Gedung rumah sakit modern yang baru selesai dibangun dengan arsitektur kontemporer',
-    tags: ['Kesehatan', 'Infrastruktur']
+    category: "Infrastruktur",
+    title:
+      "RSUD Kota Serang Tambah 3 Gedung Baru dengan Kapasitas 200 Tempat Tidur",
+    excerpt:
+      "Perluasan fasilitas rumah sakit daerah ini merupakan bagian dari investasi kesehatan jangka panjang pemerintah kota.",
+    date: "5 Mar 2026",
+    author: "RSUD Kota Serang",
+    readTime: "3 menit",
+    image:
+      "https://img.rocket.new/generatedImages/rocket_gen_img_1008f3ef7-1767606960262.png",
+    alt: "Gedung rumah sakit modern yang baru selesai dibangun dengan arsitektur kontemporer",
+    tags: ["Kesehatan", "Infrastruktur"],
   },
   {
     id: 9,
-    category: 'Layanan Publik',
-    title: 'E-Government Award 2026: Serang Masuk 10 Kota Terbaik Transformasi Digital',
-    excerpt: 'Penghargaan nasional ini mengakui upaya Pemkot Serang dalam digitalisasi layanan publik selama dua tahun terakhir.',
-    date: '2 Mar 2026',
-    author: 'Humas Pemkot Serang',
-    readTime: '4 menit',
-    image: "https://img.rocket.new/generatedImages/rocket_gen_img_13ed0a2d2-1774649961452.png",
-    alt: 'Tim pemerintah kota menerima penghargaan e-government di acara penghargaan nasional',
-    tags: ['Penghargaan', 'Digital']
-  }
+    category: "Layanan Publik",
+    title:
+      "E-Government Award 2026: Serang Masuk 10 Kota Terbaik Transformasi Digital",
+    excerpt:
+      "Penghargaan nasional ini mengakui upaya Pemkot Serang dalam digitalisasi layanan publik selama dua tahun terakhir.",
+    date: "2 Mar 2026",
+    author: "Humas Pemkot Serang",
+    readTime: "4 menit",
+    image:
+      "https://img.rocket.new/generatedImages/rocket_gen_img_13ed0a2d2-1774649961452.png",
+    alt: "Tim pemerintah kota menerima penghargaan e-government di acara penghargaan nasional",
+    tags: ["Penghargaan", "Digital"],
+  },
 ];
 
 const allCategories = [
-  'Semua',
-  'Layanan Publik',
-  'Ekonomi',
-  'Pendidikan',
-  'Lingkungan',
-  'Infrastruktur',
-  'Sosial'
+  "Semua",
+  "Layanan Publik",
+  "Ekonomi",
+  "Pendidikan",
+  "Lingkungan",
+  "Infrastruktur",
+  "Sosial",
 ];
 
 const categoryColors: Record<string, string> = {
-  'Layanan Publik': 'bg-accent-50 text-accent-dark dark:bg-accent/15 dark:text-accent-light',
-  'Ekonomi': 'bg-amber-50 text-amber-700 dark:bg-amber-900/20 dark:text-amber-300',
-  'Pendidikan': 'bg-violet-50 text-violet-700 dark:bg-violet-900/20 dark:text-violet-300',
-  'Lingkungan': 'bg-green-50 text-green-700 dark:bg-green-900/20 dark:text-green-300',
-  'Infrastruktur': 'bg-orange-50 text-orange-700 dark:bg-orange-900/20 dark:text-orange-300',
-  'Sosial': 'bg-rose-50 text-rose-700 dark:bg-rose-900/20 dark:text-rose-300'
+  "Layanan Publik":
+    "bg-accent-50 text-accent-dark dark:bg-accent/15 dark:text-accent-light",
+  Ekonomi:
+    "bg-amber-50 text-amber-700 dark:bg-amber-900/20 dark:text-amber-300",
+  Pendidikan:
+    "bg-violet-50 text-violet-700 dark:bg-violet-900/20 dark:text-violet-300",
+  Lingkungan:
+    "bg-green-50 text-green-700 dark:bg-green-900/20 dark:text-green-300",
+  Infrastruktur:
+    "bg-orange-50 text-orange-700 dark:bg-orange-900/20 dark:text-orange-300",
+  Sosial: "bg-rose-50 text-rose-700 dark:bg-rose-900/20 dark:text-rose-300",
 };
 
 export default function NewsGrid() {
   const sectionRef = useRef<HTMLElement>(null);
-  const [activeCategory, setActiveCategory] = useState('Semua');
+  const [activeCategory, setActiveCategory] = useState("Semua");
+  const router = useRouter();
   const [page, setPage] = useState(1);
   const ITEMS_PER_PAGE = 6;
-
+  const handleClick = () => {
+    router.push("/news/detail");
+  };
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.querySelectorAll('.reveal').forEach((el) =>
-              el.classList.add('opacity-100', 'translate-y-0')
-            );
+            entry.target
+              .querySelectorAll(".reveal")
+              .forEach((el) =>
+                el.classList.add("opacity-100", "translate-y-0"),
+              );
           }
         });
       },
-      { threshold: 0.05 }
+      { threshold: 0.05 },
     );
 
     if (sectionRef.current) observer.observe(sectionRef.current);
@@ -171,7 +205,7 @@ export default function NewsGrid() {
   }, []);
 
   const filtered =
-    activeCategory === 'Semua'
+    activeCategory === "Semua"
       ? articles
       : articles.filter((a) => a.category === activeCategory);
 
@@ -184,7 +218,6 @@ export default function NewsGrid() {
       className="py-14 lg:py-20 bg-gray-50 dark:bg-slate-900"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
         {/* Header */}
         <div className="reveal opacity-0 translate-y-6 transition-all duration-700 flex flex-col sm:flex-row justify-between gap-5 mb-10">
           <h2 className="text-lg font-bold text-gray-900 dark:text-white">
@@ -202,8 +235,8 @@ export default function NewsGrid() {
                 className={`px-3.5 py-1.5 rounded-xl text-xs font-medium transition
                 ${
                   activeCategory === cat
-                    ? 'bg-blue-600 text-white shadow'
-                    : 'bg-white dark:bg-slate-800 text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-white/10 hover:text-blue-600 hover:border-blue-300'
+                    ? "bg-blue-600 text-white shadow"
+                    : "bg-white dark:bg-slate-800 text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-white/10 hover:text-blue-600 hover:border-blue-300"
                 }`}
               >
                 {cat}
@@ -217,8 +250,9 @@ export default function NewsGrid() {
           {paginated.map((article, i) => (
             <article
               key={article.id}
+              onClick={handleClick}
               style={{ transitionDelay: `${i * 80}ms` }}
-              className="reveal opacity-0 translate-y-6 transition-all duration-700 group bg-white dark:bg-slate-800 border border-gray-200 dark:border-white/10 rounded-2xl overflow-hidden flex flex-col hover:shadow-md"
+              className="reveal cursor-pointer opacity-0 translate-y-6 transition-all duration-700 group bg-white dark:bg-slate-800 border border-gray-200 dark:border-white/10 rounded-2xl overflow-hidden flex flex-col hover:shadow-md"
             >
               {/* Image */}
               <div className="relative aspect-[16/10] overflow-hidden">
@@ -234,7 +268,7 @@ export default function NewsGrid() {
                   <span
                     className={`text-xs font-semibold px-2.5 py-1 rounded-full ${
                       categoryColors[article.category] ||
-                      'bg-gray-100 text-gray-700'
+                      "bg-gray-100 text-gray-700"
                     }`}
                   >
                     {article.category}

@@ -125,7 +125,7 @@ export default function NewsPreviewSection() {
               — Berita & Pengumuman
             </p>
             <h2
-              className={`text-[2.5rem] leading-[1.1] font-display font-bold ${theme === "dark" ? "text-white" : "text-[#111827]"}`}
+              className={`text-[2.5rem] leading-[1.1] font-display font-bold text-content`}
             >
               Semua Kebutuhan
               <br />
