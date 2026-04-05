@@ -9,5 +9,5 @@ export type CorMenu = {
   title?: string;
   href: string;
   desc?: string;
-  subMenu?: SubMenu[];
+  subMenu: SubMenu[];
 };
