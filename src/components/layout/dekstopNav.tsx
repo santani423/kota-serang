@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { fetchSettingsCorMenu } from "@/lib/settings";
+ 
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";  
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import type { CorMenu, SubMenu } from "@/types/settings";
+import type {   SubMenu } from "@/types/settings";
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -17,21 +18,8 @@ import {
 
 export default function DesktopNav() {
   const pathname = usePathname();
-  const [menu, setMenu] = useState<CorMenu[]>([]);
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const res = await fetchSettingsCorMenu();
-        console.log("fetchSettingsCorMenu", res);
-
-        setMenu(res.data); // sesuaikan dengan response API
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
-    getData();
-  }, []);
+  const menu = useSelector((state: RootState) => state.settings.menu);
+ 
   return (
     <NavigationMenu>
       <NavigationMenuList>

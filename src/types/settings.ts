@@ -5,7 +5,7 @@ export type SubMenu = {
 };
 
 export type CorMenu = {
-  code?: string;
+  code: string;
   title?: string;
   href: string;
   desc?: string;

@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
+import { RootState } from "@/store";  
+import { useSelector } from "react-redux";
 import {
   Sheet,
   SheetContent,
@@ -42,6 +44,7 @@ const navItems = [
 export default function MobileNav() {
   const [active, setActive] = useState("beranda");
   const [open, setOpen] = useState(false);
+  const menu = useSelector((state: RootState) => state.settings.menu);
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -68,7 +71,7 @@ export default function MobileNav() {
 
         {/* Navigation */}
         <nav className="mt-6 flex flex-col gap-2 px-2">
-          {navItems.map((item) => {
+          {menu.map((item) => {
             const isActive = active === item.code;
 
             return (
