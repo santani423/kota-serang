@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import Template from "@/components/layout/template";
 import HeroSection from "@/components/layout/hompage/HeroSection";
