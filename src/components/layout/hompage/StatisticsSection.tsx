@@ -2,83 +2,14 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import {
-  UsersIcon,
-  BuildingOffice2Icon,
-  DocumentCheckIcon,
-  ChartBarIcon,
-  BuildingStorefrontIcon,
-  AcademicCapIcon,
+  UsersIcon, 
 } from "@heroicons/react/24/outline";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-
-/* ================= TYPES ================= */
-interface Stat {
-  icon: React.ElementType;
-  value: number;
-  suffix: string;
-  label: string;
-  sub: string;
-  color: string;
-  bgColor: string;
-}
-
-/* ================= DATA ================= */
-const stats: Stat[] = [
-  {
-    icon: UsersIcon,
-    value: 750,
-    suffix: "K+",
-    label: "Total Penduduk",
-    sub: "Data BPS 2025",
-    color: "text-primary-700 dark:text-primary-light",
-    bgColor: "bg-primary-50 dark:bg-primary-900/20",
-  },
-  {
-    icon: BuildingOffice2Icon,
-    value: 6,
-    suffix: "",
-    label: "Kecamatan",
-    sub: "Wilayah administratif",
-    color: "text-accent-dark dark:text-accent-light",
-    bgColor: "bg-accent-50 dark:bg-accent/10",
-  },
-  {
-    icon: DocumentCheckIcon,
-    value: 120,
-    suffix: "+",
-    label: "Layanan Digital",
-    sub: "Tersedia 24/7 online",
-    color: "text-violet-600 dark:text-violet-400",
-    bgColor: "bg-violet-50 dark:bg-violet-900/20",
-  },
-  {
-    icon: ChartBarIcon,
-    value: 98,
-    suffix: "%",
-    label: "Kepuasan Warga",
-    sub: "Survei Q1 2026",
-    color: "text-amber-600 dark:text-amber-400",
-    bgColor: "bg-amber-50 dark:bg-amber-900/20",
-  },
-  {
-    icon: BuildingStorefrontIcon,
-    value: 42000,
-    suffix: "+",
-    label: "UMKM Terdaftar",
-    sub: "Aktif & terverifikasi",
-    color: "text-rose-600 dark:text-rose-400",
-    bgColor: "bg-rose-50 dark:bg-rose-900/20",
-  },
-  {
-    icon: AcademicCapIcon,
-    value: 320,
-    suffix: "+",
-    label: "Sekolah Aktif",
-    sub: "SD, SMP, SMA/SMK",
-    color: "text-cyan-600 dark:text-cyan-400",
-    bgColor: "bg-cyan-50 dark:bg-cyan-900/20",
-  },
-];
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
+import { Skeleton } from "@/components/ui/skeleton";
+import { iconMap } from "@/lib/utils";
+import { CityStats } from "@/types/settings";
 
 /* ================= HOOK ================= */
 function useCountUp(target: number, duration = 1800, active: boolean) {
@@ -113,13 +44,13 @@ function StatCard({
   active,
   index,
 }: {
-  stat: Stat;
+  stat: CityStats;
   active: boolean;
   index: number;
 }) {
   const count = useCountUp(stat.value, 1600, active);
-  const Icon = stat.icon;
-  
+  const Icon = iconMap[stat.icon] || UsersIcon;
+
   const theme = useAppSelector((state) => state.theme.value);
 
   return (
@@ -132,7 +63,11 @@ function StatCard({
       <div
         className={`w-12 h-12 rounded-xl flex items-center justify-center ${stat.bgColor}`}
       >
-        <Icon className={`w-6 h-6 ${stat.color}`} />
+        {Icon ? (
+          <Icon className={`w-6 h-6 ${stat.color}`} />
+        ) : (
+          <span className="w-6 h-6 bg-gray-300 rounded" />
+        )}
       </div>
 
       <div>
@@ -158,6 +93,9 @@ export default function StatisticsSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const [active, setActive] = useState(false);
   const theme = useAppSelector((state) => state.theme.value);
+  const { cityStats , loading } = useSelector(
+    (state: RootState) => state.settings,
+  );
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -205,9 +143,26 @@ export default function StatisticsSection() {
 
         {/* STATS */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-          {stats.map((stat, i) => (
-            <StatCard key={stat.label} stat={stat} active={active} index={i} />
-          ))}
+          {loading
+            ? Array.from({ length: 6 }).map((_, i) => (
+                <div
+                  key={i}
+                  className={`reveal delay-${Math.min(i * 100, 500)} ${theme === "dark" ? "bg-[#22304a]" : "bg-gray-100"} border ${theme === "dark" ? "border-white/10" : "border-gray-200"} rounded-2xl p-6 flex flex-col gap-4`}
+                >
+                  <Skeleton className="w-12 h-12 rounded-xl mb-2" />
+                  <Skeleton className="h-8 w-20 mb-2" />
+                  <Skeleton className="h-4 w-24 mb-1" />
+                  <Skeleton className="h-3 w-16" />
+                </div>
+              ))
+            : cityStats.map((stat, i) => (
+                <StatCard
+                  key={stat.label}
+                  stat={stat}
+                  active={active}
+                  index={i}
+                />
+              ))}
         </div>
 
         {/* PROGRESS */}

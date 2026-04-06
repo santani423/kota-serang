@@ -95,17 +95,17 @@ export default function QuickServicesSection() {
                 className="col-span-1 bg-surface border border-gray-200 dark:border-primary-800 rounded-2xl p-6 flex flex-col gap-4 animate-pulse"
               >
                 {/* Icon */}
-                <Skeleton className="w-12 h-12 rounded-xl" />
+                <Skeleton className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-xl" />
 
                 {/* Title */}
-                <Skeleton className="h-4 w-32" />
+                <Skeleton className="h-4 bg-blue-100 dark:bg-blue-900/30 w-32" />
 
                 {/* Desc */}
-                <Skeleton className="h-3 w-full" />
-                <Skeleton className="h-3 w-5/6" />
+                <Skeleton className="h-3 bg-blue-100 dark:bg-blue-900/30 w-full" />
+                <Skeleton className="h-3 bg-blue-100 dark:bg-blue-900/30 w-5/6" />
 
                 {/* CTA */}
-                <Skeleton className="h-3 w-24 mt-auto" />
+                <Skeleton className="h-3 bg-blue-100 dark:bg-blue-900/30 w-24 mt-auto" />
               </div>
             ))
           ) : quickServicesSection?.length ? (

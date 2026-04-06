@@ -12,8 +12,17 @@ import {
   Heart,
   GraduationCap,
   Truck,
-  Store,
+  Store, 
 } from "lucide-react";
+
+import {
+  UsersIcon,
+  BuildingOffice2Icon,
+  DocumentCheckIcon,
+  ChartBarIcon,
+  BuildingStorefrontIcon,
+  AcademicCapIcon,
+} from "@heroicons/react/24/outline";
 
 export const iconMap: Record<string, React.ElementType> = {
   Users: Users,
@@ -27,6 +36,12 @@ export const iconMap: Record<string, React.ElementType> = {
   GraduationCap: GraduationCap,
   Truck: Truck,
   Store: Store,
+  UsersIcon: UsersIcon,
+  BuildingOffice2Icon: BuildingOffice2Icon,
+  DocumentCheckIcon: DocumentCheckIcon,
+  ChartBarIcon: ChartBarIcon,
+  BuildingStorefrontIcon: BuildingStorefrontIcon,
+  AcademicCapIcon: AcademicCapIcon,
 };
 
 export function cn(...inputs: ClassValue[]) {

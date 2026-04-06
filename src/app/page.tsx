@@ -15,6 +15,8 @@ import {
   setImageHomepage,
   setStatistikHeroSection,
   setQuickServicesSection,
+  setNewsItemHomepage,
+  setCityStats,
   setLoading,
 } from "@/store/settingsSlice";
 import { useAppDispatch } from "@/store/hooks";
@@ -29,6 +31,8 @@ export default function Home() {
         console.log("homepage", homepage);
         dispatch(setStatistikHeroSection(homepage.data.StatistikHeroSection));
         dispatch(setQuickServicesSection(homepage.data.QuickServicesSection));
+        dispatch(setNewsItemHomepage(homepage.data.NewsItemHomepage));
+        dispatch(setCityStats(homepage?.data?.CityStats || []));
         const imgHomepage = await fetchSettingsImageHomepage();
         dispatch(setImageHomepage(imgHomepage.data));
       } catch (err) {

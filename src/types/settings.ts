@@ -25,6 +25,19 @@ export type StatistikHeroSection = {
   value: string;
 };
 
+ 
+
+export type CityStats = {
+  code: string;
+  icon: string;
+  value: number;
+  suffix: string;
+  label: string;
+  sub: string;
+  color: string;
+  bgColor: string;
+};
+
 export type QuickServicesSection = {
   icon: string;
   title: string;

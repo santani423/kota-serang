@@ -4,6 +4,8 @@ import {
   ImageHomepage,
   StatistikHeroSection,
   QuickServicesSection,
+  NewsItemHompage,
+  CityStats,
 } from "@/types/settings";
 
 export interface SettingsState {
@@ -11,6 +13,8 @@ export interface SettingsState {
   imageHomepage: ImageHomepage[];
   statistikHeroSection: StatistikHeroSection[];
   quickServicesSection: QuickServicesSection[];
+  newsItemHomepage: NewsItemHompage[];
+  cityStats: CityStats[];
   loading: boolean;
 }
 
@@ -19,6 +23,8 @@ const initialState: SettingsState = {
   imageHomepage: [],
   statistikHeroSection: [],
   quickServicesSection: [],
+  newsItemHomepage: [],
+  cityStats: [],
   loading: true,
 };
 
@@ -66,6 +72,20 @@ const settingsSlice = createSlice({
     clearQuickServicesSection: (state) => {
       state.quickServicesSection = [];
     },
+    // Reducer untuk mengupdate data news item homepage dari API
+    setNewsItemHomepage: (state, action: PayloadAction<NewsItemHompage[]>) => {
+      state.newsItemHomepage = action.payload;
+    },
+    clearNewsItemHomepage: (state) => {
+      state.newsItemHomepage = [];
+    },
+    // Reducer untuk mengupdate data city stats dari API
+    setCityStats: (state, action: PayloadAction<CityStats[]>) => {
+      state.cityStats = action.payload;
+    },
+    clearCityStats: (state) => {
+      state.cityStats = [];
+    },
   },
 });
 
@@ -79,5 +99,9 @@ export const {
   clearStatistikHeroSection,
   setQuickServicesSection,
   clearQuickServicesSection,
+  setNewsItemHomepage,
+  clearNewsItemHomepage,
+  setCityStats,
+  clearCityStats,
 } = settingsSlice.actions;
 export default settingsSlice.reducer;
