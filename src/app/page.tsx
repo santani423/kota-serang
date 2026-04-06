@@ -6,10 +6,39 @@ import HeroSection from "@/components/layout/hompage/HeroSection";
 import QuickServicesSection from "@/components/layout/hompage/QuickServicesSection";
 import NewsPreviewSection from "@/components/layout/hompage/NewsPreviewSection";
 import StatisticsSection from "@/components/layout/hompage/StatisticsSection";
-import AspirasiSection from "@/components/layout/hompage/AspirasiSection"; 
+import AspirasiSection from "@/components/layout/hompage/AspirasiSection";
+import {
+  fetchSettingsHomepage,
+  fetchSettingsImageHomepage,
+} from "@/lib/settings";
+import {
+  setImageHomepage,
+  setStatistikHeroSection,
+  setQuickServicesSection,
+  setLoading,
+} from "@/store/settingsSlice";
+import { useAppDispatch } from "@/store/hooks";
 
-export default function Home() { 
- 
+export default function Home() {
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    const getData = async () => {
+      dispatch(setLoading(true));
+      try {
+        const homepage = await fetchSettingsHomepage();
+        console.log("homepage", homepage);
+        dispatch(setStatistikHeroSection(homepage.data.StatistikHeroSection));
+        dispatch(setQuickServicesSection(homepage.data.QuickServicesSection));
+        const imgHomepage = await fetchSettingsImageHomepage();
+        dispatch(setImageHomepage(imgHomepage.data));
+      } catch (err) {
+        console.error(err);
+      } finally {
+        dispatch(setLoading(false));
+      }
+    };
+    getData();
+  }, []);
   return (
     <>
       <Template>

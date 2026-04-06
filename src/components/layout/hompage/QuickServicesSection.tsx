@@ -2,17 +2,12 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import {
-  FileText,
-  IdCard,
-  Heart,
-  GraduationCap,
-  Truck,
-  Store,
-  ArrowRight,
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { ArrowRight } from "lucide-react";
+import { useAppSelector } from "@/store/hooks";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
+import { iconMap } from "@/lib/utils";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface Service {
   icon: React.ElementType;
@@ -24,59 +19,6 @@ interface Service {
   href: string;
 }
 
-const services: Service[] = [
-  {
-    icon: FileText,
-    title: "Perizinan Online",
-    desc: "Ajukan izin usaha, IMB, dan dokumen lainnya secara digital tanpa antri.",
-    color: "text-blue-600 dark:text-blue-400",
-    bgColor: "bg-blue-50 dark:bg-blue-900/20",
-    span: "col-span-1 md:col-span-2",
-    href: "/public-services",
-  },
-  {
-    icon: IdCard,
-    title: "Kependudukan",
-    desc: "KTP, KK, Akta — semua dalam satu platform.",
-    color: "text-accent-dark dark:text-accent-light",
-    bgColor: "bg-accent-50 dark:bg-accent/10",
-    href: "/public-services",
-  },
-  {
-    icon: Heart,
-    title: "Layanan Kesehatan",
-    desc: "Jadwal Puskesmas, rujukan, dan informasi kesehatan warga.",
-    color: "text-rose-600 dark:text-rose-400",
-    bgColor: "bg-rose-50 dark:bg-rose-900/20",
-    href: "/public-services",
-  },
-  {
-    icon: GraduationCap,
-    title: "Pendidikan",
-    desc: "Pendaftaran sekolah, beasiswa, dan data pendidikan kota.",
-    color: "text-violet-600 dark:text-violet-400",
-    bgColor: "bg-violet-50 dark:bg-violet-900/20",
-    href: "/public-services",
-  },
-  {
-    icon: Truck,
-    title: "Infrastruktur",
-    desc: "Laporkan kerusakan jalan, lampu, dan fasilitas umum.",
-    color: "text-amber-600 dark:text-amber-400",
-    bgColor: "bg-amber-50 dark:bg-amber-900/20",
-    href: "/public-services",
-  },
-  {
-    icon: Store,
-    title: "UMKM & Investasi",
-    desc: "Dukung pertumbuhan ekonomi lokal dengan kemudahan perizinan UMKM.",
-    color: "text-primary-700 dark:text-primary-light",
-    bgColor: "bg-primary-50 dark:bg-primary-900/20",
-    span: "col-span-1 md:col-span-2",
-    href: "/public-services",
-  },
-];
-
 const delays = [
   "delay-100",
   "delay-200",
@@ -87,8 +29,11 @@ const delays = [
 
 export default function QuickServicesSection() {
   const sectionRef = useRef<HTMLElement>(null);
-  const theme = useAppSelector((state) => state.theme.value); 
-  
+  const theme = useAppSelector((state) => state.theme.value);
+  const { quickServicesSection, loading } = useSelector(
+    (state: RootState) => state.settings,
+  );
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -115,12 +60,16 @@ export default function QuickServicesSection() {
     >
       <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-surface`}>
         {/* Header */}
-        <div className={`flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14 bg-surface`}>
+        <div
+          className={`flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14 bg-surface`}
+        >
           <div className="reveal">
             <p className="text-xs font-mono uppercase tracking-[0.2em] text-[#22c55e] mb-3">
               — LAYANAN PUBLIK
             </p>
-            <h2 className={`text-[2.5rem] leading-[1.1] font-display font-bold   text-content`}>
+            <h2
+              className={`text-[2.5rem] leading-[1.1] font-display font-bold   text-content`}
+            >
               Semua Kebutuhan
               <br />
               <span className="gradient-title">Dalam Satu Portal</span>
@@ -138,65 +87,103 @@ export default function QuickServicesSection() {
 
         {/* Grid */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
-          {services.map((service, i) => {
-            const Icon = service.icon;
-
-            return (
-              <Link
-                key={service.title}
-                href={service.href}
-                className={`
-                  reveal-scale ${delays[i] || "delay-500"}
-                  ${service.span || "col-span-1"}
-                  group relative overflow-hidden
-                  bg-surface  
-                  border border-gray-200 dark:border-primary-800  
-                  rounded-2xl p-6 flex flex-col gap-4
-                  transform will-change-transform
-                  hover:-translate-y-1
-                  transition-transform duration-200
-                `}
+          {loading ? (
+            // 🔹 SKELETON (6 items)
+            Array.from({ length: 6 }).map((_, i) => (
+              <div
+                key={i}
+                className="col-span-1 bg-surface border border-gray-200 dark:border-primary-800 rounded-2xl p-6 flex flex-col gap-4 animate-pulse"
               >
-                {/* Background Hover (INSTANT) */}
-                <div
-                  className={`absolute inset-0 bg-white dark:bg-primary-900/60 opacity-0 group-hover: 
-                  opacity-visible transition-opacity duration-150`}
-                />
+                {/* Icon */}
+                <Skeleton className="w-12 h-12 rounded-xl" />
 
-                {/* Content wrapper biar di atas overlay */}
-                <div className="relative z-10 flex flex-col gap-4 h-full">
-                  {/* Icon */}
-                  <div
-                    className={`w-12 h-12 rounded-xl flex items-center justify-center ${service.bgColor}`}
-                  >
-                    <Icon size={22} className={service.color} />
+                {/* Title */}
+                <Skeleton className="h-4 w-32" />
+
+                {/* Desc */}
+                <Skeleton className="h-3 w-full" />
+                <Skeleton className="h-3 w-5/6" />
+
+                {/* CTA */}
+                <Skeleton className="h-3 w-24 mt-auto" />
+              </div>
+            ))
+          ) : quickServicesSection?.length ? (
+            // 🔹 DATA
+            quickServicesSection.map((service, i) => {
+              const Icon = iconMap[service.icon];
+
+              return (
+                <Link
+                  key={service.title}
+                  href={service.href}
+                  className={`
+          reveal-scale ${delays[i] || "delay-500"}
+          ${service.span || "col-span-1"}
+          group relative overflow-hidden
+          bg-surface  
+          border border-gray-200 dark:border-primary-800  
+          rounded-2xl p-6 flex flex-col gap-4
+          transform will-change-transform
+          hover:-translate-y-1
+          transition-transform duration-200
+        `}
+                >
+                  {/* Background Hover */}
+                  <div className="absolute inset-0 bg-white dark:bg-primary-900/60 opacity-0 group-hover:opacity-100 transition-opacity duration-150" />
+
+                  <div className="relative z-10 flex flex-col gap-4 h-full">
+                    {/* Icon */}
+                    <div
+                      className={`w-12 h-12 rounded-xl flex items-center justify-center ${service.bgColor}`}
+                    >
+                      {Icon ? (
+                        <Icon size={22} className={service.color} />
+                      ) : (
+                        <span className="text-xs">?</span>
+                      )}
+                    </div>
+
+                    {/* Content */}
+                    <div>
+                      <h3 className="mt-2 font-bold text-brand-hover transition-colors">
+                        {service.title}
+                      </h3>
+                      <p
+                        className={`text-sm ${
+                          theme === "dark"
+                            ? "text-slate-300"
+                            : "text-serang-muted"
+                        } leading-relaxed`}
+                      >
+                        {service.desc}
+                      </p>
+                    </div>
+
+                    {/* CTA */}
+                    <div className="mt-auto flex items-center gap-1 text-xs group-hover:text-primary-700 transition-colors duration-150">
+                      Akses Layanan
+                      <ArrowRight
+                        size={14}
+                        className="group-hover:translate-x-1 transition-transform duration-150"
+                      />
+                    </div>
                   </div>
 
-                  {/* Content */}
-                  <div>
-                     <h3 className={`mt-2 font-bold text-brand-hover transition-colors`}>
-                      {service.title}
-                    </h3>
-                    <p className={`text-sm ${theme === "dark" ? "text-slate-300" : "text-serang-muted"} leading-relaxed`}>
-                      {service.desc}
-                    </p>
-                  </div>
-
-                  {/* Arrow */}
-                  <div className={`mt-auto flex items-center gap-1 text-xs  group-hover:text-primary-700 transition-colors duration-150`}>
-                    Akses Layanan
-                    <ArrowRight
-                      size={14}
-                      className="group-hover:translate-x-1 transition-transform duration-150"
-                    />
-                  </div>
-                </div>
-
-                {/* Optional underline (tidak ganggu hover lagi) */}
-                <div className="service-link-underline" />
-              </Link>
-            );
-          })}
+                  <div className="service-link-underline" />
+                </Link>
+              );
+            })
+          ) : (
+            // 🔹 EMPTY STATE
+            <div className="col-span-full flex items-center justify-center">
+              <div className="text-center bg-surface border border-gray-200 dark:border-primary-800 rounded-2xl p-8">
+                <p className="text-sm text-serang-muted">
+                  Tidak ada layanan tersedia
+                </p>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </section>
