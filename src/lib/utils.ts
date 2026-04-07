@@ -12,7 +12,9 @@ import {
   Heart,
   GraduationCap,
   Truck,
-  Store, 
+  Store,
+  ShieldCheck,
+  BarChart,
 } from "lucide-react";
 
 import {
@@ -42,6 +44,8 @@ export const iconMap: Record<string, React.ElementType> = {
   ChartBarIcon: ChartBarIcon,
   BuildingStorefrontIcon: BuildingStorefrontIcon,
   AcademicCapIcon: AcademicCapIcon,
+  ShieldCheck: ShieldCheck,
+  BarChart: BarChart,
 };
 
 export function cn(...inputs: ClassValue[]) {

@@ -6,7 +6,7 @@ import Footer from "@/components/layout/Footer";
 import AccessibilityComponent from "@/components/layout/Accessibility/accessibility";
 import { Accessibility } from "lucide-react";
 import { useAppDispatch } from "@/store/hooks";
-import { fetchSettingsCorMenu } from "@/lib/settings";
+import { fetchSettingsCorMenu } from "@/lib/services/settingsServices";
 import { setMenu } from "@/store/settingsSlice";
 
 

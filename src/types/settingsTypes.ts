@@ -25,8 +25,6 @@ export type StatistikHeroSection = {
   value: string;
 };
 
- 
-
 export type CityStats = {
   code: string;
   icon: string;
@@ -60,6 +58,24 @@ export type NewsItemHompage = {
   featured?: boolean;
 };
 
+export type PerformanceMetrics = {
+  value: number;
+  label: string;
+  gradient: string;
+};
+
+export type ServiceFeatures = {
+  icon: string;
+  title: string;
+  desc: string;
+};
+
+export type CategoryAspirasi = {
+  code: string;
+  title: string;
+  icon: string;
+};
+
 export type SettingsStateHomePage = {
   title?: string;
   description?: string;
@@ -67,5 +83,5 @@ export type SettingsStateHomePage = {
   imageHomepage: ImageHomepage[];
   StatistikHeroSection: StatistikHeroSection[];
   QuickServicesSection: QuickServicesSection[];
-  NewsItemHompage: NewsItemHompage[];
+  PerformanceMetrics: PerformanceMetrics[];
 };

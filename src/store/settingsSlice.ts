@@ -6,7 +6,9 @@ import {
   QuickServicesSection,
   NewsItemHompage,
   CityStats,
-} from "@/types/settings";
+  PerformanceMetrics,
+  ServiceFeatures,
+} from "@/types/settingsTypes";
 
 export interface SettingsState {
   menu: CorMenu[];
@@ -15,6 +17,8 @@ export interface SettingsState {
   quickServicesSection: QuickServicesSection[];
   newsItemHomepage: NewsItemHompage[];
   cityStats: CityStats[];
+  performanceMetrics: PerformanceMetrics[];
+  serviceFeatures: ServiceFeatures[];
   loading: boolean;
 }
 
@@ -25,6 +29,8 @@ const initialState: SettingsState = {
   quickServicesSection: [],
   newsItemHomepage: [],
   cityStats: [],
+  performanceMetrics: [],
+  serviceFeatures: [],
   loading: true,
 };
 
@@ -86,6 +92,23 @@ const settingsSlice = createSlice({
     clearCityStats: (state) => {
       state.cityStats = [];
     },
+    // Reducer untuk mengupdate data performance metrics dari API
+    setPerformanceMetrics: (
+      state,
+      action: PayloadAction<PerformanceMetrics[]>,
+    ) => {
+      state.performanceMetrics = action.payload;
+    },
+    clearPerformanceMetrics: (state) => {
+      state.performanceMetrics = [];
+    },
+    // Reducer untuk mengupdate data service features dari API
+    setServiceFeatures: (state, action: PayloadAction<ServiceFeatures[]>) => {
+      state.serviceFeatures = action.payload;
+    },
+    clearServiceFeatures: (state) => {
+      state.serviceFeatures = [];
+    },
   },
 });
 
@@ -103,5 +126,9 @@ export const {
   clearNewsItemHomepage,
   setCityStats,
   clearCityStats,
+  setPerformanceMetrics,
+  clearPerformanceMetrics,
+  setServiceFeatures,
+  clearServiceFeatures,
 } = settingsSlice.actions;
 export default settingsSlice.reducer;

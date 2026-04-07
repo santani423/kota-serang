@@ -1,8 +1,10 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { use, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { fetchArticlesCategories } from "@/lib/services/articlesServices";
+import { Category } from "@/types/articlesTypes";
 
 interface Article {
   id: number;
@@ -151,16 +153,6 @@ const articles: Article[] = [
   },
 ];
 
-const allCategories = [
-  "Semua",
-  "Layanan Publik",
-  "Ekonomi",
-  "Pendidikan",
-  "Lingkungan",
-  "Infrastruktur",
-  "Sosial",
-];
-
 const categoryColors: Record<string, string> = {
   "Layanan Publik":
     "bg-accent-50 text-accent-dark dark:bg-accent/15 dark:text-accent-light",
@@ -178,6 +170,8 @@ const categoryColors: Record<string, string> = {
 export default function NewsGrid() {
   const sectionRef = useRef<HTMLElement>(null);
   const [activeCategory, setActiveCategory] = useState("Semua");
+  const [loading, setLoading] = useState(false);
+  const [allCategories, setAllCategories] = useState<Category[]>([]);
   const router = useRouter();
   const [page, setPage] = useState(1);
   const ITEMS_PER_PAGE = 6;
@@ -212,6 +206,31 @@ export default function NewsGrid() {
   const paginated = filtered.slice(0, page * ITEMS_PER_PAGE);
   const hasMore = paginated.length < filtered.length;
 
+  useEffect(() => {
+    const getData = async () => {
+      setLoading(true);
+      try {
+        const categories = await fetchArticlesCategories();
+        console.log("categories", categories);
+        setAllCategories([
+          {
+            id: 0,
+            name: "Semua",
+            style:
+              "bg-gray-100 text-gray-700 dark:bg-slate-800 dark:text-gray-400",
+            slug: "semua",
+          },
+          ...categories.data,
+        ]);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    getData();
+  }, []);
+
   return (
     <section
       ref={sectionRef}
@@ -225,21 +244,21 @@ export default function NewsGrid() {
           </h2>
 
           <div className="flex flex-wrap gap-2">
-            {allCategories.map((cat) => (
+            {allCategories.map((cat, idx) => (
               <button
-                key={cat}
+                key={idx}
                 onClick={() => {
-                  setActiveCategory(cat);
+                  setActiveCategory(cat.name);
                   setPage(1);
                 }}
                 className={`px-3.5 py-1.5 rounded-xl text-xs font-medium transition
                 ${
-                  activeCategory === cat
+                  activeCategory === cat.name
                     ? "bg-blue-600 text-white shadow"
                     : "bg-white dark:bg-slate-800 text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-white/10 hover:text-blue-600 hover:border-blue-300"
                 }`}
               >
-                {cat}
+                {cat.name}
               </button>
             ))}
           </div>
@@ -308,9 +327,9 @@ export default function NewsGrid() {
 
                 {/* Tags */}
                 <div className="mt-3 flex flex-wrap gap-1.5">
-                  {article.tags.map((tag) => (
+                  {article.tags.map((tag, idx) => (
                     <span
-                      key={tag}
+                      key={idx}
                       className="text-xs px-2 py-0.5 rounded-md bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-400"
                     >
                       #{tag}

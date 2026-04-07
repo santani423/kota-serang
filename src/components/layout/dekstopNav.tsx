@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/store";  
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import type {   SubMenu } from "@/types/settings";
+import type {   SubMenu } from "@/types/settingsTypes";
 import {
   NavigationMenu,
   NavigationMenuItem,

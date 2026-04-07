@@ -10,13 +10,13 @@ import AspirasiSection from "@/components/layout/hompage/AspirasiSection";
 import {
   fetchSettingsHomepage,
   fetchSettingsImageHomepage,
-} from "@/lib/settings";
+} from "@/lib/services/settingsServices";
 import {
   setImageHomepage,
   setStatistikHeroSection,
   setQuickServicesSection,
   setNewsItemHomepage,
-  setCityStats,
+  setCityStats,setPerformanceMetrics,setServiceFeatures,
   setLoading,
 } from "@/store/settingsSlice";
 import { useAppDispatch } from "@/store/hooks";
@@ -32,6 +32,8 @@ export default function Home() {
         dispatch(setStatistikHeroSection(homepage.data.StatistikHeroSection));
         dispatch(setQuickServicesSection(homepage.data.QuickServicesSection));
         dispatch(setNewsItemHomepage(homepage.data.NewsItemHomepage));
+        dispatch(setPerformanceMetrics(homepage.data.PerformanceMetrics));
+        dispatch(setServiceFeatures(homepage.data.ServiceFeatures));
         dispatch(setCityStats(homepage?.data?.CityStats || []));
         const imgHomepage = await fetchSettingsImageHomepage();
         dispatch(setImageHomepage(imgHomepage.data));

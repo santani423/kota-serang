@@ -2,6 +2,11 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { Clock, ShieldCheck, BarChart3, CheckCircle, Send } from "lucide-react";
+import { iconMap } from "@/lib/utils";
+import { Skeleton } from "@/components/ui/skeleton";
+import { GalleryVerticalEnd, Newspaper } from "lucide-react";
+import { RootState } from "@/store";
+import { useSelector } from "react-redux";
 
 export default function AspirasiSection() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -14,6 +19,10 @@ export default function AspirasiSection() {
     kategori: "",
   });
   const [focused, setFocused] = useState<string | null>(null);
+
+  const { serviceFeatures, loading } = useSelector(
+    (state: RootState) => state.settings,
+  );
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -85,24 +94,8 @@ export default function AspirasiSection() {
           </p>
 
           <div className="flex flex-col gap-5">
-            {[
-              {
-                icon: Clock,
-                title: "Respons 1×24 Jam",
-                desc: "Ditindaklanjuti dalam 24 jam",
-              },
-              {
-                icon: ShieldCheck,
-                title: "Identitas Terlindungi",
-                desc: "Data aman & rahasia",
-              },
-              {
-                icon: BarChart3,
-                title: "Tracking Real-time",
-                desc: "Pantau progres laporan",
-              },
-            ].map((item) => {
-              const Icon = item.icon;
+            {serviceFeatures.map((item) => {
+              const Icon = iconMap[item.icon];
               return (
                 <div key={item.title} className="flex gap-4">
                   <div className="w-10 h-10 bg-[#406A40] rounded-xl flex items-center justify-center">

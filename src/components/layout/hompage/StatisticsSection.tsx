@@ -1,15 +1,13 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import {
-  UsersIcon, 
-} from "@heroicons/react/24/outline";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { UsersIcon } from "@heroicons/react/24/outline";
+import { useAppSelector } from "@/store/hooks";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { Skeleton } from "@/components/ui/skeleton";
 import { iconMap } from "@/lib/utils";
-import { CityStats } from "@/types/settings";
+import { CityStats } from "@/types/settingsTypes";
 
 /* ================= HOOK ================= */
 function useCountUp(target: number, duration = 1800, active: boolean) {
@@ -93,7 +91,7 @@ export default function StatisticsSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const [active, setActive] = useState(false);
   const theme = useAppSelector((state) => state.theme.value);
-  const { cityStats , loading } = useSelector(
+  const { cityStats, performanceMetrics, loading } = useSelector(
     (state: RootState) => state.settings,
   );
 
@@ -149,10 +147,10 @@ export default function StatisticsSection() {
                   key={i}
                   className={`reveal delay-${Math.min(i * 100, 500)} ${theme === "dark" ? "bg-[#22304a]" : "bg-gray-100"} border ${theme === "dark" ? "border-white/10" : "border-gray-200"} rounded-2xl p-6 flex flex-col gap-4`}
                 >
-                  <Skeleton className="w-12 h-12 rounded-xl mb-2" />
-                  <Skeleton className="h-8 w-20 mb-2" />
-                  <Skeleton className="h-4 w-24 mb-1" />
-                  <Skeleton className="h-3 w-16" />
+                  <Skeleton className="w-12 bg-blue-100 dark:bg-blue-900/30 h-12 rounded-xl mb-2" />
+                  <Skeleton className="h-8 bg-blue-100 dark:bg-blue-900/30 w-20 mb-2" />
+                  <Skeleton className="h-4 bg-blue-100 dark:bg-blue-900/30 w-24 mb-1" />
+                  <Skeleton className="h-3 bg-blue-100 dark:bg-blue-900/30 w-16" />
                 </div>
               ))
             : cityStats.map((stat, i) => (
@@ -167,23 +165,7 @@ export default function StatisticsSection() {
 
         {/* PROGRESS */}
         <div className="mt-12 grid md:grid-cols-3 gap-6">
-          {[
-            {
-              label: "Realisasi APBD 2025",
-              value: 87,
-              gradient: "from-blue-500 via-indigo-500 to-emerald-400",
-            },
-            {
-              label: "Tingkat Literasi Digital",
-              value: 74,
-              gradient: "from-emerald-500 via-green-400 to-teal-300",
-            },
-            {
-              label: "Cakupan Layanan Online",
-              value: 92,
-              gradient: "from-purple-500 via-indigo-500 to-blue-500",
-            },
-          ].map(({ label, value, gradient }) => (
+          {performanceMetrics.map(({ label, value, gradient }) => (
             <div
               key={label}
               className="bg-white/10 backdrop-blur-xl rounded-2xl p-6 border border-white/20"

@@ -1,6 +1,7 @@
 import Template from "@/components/layout/template";
 import NewsHero from "@/components/layout/News/NewsHero";
 import NewsGrid from "@/components/layout/News/NewsGrid";
+import { fetchArticlesCategories } from "@/lib/services/articlesServices";
 
 import type { Metadata } from "next";
 
@@ -14,7 +15,7 @@ export default function NewsPage() {
     <>
       <Template>
         <NewsHero />
-        <NewsGrid /> 
+        <NewsGrid />
       </Template>
     </>
   );
