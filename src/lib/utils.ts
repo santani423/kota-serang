@@ -51,3 +51,17 @@ export const iconMap: Record<string, React.ElementType> = {
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
+
+export function formatDateToMMDDYYYY(dateString: string | undefined): string {
+  if (!dateString) {
+    return '';
+  }
+  const date = new Date(dateString);
+  if (isNaN(date.getTime())) {
+    return '';
+  }
+  const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+  const day = String(date.getUTCDate()).padStart(2, '0');
+  const year = date.getUTCFullYear();
+  return `${month}-${day}-${year}`;
+}

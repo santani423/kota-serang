@@ -3,8 +3,8 @@
 import React, { use, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { fetchArticlesCategories } from "@/lib/services/articlesServices";
-import { Category } from "@/types/articlesTypes";
+import { fetchArticlesCategories,fetchArticles, fetchArticlesRandom } from "@/lib/services/articlesServices";
+import { Category,Articles } from "@/types/articlesTypes";
 
 interface Article {
   id: number;
@@ -172,6 +172,8 @@ export default function NewsGrid() {
   const [activeCategory, setActiveCategory] = useState("Semua");
   const [loading, setLoading] = useState(false);
   const [allCategories, setAllCategories] = useState<Category[]>([]);
+  const [allArticles, setAllArticles] = useState<Articles[]>([]);
+  const [randomArticles, setRandomArticles] = useState<Articles>({} as Articles);
   const router = useRouter();
   const [page, setPage] = useState(1);
   const ITEMS_PER_PAGE = 6;
@@ -210,6 +212,13 @@ export default function NewsGrid() {
     const getData = async () => {
       setLoading(true);
       try {
+        const articles = await fetchArticles();
+        console.log("fetchArticles", articles);
+        setAllArticles(articles.data);
+        
+        const randomArticles = await fetchArticlesRandom();
+        setRandomArticles(randomArticles.data);
+
         const categories = await fetchArticlesCategories();
         console.log("categories", categories);
         setAllCategories([
@@ -264,9 +273,9 @@ export default function NewsGrid() {
           </div>
         </div>
 
-        {/* Grid */}
+        {/* Grid */}  
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {paginated.map((article, i) => (
+          {allArticles.map((article, i) => (
             <article
               key={article.id}
               onClick={handleClick}
@@ -276,7 +285,7 @@ export default function NewsGrid() {
               {/* Image */}
               <div className="relative aspect-[16/10] overflow-hidden">
                 <img
-                  src={article.image}
+                  src={article.featured_image}
                   alt={article.alt}
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
@@ -286,11 +295,11 @@ export default function NewsGrid() {
                 <div className="absolute top-3 left-3">
                   <span
                     className={`text-xs font-semibold px-2.5 py-1 rounded-full ${
-                      categoryColors[article.category] ||
+                      categoryColors[article.categories?.[0]?.style] ||
                       "bg-gray-100 text-gray-700"
                     }`}
                   >
-                    {article.category}
+                    {article.categories?.[0]?.name}
                   </span>
                 </div>
               </div>
@@ -298,9 +307,9 @@ export default function NewsGrid() {
               {/* Content */}
               <div className="p-5 flex flex-col flex-1">
                 <div className="flex items-center gap-3 text-xs text-gray-500 dark:text-gray-400 mb-3">
-                  <span>{article.date}</span>
+                  <span>{article.created_at}</span>
                   <span>·</span>
-                  <span>{article.readTime}</span>
+                  <span>{article.created_at}</span>
                 </div>
 
                 <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-2.5 leading-snug group-hover:text-blue-600 transition line-clamp-2">
@@ -314,7 +323,7 @@ export default function NewsGrid() {
                 {/* Footer */}
                 <div className="mt-4 pt-4 border-t border-gray-200 dark:border-white/10 flex justify-between items-center">
                   <span className="text-xs text-gray-500 dark:text-gray-400 truncate max-w-[120px]">
-                    {article.author}
+                    {article.author?.name}
                   </span>
 
                   <Link
@@ -332,7 +341,7 @@ export default function NewsGrid() {
                       key={idx}
                       className="text-xs px-2 py-0.5 rounded-md bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-400"
                     >
-                      #{tag}
+                      #{tag?.name || "tag"}
                     </span>
                   ))}
                 </div>
