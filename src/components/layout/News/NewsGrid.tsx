@@ -123,80 +123,100 @@ export default function NewsGrid() {
 
         {/* Grid */}  
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {allArticles.map((article: any, i: number) => (
-            <article
-              key={article.id}
-              onClick={handleClick}
-              style={{ transitionDelay: `${i * 80}ms` }}
-              className="reveal cursor-pointer opacity-0 translate-y-6 transition-all duration-700 group bg-white dark:bg-slate-800 border border-gray-200 dark:border-white/10 rounded-2xl overflow-hidden flex flex-col hover:shadow-md"
-            >
-              {/* Image */}
-              <div className="relative aspect-[16/10] overflow-hidden">
-                <img
-                  src={article.featured_image || article.image}
-                  alt={article.alt}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-
-                <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition" />
-
-                <div className="absolute top-3 left-3">
-                  <span
-                    className={`text-xs font-semibold px-2.5 py-1 rounded-full ${
-                      categoryColors[
-                        article.categories?.[0]?.style || article.category
-                      ] || "bg-gray-100 text-gray-700"
-                    }`}
-                  >
-                    {article.categories?.[0]?.name || article.category}
-                  </span>
+          {loading
+            ? Array.from({ length: 6 }).map((_, i) => (
+                <div key={i} className="reveal opacity-100 translate-y-0">
+                  <Skeleton className="h-[220px] w-full rounded-2xl mb-4" />
+                  <div className="px-2">
+                    <Skeleton className="h-4 bg-blue-100 dark:bg-blue-900/30 w-1/2 mb-2" />
+                    <Skeleton className="h-6 bg-blue-100 dark:bg-blue-900/30 w-full mb-2" />
+                    <Skeleton className="h-3 bg-blue-100 dark:bg-blue-900/30 w-3/4 mb-2" />
+                    <Skeleton className="h-3 bg-blue-100 dark:bg-blue-900/30 w-1/2 mb-4" />
+                    <div className="flex gap-2 mb-2">
+                      <Skeleton className="h-3 bg-blue-100 dark:bg-blue-900/30 w-12 rounded" />
+                      <Skeleton className="h-3 bg-blue-100 dark:bg-blue-900/30 w-16 rounded" />
+                    </div>
+                    <div className="flex gap-2">
+                      <Skeleton className="h-3 bg-blue-100 dark:bg-blue-900/30 w-10 rounded" />
+                      <Skeleton className="h-3 bg-blue-100 dark:bg-blue-900/30 w-8 rounded" />
+                    </div>
+                  </div>
                 </div>
-              </div>
+              ))
+            : allArticles.map((article: any, i: number) => (
+                <article
+                  key={article.id}
+                  onClick={handleClick}
+                  style={{ transitionDelay: `${i * 80}ms` }}
+                  className="reveal cursor-pointer opacity-0 translate-y-6 transition-all duration-700 group bg-white dark:bg-slate-800 border border-gray-200 dark:border-white/10 rounded-2xl overflow-hidden flex flex-col hover:shadow-md"
+                >
+                  {/* Image */}
+                  <div className="relative aspect-[16/10] overflow-hidden">
+                    <img
+                      src={article.featured_image || article.image}
+                      alt={article.alt}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
 
-              {/* Content */}
-              <div className="p-5 flex flex-col flex-1">
-                <div className="flex items-center gap-3 text-xs text-gray-500 dark:text-gray-400 mb-3">
-                  <span>{formatDateToMMDDYYYY(article.created_at || article.date)}</span>
-                  <span>·</span>
-                  <span>{article.readTime || ""}</span>
-                </div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition" />
 
-                <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-2.5 leading-snug group-hover:text-blue-600 transition line-clamp-2">
-                  {article.title}
-                </h3>
+                    <div className="absolute top-3 left-3">
+                      <span
+                        className={`text-xs font-semibold px-2.5 py-1 rounded-full ${
+                          categoryColors[
+                            article.categories?.[0]?.style || article.category
+                          ] || "bg-gray-100 text-gray-700"
+                        }`}
+                      >
+                        {article.categories?.[0]?.name || article.category}
+                      </span>
+                    </div>
+                  </div>
 
-                <p className="text-xs text-gray-600 dark:text-gray-400 flex-1 line-clamp-3">
-                  {article.excerpt}
-                </p>
+                  {/* Content */}
+                  <div className="p-5 flex flex-col flex-1">
+                    <div className="flex items-center gap-3 text-xs text-gray-500 dark:text-gray-400 mb-3">
+                      <span>{formatDateToMMDDYYYY(article.created_at || article.date)}</span>
+                      <span>·</span>
+                      <span>{article.readTime || ""}</span>
+                    </div>
 
-                {/* Footer */}
-                <div className="mt-4 pt-4 border-t border-gray-200 dark:border-white/10 flex justify-between items-center">
-                  <span className="text-xs text-gray-500 dark:text-gray-400 truncate max-w-[120px]">
-                    {article.author?.name || article.author}
-                  </span>
+                    <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-2.5 leading-snug group-hover:text-blue-600 transition line-clamp-2">
+                      {article.title}
+                    </h3>
 
-                  <Link
-                    href="/news"
-                    className="text-xs font-semibold text-blue-600 hover:underline"
-                  >
-                    Baca →
-                  </Link>
-                </div>
+                    <p className="text-xs text-gray-600 dark:text-gray-400 flex-1 line-clamp-3">
+                      {article.excerpt}
+                    </p>
 
-                {/* Tags */}
-                <div className="mt-3 flex flex-wrap gap-1.5">
-                  {(article.tags || []).map((tag: any, idx: number) => (
-                    <span
-                      key={idx}
-                      className="text-xs px-2 py-0.5 rounded-md bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-400"
-                    >
-                      #{tag?.name || tag || "tag"}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </article>
-          ))}
+                    {/* Footer */}
+                    <div className="mt-4 pt-4 border-t border-gray-200 dark:border-white/10 flex justify-between items-center">
+                      <span className="text-xs text-gray-500 dark:text-gray-400 truncate max-w-[120px]">
+                        {article.author?.name || article.author}
+                      </span>
+
+                      <Link
+                        href="/news"
+                        className="text-xs font-semibold text-blue-600 hover:underline"
+                      >
+                        Baca →
+                      </Link>
+                    </div>
+
+                    {/* Tags */}
+                    <div className="mt-3 flex flex-wrap gap-1.5">
+                      {(article.tags || []).map((tag: any, idx: number) => (
+                        <span
+                          key={idx}
+                          className="text-xs px-2 py-0.5 rounded-md bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-400"
+                        >
+                          #{tag?.name || tag || "tag"}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </article>
+              ))}
         </div>
 
         {/* Empty */}
