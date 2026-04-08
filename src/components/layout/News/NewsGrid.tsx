@@ -5,154 +5,9 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { fetchArticlesCategories,fetchArticles } from "@/lib/services/articlesServices";
 import { Category,Articles } from "@/types/articlesTypes";
+import { Skeleton } from "@/components/ui/skeleton";
 import { formatDateToMMDDYYYY } from "@/lib/utils";
-
-interface Article {
-  id: number;
-  category: string;
-  title: string;
-  excerpt: string;
-  date: string;
-  author: string;
-  readTime: string;
-  image: string;
-  alt: string;
-  tags: string[];
-}
-
-const articles: Article[] = [
-  {
-    id: 1,
-    category: "Layanan Publik",
-    title:
-      "Sistem Antrian Digital Puskesmas Kini Terintegrasi Portal SerangKota",
-    excerpt:
-      "Warga kini dapat mendaftar antrian Puskesmas dari rumah melalui portal resmi kota tanpa perlu datang pagi-pagi.",
-    date: "22 Mar 2026",
-    author: "Dinas Kesehatan",
-    readTime: "3 menit",
-    image:
-      "https://img.rocket.new/generatedImages/rocket_gen_img_11dd292e2-1764667687408.png",
-    alt: "Petugas kesehatan menggunakan tablet untuk sistem antrian digital di Puskesmas modern",
-    tags: ["Kesehatan", "Digital"],
-  },
-  {
-    id: 2,
-    category: "Ekonomi",
-    title:
-      "Pasar UMKM Digital Serang Catat Transaksi Rp 4,2 Miliar di Kuartal I 2026",
-    excerpt:
-      "Program digitalisasi UMKM yang diluncurkan awal tahun berhasil meningkatkan omzet pedagang lokal secara signifikan.",
-    date: "20 Mar 2026",
-    author: "Dinas Perdagangan",
-    readTime: "4 menit",
-    image:
-      "https://img.rocket.new/generatedImages/rocket_gen_img_1d5b361fd-1774649961794.png",
-    alt: "Pedagang UMKM menggunakan smartphone untuk transaksi digital di pasar modern Kota Serang",
-    tags: ["UMKM", "Ekonomi"],
-  },
-  {
-    id: 3,
-    category: "Pendidikan",
-    title:
-      "Serang Raih Penghargaan Kota Literasi Digital Terbaik Tingkat Provinsi Banten",
-    excerpt:
-      "Inovasi program literasi digital yang menjangkau 120 sekolah di seluruh kecamatan mendapat pengakuan provinsi.",
-    date: "18 Mar 2026",
-    author: "Dinas Pendidikan",
-    readTime: "3 menit",
-    image:
-      "https://img.rocket.new/generatedImages/rocket_gen_img_1f995b44c-1774649960096.png",
-    alt: "Siswa sekolah dasar menggunakan komputer di laboratorium digital modern Kota Serang",
-    tags: ["Pendidikan", "Penghargaan"],
-  },
-  {
-    id: 4,
-    category: "Lingkungan",
-    title: "Program Serang Hijau: 10.000 Pohon Ditanam di Seluruh Kecamatan",
-    excerpt:
-      "Gerakan penghijauan masif melibatkan komunitas warga, sekolah, dan instansi pemerintah untuk Serang yang lebih hijau.",
-    date: "15 Mar 2026",
-    author: "Dinas Lingkungan Hidup",
-    readTime: "2 menit",
-    image:
-      "https://img.rocket.new/generatedImages/rocket_gen_img_111a6e9b2-1774649959594.png",
-    alt: "Komunitas warga menanam pohon di taman kota sebagai bagian program Serang Hijau",
-    tags: ["Lingkungan", "Komunitas"],
-  },
-  {
-    id: 5,
-    category: "Infrastruktur",
-    title: "Pembangunan Jalan Lingkar Timur Serang Capai Progress 68%",
-    excerpt:
-      "Proyek strategis yang akan memperlancar konektivitas antar kecamatan ini ditargetkan selesai akhir 2026.",
-    date: "12 Mar 2026",
-    author: "Dinas PUPR",
-    readTime: "4 menit",
-    image:
-      "https://img.rocket.new/generatedImages/rocket_gen_img_1227842d5-1770821562771.png",
-    alt: "Proses pembangunan jalan raya baru dengan alat berat dan pekerja konstruksi di Kota Serang",
-    tags: ["Infrastruktur", "Pembangunan"],
-  },
-  {
-    id: 6,
-    category: "Sosial",
-    title: "Bantuan Sosial Langsung Tunai Tahap II Disalurkan ke 45.000 KPM",
-    excerpt:
-      "Pemerintah Kota Serang menyalurkan BST tahap kedua kepada keluarga penerima manfaat melalui rekening bank.",
-    date: "10 Mar 2026",
-    author: "Dinas Sosial",
-    readTime: "3 menit",
-    image:
-      "https://img.rocket.new/generatedImages/rocket_gen_img_131be2a6d-1774649961771.png",
-    alt: "Petugas sosial membantu warga dalam proses penerimaan bantuan sosial di kantor kelurahan",
-    tags: ["Sosial", "Bantuan"],
-  },
-  {
-    id: 7,
-    category: "Ekonomi",
-    title: "Serang Investment Forum 2026 Tarik Minat 32 Investor Nasional",
-    excerpt:
-      "Forum investasi tahunan kota Serang berhasil menarik komitmen investasi senilai Rp 1,8 triliun di berbagai sektor.",
-    date: "8 Mar 2026",
-    author: "DPMPTSP Kota Serang",
-    readTime: "5 menit",
-    image:
-      "https://img.rocket.new/generatedImages/rocket_gen_img_130a039a2-1765172518149.png",
-    alt: "Para eksekutif dan investor duduk dalam forum diskusi bisnis di ruang konferensi modern",
-    tags: ["Investasi", "Ekonomi"],
-  },
-  {
-    id: 8,
-    category: "Infrastruktur",
-    title:
-      "RSUD Kota Serang Tambah 3 Gedung Baru dengan Kapasitas 200 Tempat Tidur",
-    excerpt:
-      "Perluasan fasilitas rumah sakit daerah ini merupakan bagian dari investasi kesehatan jangka panjang pemerintah kota.",
-    date: "5 Mar 2026",
-    author: "RSUD Kota Serang",
-    readTime: "3 menit",
-    image:
-      "https://img.rocket.new/generatedImages/rocket_gen_img_1008f3ef7-1767606960262.png",
-    alt: "Gedung rumah sakit modern yang baru selesai dibangun dengan arsitektur kontemporer",
-    tags: ["Kesehatan", "Infrastruktur"],
-  },
-  {
-    id: 9,
-    category: "Layanan Publik",
-    title:
-      "E-Government Award 2026: Serang Masuk 10 Kota Terbaik Transformasi Digital",
-    excerpt:
-      "Penghargaan nasional ini mengakui upaya Pemkot Serang dalam digitalisasi layanan publik selama dua tahun terakhir.",
-    date: "2 Mar 2026",
-    author: "Humas Pemkot Serang",
-    readTime: "4 menit",
-    image:
-      "https://img.rocket.new/generatedImages/rocket_gen_img_13ed0a2d2-1774649961452.png",
-    alt: "Tim pemerintah kota menerima penghargaan e-government di acara penghargaan nasional",
-    tags: ["Penghargaan", "Digital"],
-  },
-];
+ 
 
 const categoryColors: Record<string, string> = {
   "Layanan Publik":
@@ -200,11 +55,7 @@ export default function NewsGrid() {
 
     if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
-  }, []);
-
-
- 
- 
+  }, []); 
 
   useEffect(() => {
     const getData = async () => {
@@ -217,8 +68,7 @@ export default function NewsGrid() {
         setTotalArticles(articles.data.total);
         setToArticles(articles.data.to);
 
-        const categories = await fetchArticlesCategories();
-        console.log("categories", categories);
+        const categories = await fetchArticlesCategories(); 
         setAllCategories([
           {
             id: 0,
