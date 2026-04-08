@@ -29,8 +29,14 @@ export function useArticlesCategories() {
 }
 // End Fetch Articles
 //   Fetch Articles
-export const fetchArticles = async () => {
-  const url = `${API_BASE_URL}`;
+export const fetchArticles = async ({ page, category }: { page?: number; category?: string } = {}) => {
+  let url = `${API_BASE_URL}`;
+  const params = new URLSearchParams();
+  if (page) params.append("page", String(page));
+  if (category) params.append("category", category);
+  if ([...params].length > 0) {
+    url += `?${params.toString()}`;
+  }
   try {
     const res = await fetch(url);
     if (!res.ok) {

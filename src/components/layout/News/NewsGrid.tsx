@@ -1,10 +1,11 @@
 "use client";
 
-import React, { use, useEffect, useRef, useState } from "react";
+import  {useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { fetchArticlesCategories,fetchArticles, fetchArticlesRandom } from "@/lib/services/articlesServices";
+import { fetchArticlesCategories,fetchArticles } from "@/lib/services/articlesServices";
 import { Category,Articles } from "@/types/articlesTypes";
+import { formatDateToMMDDYYYY } from "@/lib/utils";
 
 interface Article {
   id: number;
@@ -172,11 +173,12 @@ export default function NewsGrid() {
   const [activeCategory, setActiveCategory] = useState("Semua");
   const [loading, setLoading] = useState(false);
   const [allCategories, setAllCategories] = useState<Category[]>([]);
-  const [allArticles, setAllArticles] = useState<Articles[]>([]);
-  const [randomArticles, setRandomArticles] = useState<Articles>({} as Articles);
+  const [allArticles, setAllArticles] = useState<Articles[]>([]); 
+  const [totalArticles, setTotalArticles] = useState(0);
+  const [toArticles, setToArticles] = useState(0);
+  const [hasMore, setHasMore] = useState(0);
   const router = useRouter();
-  const [page, setPage] = useState(1);
-  const ITEMS_PER_PAGE = 6;
+  const [page, setPage] = useState(1); 
   const handleClick = () => {
     router.push("/news/detail");
   };
@@ -200,24 +202,20 @@ export default function NewsGrid() {
     return () => observer.disconnect();
   }, []);
 
-  const filtered =
-    activeCategory === "Semua"
-      ? articles
-      : articles.filter((a) => a.category === activeCategory);
 
-  const paginated = filtered.slice(0, page * ITEMS_PER_PAGE);
-  const hasMore = paginated.length < filtered.length;
+ 
+ 
 
   useEffect(() => {
     const getData = async () => {
       setLoading(true);
       try {
-        const articles = await fetchArticles();
+        const articles = await fetchArticles({ page, category: activeCategory === "Semua" ? undefined : activeCategory });
         console.log("fetchArticles", articles);
-        setAllArticles(articles.data);
-        
-        const randomArticles = await fetchArticlesRandom();
-        setRandomArticles(randomArticles.data);
+        // Pastikan allArticles selalu array
+        setAllArticles(Array.isArray(articles.data) ? articles.data : articles.data?.data || []);
+        setTotalArticles(articles.data.total);
+        setToArticles(articles.data.to);
 
         const categories = await fetchArticlesCategories();
         console.log("categories", categories);
@@ -275,7 +273,7 @@ export default function NewsGrid() {
 
         {/* Grid */}  
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {allArticles.map((article, i) => (
+          {allArticles.map((article: any, i: number) => (
             <article
               key={article.id}
               onClick={handleClick}
@@ -285,7 +283,7 @@ export default function NewsGrid() {
               {/* Image */}
               <div className="relative aspect-[16/10] overflow-hidden">
                 <img
-                  src={article.featured_image}
+                  src={article.featured_image || article.image}
                   alt={article.alt}
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
@@ -295,11 +293,12 @@ export default function NewsGrid() {
                 <div className="absolute top-3 left-3">
                   <span
                     className={`text-xs font-semibold px-2.5 py-1 rounded-full ${
-                      categoryColors[article.categories?.[0]?.style] ||
-                      "bg-gray-100 text-gray-700"
+                      categoryColors[
+                        article.categories?.[0]?.style || article.category
+                      ] || "bg-gray-100 text-gray-700"
                     }`}
                   >
-                    {article.categories?.[0]?.name}
+                    {article.categories?.[0]?.name || article.category}
                   </span>
                 </div>
               </div>
@@ -307,9 +306,9 @@ export default function NewsGrid() {
               {/* Content */}
               <div className="p-5 flex flex-col flex-1">
                 <div className="flex items-center gap-3 text-xs text-gray-500 dark:text-gray-400 mb-3">
-                  <span>{article.created_at}</span>
+                  <span>{formatDateToMMDDYYYY(article.created_at || article.date)}</span>
                   <span>·</span>
-                  <span>{article.created_at}</span>
+                  <span>{article.readTime || ""}</span>
                 </div>
 
                 <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-2.5 leading-snug group-hover:text-blue-600 transition line-clamp-2">
@@ -323,7 +322,7 @@ export default function NewsGrid() {
                 {/* Footer */}
                 <div className="mt-4 pt-4 border-t border-gray-200 dark:border-white/10 flex justify-between items-center">
                   <span className="text-xs text-gray-500 dark:text-gray-400 truncate max-w-[120px]">
-                    {article.author?.name}
+                    {article.author?.name || article.author}
                   </span>
 
                   <Link
@@ -336,12 +335,12 @@ export default function NewsGrid() {
 
                 {/* Tags */}
                 <div className="mt-3 flex flex-wrap gap-1.5">
-                  {article.tags.map((tag, idx) => (
+                  {(article.tags || []).map((tag: any, idx: number) => (
                     <span
                       key={idx}
                       className="text-xs px-2 py-0.5 rounded-md bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-400"
                     >
-                      #{tag?.name || "tag"}
+                      #{tag?.name || tag || "tag"}
                     </span>
                   ))}
                 </div>
@@ -351,7 +350,7 @@ export default function NewsGrid() {
         </div>
 
         {/* Empty */}
-        {filtered.length === 0 && (
+        {allArticles.length === 0 && (
           <div className="text-center py-20">
             <p className="text-gray-900 dark:text-white font-semibold">
               Belum Ada Berita
@@ -362,8 +361,8 @@ export default function NewsGrid() {
           </div>
         )}
 
-        {/* Load More */}
-        {hasMore && (
+     
+        
           <div className="text-center mt-12">
             <button
               onClick={() => setPage((p) => p + 1)}
@@ -372,12 +371,12 @@ export default function NewsGrid() {
               Muat Lebih Banyak
             </button>
           </div>
-        )}
+    
 
         {/* Info */}
         <div className="text-center mt-6">
           <p className="text-xs text-gray-500">
-            Menampilkan {paginated.length} dari {filtered.length} berita
+            Menampilkan {toArticles} dari {totalArticles} berita
           </p>
         </div>
       </div>
