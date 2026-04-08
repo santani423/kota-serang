@@ -4,7 +4,6 @@ const API_BASE_URL =
   process.env.API_BASE_URL ||
   "https://api-cms-kota-serang.santani.dev/api/" + "articles";
 
-
 //   Fetch Categories
 export const fetchArticlesCategories = async () => {
   const url = `${API_BASE_URL}/categories`;
@@ -29,7 +28,10 @@ export function useArticlesCategories() {
 }
 // End Fetch Articles
 //   Fetch Articles
-export const fetchArticles = async ({ page, category }: { page?: number; category?: string } = {}) => {
+export const fetchArticles = async ({
+  page,
+  category,
+}: { page?: number; category?: string } = {}) => {
   let url = `${API_BASE_URL}`;
   const params = new URLSearchParams();
   if (page) params.append("page", String(page));
@@ -50,10 +52,10 @@ export const fetchArticles = async ({ page, category }: { page?: number; categor
     throw error;
   }
 };
-export function useArticles() {
+export function useArticles(page?: number, category?: string) {
   return useQuery({
-    queryKey: ["articles"],
-    queryFn: fetchArticles,
+    queryKey: ["articles", page, category],
+    queryFn: () => fetchArticles({ page, category }),
   });
 }
 // End Fetch Articles
