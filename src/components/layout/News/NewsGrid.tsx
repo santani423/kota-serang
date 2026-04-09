@@ -3,26 +3,37 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { fetchArticlesCategories, fetchArticles } from "@/lib/services/articlesServices";
+import {
+  fetchArticlesCategories,
+  fetchArticles,
+} from "@/lib/services/articlesServices";
 import { Category, Articles } from "@/types/articlesTypes";
 import { Skeleton } from "@/components/ui/skeleton";
 import { formatDateToMMDDYYYY } from "@/lib/utils";
- 
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Calendar, ArrowRight } from "lucide-react";
+import Image from "next/image";
+import {
+  Card,
+  CardAction,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
-const categoryColors: Record<string, string> = {
-  "Layanan Publik":
-    "bg-accent-50 text-accent-dark dark:bg-accent/15 dark:text-accent-light",
-  Ekonomi:
-    "bg-amber-50 text-amber-700 dark:bg-amber-900/20 dark:text-amber-300",
-  Pendidikan:
-    "bg-violet-50 text-violet-700 dark:bg-violet-900/20 dark:text-violet-300",
-  Lingkungan:
-    "bg-green-50 text-green-700 dark:bg-green-900/20 dark:text-green-300",
-  Infrastruktur:
-    "bg-orange-50 text-orange-700 dark:bg-orange-900/20 dark:text-orange-300",
-  Sosial: "bg-rose-50 text-rose-700 dark:bg-rose-900/20 dark:text-rose-300",
+// Gunakan class utuh agar Tailwind compiler tidak melewatkannya
+const getCategoryStyle = (category: string) => {
+  const styles: Record<string, string> = {
+    Pendidikan: "bg-blue-100 text-blue-700",
+    Infrastruktur: "bg-orange-100 text-orange-700",
+    Ekonomi: "bg-violet-100 text-violet-700",
+    Teknologi: "bg-primary/10 text-primary",
+    Kesehatan: "bg-rose-100 text-rose-700",
+  };
+  return styles[category] || "bg-gray-100 text-gray-700";
 };
-
 
 export default function NewsGrid() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -46,23 +57,21 @@ export default function NewsGrid() {
             entry.target
               .querySelectorAll(".reveal")
               .forEach((el) =>
-                el.classList.add("opacity-100", "translate-y-0")
+                el.classList.add("opacity-100", "translate-y-0"),
               );
           }
         });
       },
-      { threshold: 0.05 }
+      { threshold: 0.05 },
     );
     if (sectionRef.current) observer.observe(sectionRef.current);
 
     // Fallback: jika observer gagal, paksa reveal setelah 1 detik
     fallbackTimeout = setTimeout(() => {
       if (sectionRef.current) {
-        sectionRef.current
-          .querySelectorAll(".reveal")
-          .forEach((el) => {
-            el.classList.add("opacity-100", "translate-y-0");
-          });
+        sectionRef.current.querySelectorAll(".reveal").forEach((el) => {
+          el.classList.add("opacity-100", "translate-y-0");
+        });
       }
     }, 1000);
 
@@ -81,7 +90,8 @@ export default function NewsGrid() {
           {
             id: 0,
             name: "Semua",
-            style: "bg-gray-100 text-gray-700 dark:bg-slate-800 dark:text-gray-400",
+            style:
+              "bg-gray-100 text-gray-700 dark:bg-slate-800 dark:text-gray-400",
             slug: "semua",
           },
           ...res.data,
@@ -91,7 +101,8 @@ export default function NewsGrid() {
           {
             id: 0,
             name: "Semua",
-            style: "bg-gray-100 text-gray-700 dark:bg-slate-800 dark:text-gray-400",
+            style:
+              "bg-gray-100 text-gray-700 dark:bg-slate-800 dark:text-gray-400",
             slug: "semua",
           },
         ]);
@@ -104,10 +115,14 @@ export default function NewsGrid() {
   const fetchData = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await fetchArticles({ page, perPage: 6, category: activeCategory === "Semua" ? undefined : activeCategory });
+      const res = await fetchArticles({
+        page,
+        perPage: 6,
+        category: activeCategory === "Semua" ? undefined : activeCategory,
+      });
       const dataArr = Array.isArray(res.data) ? res.data : res.data?.data || [];
-      console.log("dataArr",res);
-      
+      console.log("dataArr", res);
+
       setTotalArticles(res.total_data || 0);
       setToArticles(res.data.to || dataArr.length);
       setHasMore(res.data.to < res.total_data);
@@ -127,17 +142,27 @@ export default function NewsGrid() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, activeCategory]);
 
-  // Reset page when category changes
+  // Reset page dan articles ketika kategori berubah
   useEffect(() => {
+    setArticles([]); // reset grid agar tidak menampilkan data lama
     setPage(1);
   }, [activeCategory]);
 
+  useEffect(() => {
+    console.log("articlesarticles", articles);
+  }, [articles]);
+
   return (
-    <section ref={sectionRef} className="py-14 lg:py-20 bg-gray-50 dark:bg-slate-900">
+    <section
+      ref={sectionRef}
+      className="py-14 lg:py-20 bg-gray-50 dark:bg-slate-900"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="reveal opacity-0 translate-y-6 transition-all duration-700 flex flex-col sm:flex-row justify-between gap-5 mb-10">
-          <h2 className="text-lg font-bold text-gray-900 dark:text-white">Semua Berita</h2>
+          <h2 className="text-lg font-bold text-gray-900 dark:text-white">
+            Semua Berita
+          </h2>
           <div className="flex flex-wrap gap-2">
             {categories.map((cat, idx) => (
               <button
@@ -156,7 +181,7 @@ export default function NewsGrid() {
         </div>
 
         {/* Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 min-h-[300px]">
           {loading
             ? Array.from({ length: 6 }).map((_, i) => (
                 <div key={i} className="reveal opacity-100 translate-y-0">
@@ -178,78 +203,64 @@ export default function NewsGrid() {
                 </div>
               ))
             : articles.map((article: any, i: number) => (
-                <article
+                <Link
                   key={article.id}
-                  onClick={() => router.push(`/news/detail?id=${article.id}`)}
-                  style={{ transitionDelay: `${i * 80}ms` }}
-                  className="reveal cursor-pointer opacity-0 translate-y-6 transition-all duration-700 group bg-white dark:bg-slate-800 border border-gray-200 dark:border-white/10 rounded-2xl overflow-hidden flex flex-col hover:shadow-md"
+                  href={`/news/${article.id}`} // Dinamis berdasarkan ID
+                  className="group flex flex-col bg-white rounded-2xl overflow-hidden border border-slate-200 hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
                 >
-                  {/* Image */}
-                  <div className="relative aspect-[16/10] overflow-hidden">
+                  {/* Thumbnail Container */}
+                  <div className="relative aspect-[16/9] overflow-hidden">
                     <img
-                      src={article.featured_image || article.image}
-                      alt={article.alt}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      src={article.featured_image}
+                      alt={article.slug}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition" />
-                    <div className="absolute top-3 left-3">
+                    <div className="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors" />
+
+                    {/* Category Badge */}
+                    <div className="absolute top-4 left-4">
                       <span
-                        className={`text-xs font-semibold px-2.5 py-1 rounded-full ${
-                          categoryColors[
-                            article.categories?.[0]?.style || article.category
-                          ] || "bg-gray-100 text-gray-700"
-                        }`}
+                        className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider shadow-sm ${getCategoryStyle(article.categories.length > 0 ? article.categories[0].name : "Uncategorized")}`}
                       >
-                        {article.categories?.[0]?.name || article.category}
+                        {article.categories.length > 0 ? article.categories[0].name : "Uncategorized"}
                       </span>
                     </div>
                   </div>
-                  {/* Content */}
-                  <div className="p-5 flex flex-col flex-1">
-                    <div className="flex items-center gap-3 text-xs text-gray-500 dark:text-gray-400 mb-3">
-                      <span>{formatDateToMMDDYYYY(article.created_at || article.date)}</span>
-                      <span>·</span>
-                      <span>{article.readTime || ""}</span>
+
+                  {/* Content Container */}
+                  <div className="p-6 flex flex-col flex-grow">
+                    <div className="flex items-center gap-3 text-slate-400 text-xs mb-3">
+                      <span>{article.date}</span>
+                      <span className="w-1 h-1 rounded-full bg-slate-300" />
+                      <span>{article.readTime} Baca</span>
                     </div>
-                    <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-2.5 leading-snug group-hover:text-blue-600 transition line-clamp-2">
+
+                    <h3 className="font-bold text-content text-lg leading-tight mb-4 group-hover:text-primary transition-colors line-clamp-2">
                       {article.title}
                     </h3>
-                    <p className="text-xs text-gray-600 dark:text-gray-400 flex-1 line-clamp-3">
-                      {article.excerpt}
-                    </p>
-                    {/* Footer */}
-                    <div className="mt-4 pt-4 border-t border-gray-200 dark:border-white/10 flex justify-between items-center">
-                      <span className="text-xs text-gray-500 dark:text-gray-400 truncate max-w-[120px]">
-                        {article.author?.name || article.author}
+
+                    <div className="mt-auto pt-4 border-t border-slate-100 flex items-center justify-between">
+                      <span className="text-primary text-xs font-bold uppercase tracking-wide group-hover:underline">
+                        Baca Selengkapnya
                       </span>
-                      <Link
-                        href="/news"
-                        className="text-xs font-semibold text-blue-600 hover:underline"
-                      >
-                        Baca →
-                      </Link>
-                    </div>
-                    {/* Tags */}
-                    <div className="mt-3 flex flex-wrap gap-1.5">
-                      {(article.tags || []).map((tag: any, idx: number) => (
-                        <span
-                          key={idx}
-                          className="text-xs px-2 py-0.5 rounded-md bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-400"
-                        >
-                          #{tag?.name || tag || "tag"}
-                        </span>
-                      ))}
+                      <span className="text-slate-300 group-hover:text-primary transition-colors">
+                        ↗
+                      </span>
                     </div>
                   </div>
-                </article>
+                </Link>
               ))}
         </div>
 
         {/* Empty */}
         {!loading && articles.length === 0 && (
           <div className="text-center py-20">
-            <p className="text-gray-900 dark:text-white font-semibold">Belum Ada Berita</p>
-            <p className="text-sm text-gray-500">Tidak ada berita untuk kategori ini.</p>
+            <p className="text-gray-900 dark:text-white font-semibold">
+              Belum Ada Berita
+            </p>
+            <p className="text-sm text-gray-500">
+              Tidak ada berita untuk kategori ini.
+            </p>
           </div>
         )}
 
