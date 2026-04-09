@@ -30,11 +30,13 @@ export function useArticlesCategories() {
 //   Fetch Articles
 export const fetchArticles = async ({
   page,
+  perPage,
   category,
-}: { page?: number; category?: string } = {}) => {
+}: { page?: number; perPage?: number; category?: string } = {}) => {
   let url = `${API_BASE_URL}`;
   const params = new URLSearchParams();
   if (page) params.append("page", String(page));
+  if (perPage) params.append("per_page", String(perPage));
   if (category) params.append("category", category);
   if ([...params].length > 0) {
     url += `?${params.toString()}`;

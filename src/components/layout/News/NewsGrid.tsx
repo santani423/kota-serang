@@ -38,6 +38,7 @@ export default function NewsGrid() {
 
   // Intersection animation
   useEffect(() => {
+    let fallbackTimeout: NodeJS.Timeout | null = null;
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -53,7 +54,22 @@ export default function NewsGrid() {
       { threshold: 0.05 }
     );
     if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
+
+    // Fallback: jika observer gagal, paksa reveal setelah 1 detik
+    fallbackTimeout = setTimeout(() => {
+      if (sectionRef.current) {
+        sectionRef.current
+          .querySelectorAll(".reveal")
+          .forEach((el) => {
+            el.classList.add("opacity-100", "translate-y-0");
+          });
+      }
+    }, 1000);
+
+    return () => {
+      observer.disconnect();
+      if (fallbackTimeout) clearTimeout(fallbackTimeout);
+    };
   }, []);
 
   // Fetch categories (once)
@@ -88,11 +104,13 @@ export default function NewsGrid() {
   const fetchData = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await fetchArticles({ page, category: activeCategory === "Semua" ? undefined : activeCategory });
+      const res = await fetchArticles({ page, perPage: 6, category: activeCategory === "Semua" ? undefined : activeCategory });
       const dataArr = Array.isArray(res.data) ? res.data : res.data?.data || [];
-      setTotalArticles(res.data.total || 0);
+      console.log("dataArr",res);
+      
+      setTotalArticles(res.total_data || 0);
       setToArticles(res.data.to || dataArr.length);
-      setHasMore(res.data.to < res.data.total);
+      setHasMore(res.data.to < res.total_data);
       setArticles(page === 1 ? dataArr : (prev) => [...prev, ...dataArr]);
     } catch (err) {
       setArticles([]);
@@ -248,7 +266,7 @@ export default function NewsGrid() {
         )}
 
         {/* Info */}
-        <div className="text-center mt-6">
+        <div className="text-center mt-6 pt-6">
           <p className="text-xs text-gray-500">
             Menampilkan {toArticles} dari {totalArticles} berita
           </p>
