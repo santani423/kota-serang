@@ -193,7 +193,7 @@ export default function LeadershipGrid() {
               className="group cursor-pointer"
               style={{ transitionDelay: `${i * 70}ms` }}
             >
-              <Link href={`/leadership-detail/${leader.id}`} className="block">
+              <Link href={`/leadership/${leader.id}`} className="block">
                 <div className="relative bg-white rounded-3xl overflow-hidden shadow-soft border border-neutral-100 hover:shadow-elevated hover:-translate-y-1.5 transition-all duration-400 card-hover">
                   {/* Portrait Image */}
                   <div className="relative aspect-[4/5] img-zoom overflow-hidden">

@@ -12,16 +12,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { formatDateToMMDDYYYY } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Calendar, ArrowRight } from "lucide-react";
-import Image from "next/image";
-import {
-  Card,
-  CardAction,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Calendar, ArrowRight } from "lucide-react"; 
 
 // Gunakan class utuh agar Tailwind compiler tidak melewatkannya
 const getCategoryStyle = (category: string) => {
@@ -117,7 +108,7 @@ export default function NewsGrid() {
     try {
       const res = await fetchArticles({
         page,
-        perPage: 6,
+        perPage: 18,
         category: activeCategory === "Semua" ? undefined : activeCategory,
       });
       const dataArr = Array.isArray(res.data) ? res.data : res.data?.data || [];
@@ -181,7 +172,7 @@ export default function NewsGrid() {
         </div>
 
         {/* Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 min-h-[300px]">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 sm:gap-6 min-h-[300px]">
           {loading
             ? Array.from({ length: 6 }).map((_, i) => (
                 <div key={i} className="reveal opacity-100 translate-y-0">
@@ -232,7 +223,7 @@ export default function NewsGrid() {
                     <div className="flex items-center gap-3 text-slate-400 text-xs mb-3">
                       <span>{article.date}</span>
                       <span className="w-1 h-1 rounded-full bg-slate-300" />
-                      <span>{article.readTime} Baca</span>
+                      <span>{article.readTime} {formatDateToMMDDYYYY(article.created_at)}</span>
                     </div>
 
                     <h3 className="font-bold text-content text-lg leading-tight mb-4 group-hover:text-primary transition-colors line-clamp-2">
