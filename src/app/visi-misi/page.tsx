@@ -1,8 +1,7 @@
 import React from 'react';
 import type { Metadata } from 'next';  
-import VisiMisiHero from '@/components/layout/VisiMisi/VisiMisiHero'; 
-import ArticleContent from '@/components/layout/news-detail/ArticleContent'; 
-import RelatedArticles from '@/components/layout/news-detail/RelatedArticles'; 
+import VisiMisiHero from '@/components/layout/VisiMisi/VisiMisiHero';  
+import VisionSection from '@/components/layout/VisiMisi/VisionSection';  
 import Template from "@/components/layout/template";
 
 export const metadata: Metadata = {
@@ -13,9 +12,8 @@ export const metadata: Metadata = {
 export default function NewsDetailPage() {
   return (
     <Template> 
-      <VisiMisiHero />   
-      <ArticleContent />
-      <RelatedArticles />
+      {/* <VisiMisiHero />     */}
+      <VisionSection />    
     </Template>
   );
 }
