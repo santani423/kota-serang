@@ -5,7 +5,7 @@ import React from "react";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 
-export default function HistoryHeroSection() {
+export default function CultureHeroSection() {
   return (
     <section
       className="relative w-full min-h-[70vh] flex items-end overflow-hidden py-20"
@@ -41,18 +41,17 @@ export default function HistoryHeroSection() {
 
         {/* Title */}
         <h1 className="font-display text-white mb-5 text-[clamp(2.5rem,6vw,4.5rem)] font-extrabold leading-[1.05] tracking-[-0.04em]">
-          Jejak Sejarah <span className="gradient-text">Kota Serang</span>
+          Warisan Budaya <span className="gradient-text">Kota Serang</span>
         </h1>
 
         {/* Description */}
         <p className="font-body text-white/80 max-w-2xl mx-auto text-[clamp(1rem,2vw,1.2rem)] leading-[1.75]">
-          Lima abad perjalanan dari pusat kerajaan Islam terbesar di Nusantara hingga menjadi kota modern yang dinamis.
-          Sebuah kisah tentang peradaban, perjuangan, dan transformasi.
+          Dari seni Debus yang memukau hingga kuliner khas yang menggugah selera, kearifan lokal Serang mencerminkan kekayaan jiwa masyarakat Banten yang terus dijaga lintas generasi.
         </p>
 
         {/* Meta Chips */}
         <div className="flex flex-wrap gap-3 mt-8 justify-center">
-          {["1524 – Berdiri", "Ibu Kota Banten", "500+ Tahun Sejarah"].map((tag) => (
+          {["Seni & Budaya", "Kuliner Khas", "Tradisi Adat","Kerajinan Lokal"].map((tag) => (
             <Badge
               key={tag}
               variant="outline"

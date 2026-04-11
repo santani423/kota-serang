@@ -1,7 +1,8 @@
 import React from 'react';
 import type { Metadata } from 'next';    
 import HistoryHeroSection from '@/components/layout/CityHistory/HistoryHeroSection';     
-import TimelineEvent from '@/components/layout/CityHistory/HistoryHeroSection';     
+import TimelineEvent from '@/components/layout/CityHistory/TimelineSection';     
+import EraHighlightSection from '@/components/layout/CityHistory/EraHighlightSection';     
 import Template from "@/components/layout/template";
 
 export const metadata: Metadata = {
@@ -15,6 +16,7 @@ export default function CityHistoryPage() {
       {/* <VisiMisiHero />     */}
       <HistoryHeroSection />     
       <TimelineEvent />     
+      <EraHighlightSection />     
     </Template>
   );
 }
