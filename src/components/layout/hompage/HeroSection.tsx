@@ -84,17 +84,7 @@ export default function HeroSection() {
             tentang Kota Serang di sini.
           </p>
 
-          <div className="flex gap-4 flex-wrap">
-            <Button className="flex items-center gap-2">
-              <GalleryVerticalEnd size={22} />
-              Akses Layanan
-            </Button>
-
-            <Button variant="floating">
-              <Newspaper size={22} />
-              Berita
-            </Button>
-          </div>
+      
 
           {/* Indicator */}
           <div className="flex items-center gap-2 mt-4">

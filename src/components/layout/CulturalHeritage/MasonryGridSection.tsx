@@ -24,7 +24,7 @@ const cultureItems: CultureItem[] = [
     description:
       "Seni bela diri dan pertunjukan tradisional khas Banten yang memamerkan kekebalan tubuh.",
     image:
-      "http://googleusercontent.com/image_collection/image_retrieval/2024372953610659661_0",
+      "https://api-cms-kota-serang.santani.dev/assets/cultural-heritage/debus.jpg",
     imageAlt: "Pertunjukan Debus Banten",
     colSpan: "md:col-span-1",
     rowSpan: "md:row-span-2",
@@ -36,7 +36,7 @@ const cultureItems: CultureItem[] = [
     category: "Kerajinan Tangan",
     description: "Kain batik dengan motif artefak sejarah Kesultanan Banten.",
     image:
-      "http://googleusercontent.com/image_collection/image_retrieval/1129387656443289227_0",
+      "https://api-cms-kota-serang.santani.dev/assets/cultural-heritage/batik.webp",
     imageAlt: "Batik Banten",
     colSpan: "md:col-span-1",
     rowSpan: "",
@@ -49,7 +49,7 @@ const cultureItems: CultureItem[] = [
     description:
       "Kuliner kambing khas Serang peninggalan Sultan Maulana Hasanuddin.",
     image:
-      "http://googleusercontent.com/image_collection/image_retrieval/14984344374110707506_0",
+      "https://api-cms-kota-serang.santani.dev/assets/cultural-heritage/Rabeg.jpg",
     imageAlt: "Kuliner Rabeg Serang",
     colSpan: "md:col-span-1",
     rowSpan: "",
@@ -61,7 +61,7 @@ const cultureItems: CultureItem[] = [
     category: "Seni Tari",
     description: "Tarian tradisional penuh makna dari tanah Banten.",
     image:
-      "http://googleusercontent.com/image_collection/image_retrieval/3584313951313284957_0",
+      "https://api-cms-kota-serang.santani.dev/assets/cultural-heritage/TariTradisional.jpeg",
     imageAlt: "Tari Tradisional Banten",
     colSpan: "md:col-span-2",
     rowSpan: "",
@@ -74,7 +74,7 @@ const cultureItems: CultureItem[] = [
     description:
       "Ritual adat masyarakat Baduy bersilaturahmi kepada pemerintah.",
     image:
-      "http://googleusercontent.com/image_collection/image_retrieval/7323958997367783866_0",
+      "https://api-cms-kota-serang.santani.dev/assets/cultural-heritage/UpacaraSeba.jpg",
     imageAlt: "Tradisi Seba Baduy",
     colSpan: "md:col-span-1",
     rowSpan: "md:row-span-2",
@@ -86,7 +86,7 @@ const cultureItems: CultureItem[] = [
     category: "Kerajinan",
     description: "Kerajinan bambu dan rotan khas perajin lokal.",
     image:
-      "http://googleusercontent.com/image_collection/image_retrieval/11811487843718791364_0",
+      "https://api-cms-kota-serang.santani.dev/assets/cultural-heritage/Anyaman.jpg",
     imageAlt: "Kerajinan Anyaman",
     colSpan: "md:col-span-1",
     rowSpan: "",
@@ -99,7 +99,7 @@ const cultureItems: CultureItem[] = [
     description:
       "Masjid bersejarah dengan menara ikonik peninggalan kesultanan.",
     image:
-      "http://googleusercontent.com/image_collection/image_retrieval/3667460867857601790_0",
+      "https://api-cms-kota-serang.santani.dev/assets/cultural-heritage/MasjidAgungBanten.jpg",
     imageAlt: "Masjid Agung Banten",
     colSpan: "md:col-span-1",
     rowSpan: "",
@@ -145,7 +145,7 @@ export default function MasonryGridSection() {
 
     if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
-  }, [activeCategory]); // Re-run animation trigger saat filter berubah
+  }, [activeCategory]);
 
   return (
     <section
@@ -158,15 +158,16 @@ export default function MasonryGridSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="flex flex-col items-center text-center mb-16 reveal-item opacity-0 translate-y-4 transition-all duration-700 [&.is-visible]:opacity-100 [&.is-visible]:translate-y-0">
-          <p className="text-xs font-mono uppercase tracking-[0.3em] text-orange-600 mb-3 font-semibold">
+          <p className="text-xs font-mono uppercase tracking-[0.3em] text-[#22c55e] mb-3 font-semibold">
             — Khazanah Budaya
           </p>
           <h2
-            className={`text-4xl md:text-5xl font-display font-bold mb-4 ${theme === "dark" ? "text-white" : "text-slate-900"}`}
+            className={`text-4xl md:text-5xl font-display font-bold mb-4 ${
+              theme === "dark" ? "text-white" : "text-slate-900"
+            }`}
           >
-            Ragam Kearifan Lokal <span className="text-orange-600">Serang</span>
+            Ragam Kearifan Lokal <span className="gradient-title">Serang</span>
           </h2>
-          <div className="h-1 w-20 bg-orange-600 rounded-full" />
         </div>
 
         {/* Filter Buttons */}
@@ -177,10 +178,10 @@ export default function MasonryGridSection() {
               onClick={() => setActiveCategory(cat)}
               className={`px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 transform hover:scale-105 ${
                 activeCategory === cat
-                  ? "bg-orange-600 text-white shadow-xl shadow-orange-900/20 scale-105"
+                  ? "bg-green-600 text-white shadow-xl shadow-green-900/20 scale-105"
                   : theme === "dark"
                     ? "bg-slate-900 text-slate-400 hover:text-white border border-slate-800"
-                    : "bg-white text-slate-600 hover:text-orange-600 border border-slate-200 shadow-sm"
+                    : "bg-white text-slate-600 hover:text-green-600 border border-slate-200 shadow-sm"
               }`}
             >
               {cat}
@@ -188,7 +189,7 @@ export default function MasonryGridSection() {
           ))}
         </div>
 
-        {/* Masonry-like Grid */}
+        {/* Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {filtered.map((item) => (
             <div
@@ -205,15 +206,15 @@ export default function MasonryGridSection() {
                 priority={item.id <= 3}
               />
 
-              {/* Overlay Dinamis */}
+              {/* Overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500" />
 
-              {/* Content Box */}
-              <div className="absolute bottom-0 p-8 text-white w-full transform transition-transform duration-500">
-                <span className="text-[10px] font-bold uppercase tracking-widest bg-orange-600 px-3 py-1.5 rounded-lg mb-4 inline-block shadow-lg">
+              {/* Content */}
+              <div className="absolute bottom-0 p-8 text-white w-full">
+                <span className="text-[10px] font-bold uppercase tracking-widest bg-green-600 px-3 py-1.5 rounded-lg mb-4 inline-block shadow-lg">
                   {item.category}
                 </span>
-                <h3 className="font-display font-bold text-2xl mb-2 group-hover:text-orange-400 transition-colors">
+                <h3 className="font-display font-bold text-2xl mb-2 group-hover:text-green-400 transition-colors">
                   {item.title}
                 </h3>
                 <p className="text-sm text-gray-300 leading-relaxed max-h-0 group-hover:max-h-32 opacity-0 group-hover:opacity-100 overflow-hidden transition-all duration-500 ease-in-out">
@@ -225,9 +226,16 @@ export default function MasonryGridSection() {
         </div>
       </div>
 
+      {/* Gradient Title */}
       <style jsx>{`
         .reveal-item {
           transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .gradient-title {
+          background: linear-gradient(to right, #22c55e, #16a34a);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
         }
       `}</style>
     </section>

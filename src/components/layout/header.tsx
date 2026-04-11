@@ -90,9 +90,13 @@ export default function Header() {
           <div className="p-2 rounded-md hover:bg-gray-200   hover:text-black dark:hover:bg-gray-800 transition   xl:hidden">
             <MobileNav />
           </div>
+          <a href="/">
           <div className="custom-container flex p-2 hidden   xl:flex rounded-md transition">
-            <Button>Sampaikan Aspirasi</Button>
+            <Button  className="flex items-center justify-center text-white gap-2 bg-[#1E3A8A] hover:bg-[#1E3A8A]/90 py-3 rounded-xl font-medium transition">
+              Sampaikan Aspirasi
+            </Button>
           </div>
+          </a>
         </div>
       </div>
     </header>

@@ -3,13 +3,14 @@
 import { useEffect } from "react";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/Footer";
+import Suport from "@/components/layout/Suport";
 import AccessibilityComponent from "@/components/layout/Accessibility/accessibility";
-import { Accessibility } from "lucide-react";
 import { useAppDispatch } from "@/store/hooks";
 import { fetchSettingsCorMenu } from "@/lib/services/settingsServices";
 import { setMenu } from "@/store/settingsSlice";
-
-
+import { Button } from "../ui/button";
+import { Metadata } from "next";
+ 
 export default function Template({ children }: { children: React.ReactNode }) {
   const dispatch = useAppDispatch(); 
   useEffect(() => {
@@ -28,7 +29,9 @@ export default function Template({ children }: { children: React.ReactNode }) {
       <Header />
       <main className="min-h-screen bg-serang-bg dark:bg-serang-bg-dark">{children}</main>
       <AccessibilityComponent />
+      <Suport />
       <Footer />
+       <div className="fixed bottom-4 left-20 z-50"><Button variant={"outline"}> <span className="gradient-title"> Web Konsep </span> </Button></div>
     </>
   );
 }
