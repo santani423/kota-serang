@@ -23,6 +23,7 @@ import {
 } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
+import { postSupport } from "@/lib/services/settingsServices";
 
 export default function Support() {
   const [submitted, setSubmitted] = useState(false);
@@ -166,7 +167,17 @@ export default function Support() {
                     required
                   />
 
-                  <Button className="w-full cursor-pointer bg-[#406A40] hover:bg-[#325232] text-white">
+                  <Button
+                    onClick={() => {
+                      console.log("formformform", form);
+                      postSupport({
+                        email: form.email,
+                        hp: form.phone,
+                        message: form.message,
+                      });
+                    }}
+                    className="w-full cursor-pointer bg-[#406A40] hover:bg-[#325232] text-white"
+                  >
                     <Send className="w-4 h-4 mr-2" />
                     Kirim Pesan
                   </Button>

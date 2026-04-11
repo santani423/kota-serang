@@ -1,10 +1,11 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
+import { Support } from "@/types/settingsTypes";
 
 const API_BASE_URL =
   process.env.API_BASE_URL || "https://api-cms-kota-serang.santani.dev/api/";
 
 export const fetchSettingsCorMenu = async () => {
-  const url = `${API_BASE_URL}settings/cormenu`; 
+  const url = `${API_BASE_URL}settings/cormenu`;
   try {
     const res = await fetch(url);
     if (!res.ok) {
@@ -21,7 +22,7 @@ export const fetchSettingsCorMenu = async () => {
 };
 
 export const fetchSettingsHomepage = async () => {
-  const url = `${API_BASE_URL}settings/homepage`; 
+  const url = `${API_BASE_URL}settings/homepage`;
   try {
     const res = await fetch(url);
     if (!res.ok) {
@@ -35,10 +36,10 @@ export const fetchSettingsHomepage = async () => {
     console.error("Error fetch:", url, error);
     throw error;
   }
-}; 
+};
 
 export const fetchSettingsImageHomepage = async () => {
-  const url = `${API_BASE_URL}settings/image-homepage`; 
+  const url = `${API_BASE_URL}settings/image-homepage`;
   try {
     const res = await fetch(url);
     if (!res.ok) {
@@ -50,6 +51,32 @@ export const fetchSettingsImageHomepage = async () => {
     return data;
   } catch (error) {
     console.error("Error fetch:", url, error);
+    throw error;
+  }
+};
+
+export const postSupport = async (payload: Support) => {
+  const url = `${API_BASE_URL}support`;
+
+  try {
+    const res = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+
+    if (!res.ok) {
+      const errorText = await res.text();
+      console.error("Gagal POST:", url, res.status, errorText);
+      throw new Error("Gagal mengirim data support");
+    }
+
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error("Error POST:", url, error);
     throw error;
   }
 };
@@ -72,5 +99,11 @@ export function useSettingsImageHomepage() {
   return useQuery({
     queryKey: ["settings-img-hompage"],
     queryFn: fetchSettingsImageHomepage,
+  });
+}
+
+export function useSupport() {
+  return useMutation({
+    mutationFn: postSupport,
   });
 }

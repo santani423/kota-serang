@@ -76,6 +76,12 @@ export type CategoryAspirasi = {
   icon: string;
 };
 
+export type Support = {
+  email?: string;
+  hp?: string;
+  message?: string;
+};
+
 export type SettingsStateHomePage = {
   title?: string;
   description?: string;

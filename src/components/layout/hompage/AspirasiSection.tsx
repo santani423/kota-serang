@@ -2,15 +2,14 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { Clock, ShieldCheck, BarChart3, CheckCircle, Send } from "lucide-react";
-import { iconMap } from "@/lib/utils";
+// Hapus iconMap, pakai icon langsung
 import { Skeleton } from "@/components/ui/skeleton";
 import { GalleryVerticalEnd, Newspaper } from "lucide-react";
-import { RootState } from "@/store";
-import { useSelector } from "react-redux";
+
+
 
 export default function AspirasiSection() {
   const sectionRef = useRef<HTMLElement>(null);
-
   const [submitted, setSubmitted] = useState(false);
   const [form, setForm] = useState({
     nama: "",
@@ -20,9 +19,24 @@ export default function AspirasiSection() {
   });
   const [focused, setFocused] = useState<string | null>(null);
 
-  const { serviceFeatures, loading } = useSelector(
-    (state: RootState) => state.settings,
-  );
+  // Hardcode data untuk testing hydration
+  const serviceFeatures = [
+    {
+      icon: "Clock",
+      title: "Respon Cepat",
+      desc: "Aspirasi Anda akan segera ditindaklanjuti."
+    },
+    {
+      icon: "ShieldCheck",
+      title: "Privasi Terjaga",
+      desc: "Data Anda aman dan tidak disebarluaskan."
+    },
+    {
+      icon: "BarChart3",
+      title: "Transparan",
+      desc: "Proses penanganan aspirasi dapat dipantau."
+    }
+  ];
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -95,11 +109,15 @@ export default function AspirasiSection() {
 
           <div className="flex flex-col gap-5">
             {serviceFeatures.map((item) => {
-              const Icon = iconMap[item.icon];
+              let IconComponent = null;
+              if (item.icon === "Clock") IconComponent = Clock;
+              else if (item.icon === "ShieldCheck") IconComponent = ShieldCheck;
+              else if (item.icon === "BarChart3") IconComponent = BarChart3;
+              // Tambah mapping lain jika perlu
               return (
                 <div key={item.title} className="flex gap-4">
                   <div className="w-10 h-10 bg-[#406A40] rounded-xl flex items-center justify-center">
-                    <Icon size={18} className="text-[#37B27D]" />
+                    {IconComponent && <IconComponent size={18} className="text-[#37B27D]" />}
                   </div>
                   <div>
                     <p className="font-semibold">{item.title}</p>
