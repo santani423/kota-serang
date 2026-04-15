@@ -168,13 +168,20 @@ export default function Support() {
                   />
 
                   <Button
-                    onClick={() => {
-                      console.log("formformform", form);
-                      postSupport({
-                        email: form.email,
-                        hp: form.phone,
-                        message: form.message,
-                      });
+                    onClick={async () => {
+                      try {
+                        await postSupport({
+                          email: form.email,
+                          hp: form.phone,
+                          message: form.message,
+                        });
+                        // TODO: tampilkan notifikasi sukses ke user
+                        console.log("Pesan berhasil dikirim");
+                      } catch (err) {
+                        // TODO: tampilkan notifikasi error ke user
+                        console.error("Gagal mengirim data:", err);
+                        alert("Gagal mengirim pesan. Silakan coba lagi.");
+                      }
                     }}
                     className="w-full cursor-pointer bg-[#406A40] hover:bg-[#325232] text-white"
                   >

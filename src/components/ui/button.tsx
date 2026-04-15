@@ -23,6 +23,7 @@ const buttonVariants = cva(
         floating:
           "cursor-pointer flex items-center gap-2 px-6 py-4 p-6 rounded-2xl bg-white/10 backdrop-blur border border-white/20 text-white hover:bg-white/20 hover:border-white/30 focus-visible:ring-white/30 focus-visible:border-white/30",
         btn: "border-2 border-[#1E3A8A]/70 text-[#1E3A8A] bg-transparent hover:bg-[#1E3A8A]/10 hover:border-[#1E3A8A] active:bg-[#1E3A8A]/20 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1E3A8A]/40",
+        btn2: "border-2 p-6 rounded-2xl border-[#1E3A8A]/70 text-content bg-transparent hover:bg-[#1E3A8A]/10 hover:border-[#1E3A8A] active:bg-[#1E3A8A]/20 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1E3A8A]/40",
         teal: "bg-[#14b8a6] text-white hover:bg-[#14b8a6]/90 uppercase tracking-wider font-semibold",
         charcoal: "bg-[#424246] text-white hover:bg-[#424246]/90 uppercase tracking-wider font-semibold",
       },

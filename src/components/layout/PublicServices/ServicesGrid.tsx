@@ -187,7 +187,7 @@ export default function ServicesGrid() {
           {categories.map((cat) => (
             <Button
               key={cat}
-              variant={activeCategory === cat ? "default" : "floating"}
+              variant={activeCategory === cat ? "default" : "btn2"}
               onClick={() => setActiveCategory(cat)}
             >
               {cat}
